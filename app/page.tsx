@@ -332,7 +332,7 @@ export default function Home() {
     src="EngineeringDay-Logo.png"
     alt="Engineering Day"
     className={`w-auto transition-all duration-300 ${
-      scrolled ? "h-26 md:h-30" : "h-34 md:h-38"
+      scrolled ? "h-26 md:h-30" : "h-40 md:h-38"
     }`}
   />
 </div>
