@@ -309,6 +309,61 @@ export default function Home() {
     </div>
   </div>
 </section>
+<section className="relative overflow-hidden bg-[#efe9e1] px-6 md:px-12 lg:px-20 py-24 md:py-28 lg:py-32">
+  <div className="absolute inset-0 opacity-[0.04]">
+    <div
+      className="h-full w-full"
+      style={{
+        backgroundImage: `
+          linear-gradient(to right, rgba(0,0,0,0.14) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(0,0,0,0.14) 1px, transparent 1px)
+        `,
+        backgroundSize: "84px 84px",
+      }}
+    />
+  </div>
+
+  <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(217,164,65,0.18),transparent_34%)]" />
+
+  <div className="relative max-w-7xl mx-auto">
+    <p
+      className={`${firaSans.className} mb-14 text-center text-[11px] uppercase tracking-[0.24em] text-[#a27a26]`}
+    >
+      Founding Partners 2026
+    </p>
+
+<div className="flex items-center justify-center gap-x-20 md:gap-x-28 lg:gap-x-36 py-10 md:py-14">      <img
+        src="/Saab-Logo.png"
+        alt="Saab"
+        className="h-[120px] w-auto object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.08)] md:h-[150px] lg:h-[170px]"
+      />
+
+      <img
+        src="/Varopreem-Logo.png"
+        alt="VAROPreem"
+        className="h-[120px] w-auto object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.08)] md:h-[150px] lg:h-[170px]"
+      />
+
+      <img
+        src="/Skanska-Logo.png"
+        alt="Skanska"
+        className="h-[120px] w-auto object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.08)] md:h-[150px] lg:h-[170px]"
+      />
+
+      <img
+        src="/Sweco-Logo.png"
+        alt="Sweco"
+        className="h-[120px] w-auto object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.08)] md:h-[150px] lg:h-[170px]"
+      />
+
+      <img
+        src="/Trafikverket-Logo.png"
+        alt="Trafikverket"
+        className="h-[120px] w-auto object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.08)] md:h-[150px] lg:h-[170px]"
+      />
+    </div>
+  </div>
+</section>
     </main>
   );
 }
