@@ -364,6 +364,79 @@ export default function Home() {
     </div>
   </div>
 </section>
+<footer className="bg-[#f3f1ed] pt-28 pb-14">
+  <div className="max-w-3xl mx-auto text-center px-6">
+    <p className="text-[1.05rem] md:text-[1.15rem] text-[#3e3c38] leading-[1.9]">
+      Engineering Day is Sweden’s first official day for engineers. A platform
+      that brings together innovation, creativity and the people shaping what
+      comes next — while creating space for knowledge-sharing, recognition and
+      meaningful connections.
+    </p>
+
+    <p className="mt-5 text-sm text-black/40 italic tracking-[0.02em]">
+      A part of Ny Teknik
+    </p>
+
+    {/* Socials */}
+    <div className="flex justify-center items-center gap-8 mt-12">
+      <a
+        href="https://www.linkedin.com/company/ingenj%C3%B6rsdagen/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="opacity-60 hover:opacity-100 transition duration-200"
+      >
+        <img
+          src="/Linkedin.svg"
+          alt="LinkedIn"
+          className="h-5 w-5 object-contain"
+        />
+      </a>
+
+      <a
+        href="https://www.instagram.com/engineeringdaysweden/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="opacity-60 hover:opacity-100 transition duration-200"
+      >
+        <img
+          src="/Instagram.png"
+          alt="Instagram"
+          className="h-5 w-5 object-contain"
+        />
+      </a>
+
+      <a
+        href="https://open.spotify.com/show/6FcEbcTbMfue0FLgwIoM8a?si=5d52f0a791e14f04"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="opacity-60 hover:opacity-100 transition duration-200"
+      >
+        <img
+          src="/Spotify.png"
+          alt="Spotify"
+          className="h-5 w-5 object-contain"
+        />
+      </a>
+
+      <a
+        href="https://www.nyteknik.se/ingenjorsdagen"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="opacity-60 hover:opacity-100 transition duration-200"
+      >
+        <img
+          src="/Website.png"
+          alt="Ny Teknik"
+          className="h-5 w-5 object-contain"
+        />
+      </a>
+    </div>
+
+    <div className="mt-12 text-[11px] tracking-[0.12em] text-black/30 uppercase">
+      © 2026 Ny Teknik
+    </div>
+  </div>
+</footer>
     </main>
   );
 }

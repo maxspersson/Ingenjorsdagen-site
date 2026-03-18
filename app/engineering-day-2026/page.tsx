@@ -855,9 +855,7 @@ export default function Home() {
         </div>
       </section>
 
-     <section className="relative overflow-hidden bg-gradient-to-b from-[#f3f1ed] via-[#f3f1ed] to-[#eae4dc] px-6 md:px-12 lg:px-20 pt-12 md:pt-14 pb-28 md:pb-32">
-  <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom,_rgba(250,167,1,0.12),_rgba(250,167,1,0.05)_24%,_rgba(243,241,237,0)_58%)] pointer-events-none" />
-
+<section className="relative overflow-hidden bg-[#efe9e1] px-6 md:px-12 lg:px-20 pt-12 md:pt-14 pb-28 md:pb-32">  <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(217,164,65,0.03),rgba(217,164,65,0.1),rgba(217,164,65,0.03))]" />
   <div className="relative max-w-6xl mx-auto">
     <div className="mb-16 md:mb-20">
       <p
@@ -907,24 +905,26 @@ export default function Home() {
     </div>
   </div>
 </section>
-<footer className="pt-24 pb-12 bg-[#eae4dc]">
+<footer className="bg-[#f3f1ed] pt-28 pb-14">
   <div className="max-w-3xl mx-auto text-center px-6">
-    <p className="text-base md:text-lg text-black/70 leading-relaxed">
-      Engineering Day – Sweden’s first official day for engineers. We celebrate
-      our engineers and their powers of innovation, creativity and hard work.
-      The event is also a forum for knowledge-sharing and networking.
+    <p className="text-[1.05rem] md:text-[1.15rem] text-[#3e3c38] leading-[1.9]">
+      Engineering Day is Sweden’s first official day for engineers. A platform
+      that brings together innovation, creativity and the people shaping what
+      comes next — while creating space for knowledge-sharing, recognition and
+      meaningful connections.
     </p>
 
-    <p className="mt-4 text-sm text-black/40 italic">
+    <p className="mt-5 text-sm text-black/40 italic tracking-[0.02em]">
       A part of Ny Teknik
     </p>
 
-    <div className="flex justify-center items-center gap-6 mt-10">
+    {/* Socials */}
+    <div className="flex justify-center items-center gap-8 mt-12">
       <a
         href="https://www.linkedin.com/company/ingenj%C3%B6rsdagen/"
         target="_blank"
         rel="noopener noreferrer"
-        className="opacity-70 hover:opacity-100 transition"
+        className="opacity-60 hover:opacity-100 transition duration-200"
       >
         <img
           src="/Linkedin.svg"
@@ -937,7 +937,7 @@ export default function Home() {
         href="https://www.instagram.com/engineeringdaysweden/"
         target="_blank"
         rel="noopener noreferrer"
-        className="opacity-70 hover:opacity-100 transition"
+        className="opacity-60 hover:opacity-100 transition duration-200"
       >
         <img
           src="/Instagram.png"
@@ -950,7 +950,7 @@ export default function Home() {
         href="https://open.spotify.com/show/6FcEbcTbMfue0FLgwIoM8a?si=5d52f0a791e14f04"
         target="_blank"
         rel="noopener noreferrer"
-        className="opacity-70 hover:opacity-100 transition"
+        className="opacity-60 hover:opacity-100 transition duration-200"
       >
         <img
           src="/Spotify.png"
@@ -963,7 +963,7 @@ export default function Home() {
         href="https://www.nyteknik.se/ingenjorsdagen"
         target="_blank"
         rel="noopener noreferrer"
-        className="opacity-70 hover:opacity-100 transition"
+        className="opacity-60 hover:opacity-100 transition duration-200"
       >
         <img
           src="/Website.png"
@@ -973,7 +973,7 @@ export default function Home() {
       </a>
     </div>
 
-    <div className="mt-10 text-xs text-black/30">
+    <div className="mt-12 text-[11px] tracking-[0.12em] text-black/30 uppercase">
       © 2026 Ny Teknik
     </div>
   </div>
