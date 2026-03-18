@@ -63,11 +63,17 @@ export default function Home() {
               ATTENDING HEROES
             </a>
 
-            <div className="relative group">
-              <button className="flex items-center gap-2 uppercase hover:text-[#d9a441] transition-colors">
-                <span>THE GRAND PRIZE FOR ENGINEERING</span>
-                <span className="text-[9px]">▾</span>
-              </button>
+<div className="relative group flex items-center gap-2">
+  <a
+    href="/the-grand-prize-for-engineering"
+    className="uppercase hover:text-[#d9a441] transition-colors"
+  >
+    THE GRAND PRIZE FOR ENGINEERING
+  </a>
+
+  <button className="text-[9px] hover:text-[#d9a441] transition-colors">
+    ▾
+  </button>
 
               <div className="invisible absolute left-0 top-full z-50 mt-3 w-80 translate-y-2 bg-white opacity-0 shadow-xl ring-1 ring-black/5 transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
                 <div className="py-3">
@@ -190,7 +196,7 @@ export default function Home() {
                 </a>
 
                 <a
-                  href="#"
+                  href="/the-grand-prize-for-engineering"
                   className={`${firaSans.className} inline-flex items-center justify-center min-h-[54px] px-8 border border-white/18 bg-white/5 text-[#f7f1e8] text-[11px] font-medium tracking-[0.24em] uppercase hover:bg-white/10 transition-colors`}
                 >
                   The Grand Prize for Engineering
@@ -367,10 +373,7 @@ export default function Home() {
 <footer className="bg-[#f3f1ed] pt-28 pb-14">
   <div className="max-w-3xl mx-auto text-center px-6">
     <p className="text-[1.05rem] md:text-[1.15rem] text-[#3e3c38] leading-[1.9]">
-      Engineering Day is Sweden’s first official day for engineers. A platform
-      that brings together innovation, creativity and the people shaping what
-      comes next — while creating space for knowledge-sharing, recognition and
-      meaningful connections.
+      Engineering Day – Sweden’s first official day for engineers. We celebrate our engineers and their powers of innovation, creativity and hard work. The event is also a forum for knowledge-sharing and networking.
     </p>
 
     <p className="mt-5 text-sm text-black/40 italic tracking-[0.02em]">
