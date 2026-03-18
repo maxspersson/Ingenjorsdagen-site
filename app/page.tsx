@@ -200,31 +200,85 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <section className="bg-[#f3f1ed] px-6 md:px-12 lg:px-20 py-24 md:py-28 lg:py-32">
+  <div className="max-w-7xl mx-auto">
+    <div className="max-w-3xl mb-16 md:mb-20">
+      <p
+        className={`${firaSans.className} text-[11px] uppercase tracking-[0.24em] text-[#a27a26] mb-5`}
+      >
+        Our foundation
+      </p>
 
-      <section className="bg-[#f3f1ed] px-6 md:px-12 lg:px-20 py-20 md:py-24">
-        <div className="max-w-7xl mx-auto">
-          <div className="max-w-3xl">
-            <p
-              className={`${firaSans.className} text-[11px] uppercase tracking-[0.24em] text-[#a27a26] mb-5`}
-            >
-              First direction
-            </p>
+      <h2 className="text-[2.4rem] md:text-[3.5rem] lg:text-[4.1rem] leading-[1.04] font-serif font-light text-[#1f1f1f] max-w-4xl">
+        Engineering Day is built on three pillars.
+      </h2>
 
-            <h2 className="text-[2.4rem] md:text-[3.4rem] leading-[1.04] font-serif font-light text-[#1f1f1f] mb-6">
-              This is the homepage.
-              <br />
-              The event lives further in.
-            </h2>
+      <p className="mt-6 max-w-2xl text-[1.05rem] md:text-[1.12rem] leading-[1.9] text-[#4c4a46]">
+        Knowledge, collaboration and community shape the platform and create a
+        space where engineers can learn, connect and move ideas forward
+        together.
+      </p>
+    </div>
 
-            <p className="text-[1.04rem] md:text-[1.12rem] leading-[1.9] text-[#4c4a46] max-w-2xl">
-              Here we can continue with entry points, editorial sections and
-              partner presentation lower down. The point right now is just to
-              test the darker, more graphic hero and create a clearer
-              distinction from the event page.
-            </p>
-          </div>
-        </div>
-      </section>
+    <div className="grid grid-cols-1 md:grid-cols-3 border-t border-black/10">
+      <div className="py-10 md:py-12 md:pr-10 border-b md:border-b-0 md:border-r border-black/10">
+        <p
+          className={`${firaSans.className} text-[10px] uppercase tracking-[0.24em] text-[#a27a26] mb-6`}
+        >
+          01
+        </p>
+
+        <h3 className="text-[1.8rem] md:text-[2.1rem] leading-[1.08] font-serif font-light text-[#1f1f1f] mb-6">
+          Knowledge
+        </h3>
+
+        <p className="text-[1rem] md:text-[1.05rem] leading-[1.9] text-[#4c4a46] max-w-[28rem]">
+          Engineering Day is a place to learn from real engineering work.
+          Through talks, masterclasses and discussions, engineers share how they
+          approach complex systems, technical constraints and new technologies
+          in practice.
+        </p>
+      </div>
+
+      <div className="py-10 md:py-12 md:px-10 border-b md:border-b-0 md:border-r border-black/10">
+        <p
+          className={`${firaSans.className} text-[10px] uppercase tracking-[0.24em] text-[#a27a26] mb-6`}
+        >
+          02
+        </p>
+
+        <h3 className="text-[1.8rem] md:text-[2.1rem] leading-[1.08] font-serif font-light text-[#1f1f1f] mb-6">
+          Collaboration
+        </h3>
+
+        <p className="text-[1rem] md:text-[1.05rem] leading-[1.9] text-[#4c4a46] max-w-[28rem]">
+          Great engineering rarely happens in isolation. Engineering Day creates
+          opportunities for dialogue across teams, companies and industries,
+          making it easier to exchange perspectives, compare solutions and spark
+          new collaborations.
+        </p>
+      </div>
+
+      <div className="py-10 md:py-12 md:pl-10">
+        <p
+          className={`${firaSans.className} text-[10px] uppercase tracking-[0.24em] text-[#a27a26] mb-6`}
+        >
+          03
+        </p>
+
+        <h3 className="text-[1.8rem] md:text-[2.1rem] leading-[1.08] font-serif font-light text-[#1f1f1f] mb-6">
+          Community
+        </h3>
+
+        <p className="text-[1rem] md:text-[1.05rem] leading-[1.9] text-[#4c4a46] max-w-[28rem]">
+          Engineering Day brings together people who design, build and improve
+          complex systems every day. It is a place to meet peers, strengthen
+          your network and be part of a wider engineering community.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
     </main>
   );
 }
