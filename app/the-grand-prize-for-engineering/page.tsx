@@ -24,127 +24,337 @@ export default function SiteHeader() {
   }, []);
 
   return (
-    <nav
-      className={`sticky top-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-white/85 backdrop-blur-md shadow-md" : "bg-[#efefef]"
-      }`}
-    >
-      <div className="flex justify-center pt-10 pb-6">
-        <a href="/">
-          <img
-            src="/EngineeringDay-Logo.png"
-            alt="Engineering Day"
-            className={`w-auto transition-all duration-300 ${
-              scrolled ? "h-26 md:h-30" : "h-36 md:h-38"
-            }`}
-          />
-        </a>
-      </div>
-
-      <div className="border-t border-[#d9a441] px-10 py-3 flex justify-between items-center">
-        <div
-          className={`${firaSans.className} text-[10px] font-medium tracking-[0.18em] uppercase`}
-        >
-          STOCKHOLM, 21 OCTOBER 2026
+    <main className="min-h-screen bg-[#111111]">
+      <nav
+        className={`sticky top-0 z-50 transition-all duration-300 ${
+          scrolled ? "bg-white/85 backdrop-blur-md shadow-md" : "bg-[#efefef]"
+        }`}
+      >
+        <div className="flex justify-center pt-10 pb-6">
+          <a href="/">
+            <img
+              src="/EngineeringDay-Logo.png"
+              alt="Engineering Day"
+              className={`w-auto transition-all duration-300 ${
+                scrolled ? "h-[104px] md:h-[112px]" : "h-[144px] md:h-[152px]"
+              }`}
+            />
+          </a>
         </div>
 
-        <div
-          className={`${firaSans.className} flex items-center gap-8 text-[10px] font-medium tracking-[0.16em] uppercase`}
-        >
-          <a
-            href="/engineering-day-2026"
-            className="hover:text-[#d9a441] transition-colors"
+        <div className="border-t border-[#d9a441] px-10 py-3 flex justify-between items-center">
+          <div
+            className={`${firaSans.className} text-[10px] font-medium tracking-[0.18em] uppercase`}
           >
-            ENGINEERING DAY 2026
-          </a>
-
-          <a href="#" className="hover:text-[#d9a441] transition-colors">
-            ATTENDING HEROES
-          </a>
-
-<div className="relative group flex items-center gap-2">
-  <a
-    href="/the-grand-prize-for-engineering"
-    className="uppercase hover:text-[#d9a441] transition-colors"
-  >
-    THE GRAND PRIZE FOR ENGINEERING
-  </a>
-
-  <button className="text-[9px] hover:text-[#d9a441] transition-colors">
-    ▾
-  </button>
-
-            <div className="invisible absolute left-0 top-full z-50 mt-3 w-80 translate-y-2 bg-white opacity-0 shadow-xl ring-1 ring-black/5 transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
-              <div className="py-3">
-                <a
-                  href="#"
-                  className="block px-5 py-3 text-[11px] uppercase tracking-[0.12em] hover:bg-[#f7f3ea] hover:text-[#d9a441]"
-                >
-                  INNOVATION
-                </a>
-                <a
-                  href="#"
-                  className="block px-5 py-3 text-[11px] uppercase tracking-[0.12em] hover:bg-[#f7f3ea] hover:text-[#d9a441]"
-                >
-                  LEADERSHIP
-                </a>
-                <a
-                  href="#"
-                  className="block px-5 py-3 text-[11px] uppercase tracking-[0.12em] hover:bg-[#f7f3ea] hover:text-[#d9a441]"
-                >
-                  RISING STAR
-                </a>
-                <a
-                  href="#"
-                  className="block px-5 py-3 text-[11px] uppercase tracking-[0.12em] hover:bg-[#f7f3ea] hover:text-[#d9a441]"
-                >
-                  ROLE MODEL OF THE YEAR
-                </a>
-                <a
-                  href="#"
-                  className="block px-5 py-3 text-[11px] uppercase tracking-[0.12em] hover:bg-[#f7f3ea] hover:text-[#d9a441]"
-                >
-                  SUSTAINABILITY
-                </a>
-              </div>
-            </div>
+            STOCKHOLM, 21 OCTOBER 2026
           </div>
 
-          <div className="relative group">
-            <button className="flex items-center gap-2 uppercase hover:text-[#d9a441] transition-colors">
-              <span>PRE-EVENTS</span>
-              <span className="text-[9px]">▾</span>
-            </button>
+          <div
+            className={`${firaSans.className} flex items-center gap-8 text-[10px] font-medium tracking-[0.16em] uppercase`}
+          >
+            <a
+              href="/engineering-day-2026"
+              className="hover:text-[#d9a441] transition-colors"
+            >
+              ENGINEERING DAY 2026
+            </a>
 
-            <div className="invisible absolute left-0 top-full z-50 mt-3 w-72 translate-y-2 bg-white opacity-0 shadow-xl ring-1 ring-black/5 transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
-              <div className="py-3">
-                <a
-                  href="#"
-                  className="block px-5 py-3 text-[11px] uppercase tracking-[0.12em] hover:bg-[#f7f3ea] hover:text-[#d9a441]"
-                >
-                  CAREER DAY @ GÖTEBORG
-                </a>
-                <a
-                  href="#"
-                  className="block px-5 py-3 text-[11px] uppercase tracking-[0.12em] hover:bg-[#f7f3ea] hover:text-[#d9a441]"
-                >
-                  CAREER DAY @ MALMÖ
-                </a>
-                <a
-                  href="#"
-                  className="block px-5 py-3 text-[11px] uppercase tracking-[0.12em] hover:bg-[#f7f3ea] hover:text-[#d9a441]"
-                >
-                  CAREER DAY @ STOCKHOLM
-                </a>
+            <a href="#" className="hover:text-[#d9a441] transition-colors">
+              ATTENDING HEROES
+            </a>
+
+            <div className="relative group flex items-center gap-2">
+              <a
+                href="/the-grand-prize-for-engineering"
+                className="uppercase hover:text-[#d9a441] transition-colors"
+              >
+                THE GRAND PRIZE FOR ENGINEERING
+              </a>
+
+              <button className="text-[9px] hover:text-[#d9a441] transition-colors">
+                ▾
+              </button>
+
+              <div className="invisible absolute left-0 top-full z-50 mt-3 w-80 translate-y-2 bg-white opacity-0 shadow-xl ring-1 ring-black/5 transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
+                <div className="py-3">
+                  <a
+                    href="#"
+                    className="block px-5 py-3 text-[11px] uppercase tracking-[0.12em] hover:bg-[#f7f3ea] hover:text-[#d9a441]"
+                  >
+                    INNOVATION
+                  </a>
+                  <a
+                    href="#"
+                    className="block px-5 py-3 text-[11px] uppercase tracking-[0.12em] hover:bg-[#f7f3ea] hover:text-[#d9a441]"
+                  >
+                    LEADERSHIP
+                  </a>
+                  <a
+                    href="#"
+                    className="block px-5 py-3 text-[11px] uppercase tracking-[0.12em] hover:bg-[#f7f3ea] hover:text-[#d9a441]"
+                  >
+                    RISING STAR
+                  </a>
+                  <a
+                    href="#"
+                    className="block px-5 py-3 text-[11px] uppercase tracking-[0.12em] hover:bg-[#f7f3ea] hover:text-[#d9a441]"
+                  >
+                    ROLE MODEL OF THE YEAR
+                  </a>
+                  <a
+                    href="#"
+                    className="block px-5 py-3 text-[11px] uppercase tracking-[0.12em] hover:bg-[#f7f3ea] hover:text-[#d9a441]"
+                  >
+                    SUSTAINABILITY
+                  </a>
+                </div>
               </div>
             </div>
-          </div>
 
-          <a href="#" className="hover:text-[#d9a441] transition-colors">
-            CONTACT
-          </a>
+            <div className="relative group">
+              <button className="flex items-center gap-2 uppercase hover:text-[#d9a441] transition-colors">
+                <span>PRE-EVENTS</span>
+                <span className="text-[9px]">▾</span>
+              </button>
+
+              <div className="invisible absolute left-0 top-full z-50 mt-3 w-72 translate-y-2 bg-white opacity-0 shadow-xl ring-1 ring-black/5 transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
+                <div className="py-3">
+                  <a
+                    href="#"
+                    className="block px-5 py-3 text-[11px] uppercase tracking-[0.12em] hover:bg-[#f7f3ea] hover:text-[#d9a441]"
+                  >
+                    CAREER DAY @ GÖTEBORG
+                  </a>
+                  <a
+                    href="#"
+                    className="block px-5 py-3 text-[11px] uppercase tracking-[0.12em] hover:bg-[#f7f3ea] hover:text-[#d9a441]"
+                  >
+                    CAREER DAY @ MALMÖ
+                  </a>
+                  <a
+                    href="#"
+                    className="block px-5 py-3 text-[11px] uppercase tracking-[0.12em] hover:bg-[#f7f3ea] hover:text-[#d9a441]"
+                  >
+                    CAREER DAY @ STOCKHOLM
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <a href="#" className="hover:text-[#d9a441] transition-colors">
+              CONTACT
+            </a>
+          </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+
+ <section className="relative min-h-screen overflow-hidden bg-[#0f0f10] text-white">
+  <div
+    className="absolute inset-0 bg-cover bg-center"
+    style={{ backgroundImage: "url('/grand-prize-statuettes.jpg')" }}
+  />
+
+  <div className="absolute inset-0 bg-black/68" />
+  <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.34),rgba(0,0,0,0.12),rgba(0,0,0,0.44))]" />
+
+  <div className="relative z-10 flex min-h-screen items-center justify-center px-6 text-center">
+    <div className="max-w-[1200px] -mt-28 md:-mt-24 lg:-mt-20">
+<h1 className="font-serif text-white text-center leading-[1.05]">
+  <span className="block text-[2.2rem] md:text-[3.8rem] lg:text-[4.8rem] tracking-[0.12em] opacity-90">
+    The Grand Prize for
+  </span>
+
+  <span className="mt-4 block text-[3.2rem] md:text-[6rem] lg:text-[7.2rem] tracking-[-0.02em]">
+    Engineering
+  </span>
+</h1>
+    </div>
+  </div>
+</section>
+<section className="bg-[#f3f1ed] px-6 md:px-12 lg:px-20 pt-24 md:pt-28 pb-24 md:pb-28">
+  <div className="max-w-6xl mx-auto">
+    <div className="mb-10 md:mb-12">
+      <p
+        className={`${firaSans.className} text-[13px] uppercase tracking-[0.24em] text-[#a27a26] mb-4`}
+      >
+        WHY?
+      </p>
+
+      <div className="w-14 h-px bg-[#d9a441]" />
+    </div>
+
+    <div className="max-w-4xl mx-auto text-center mb-12 md:mb-14">
+      <h2 className="text-[3rem] md:text-[4.05rem] lg:text-[4.6rem] leading-[1.03] font-serif font-light text-[#1f1f1f] mb-6">
+Engineering that matters
+        <br />
+      </h2>
+
+      <p className="italic text-[1.22rem] md:text-[1.4rem] leading-[1.45] text-[#5f5a52]">
+        A prize for engineering that creates lasting impact.
+      </p>
+    </div>
+
+    <div className="max-w-3xl mx-auto">
+      <p className="text-[1.16rem] md:text-[1.3rem] leading-[1.82] text-[#2c2c2c] mb-8">
+        Engineering has always been at the core of progress. From infrastructure
+        and energy systems to digital platforms and intelligent machines, it is
+        engineers who translate ideas into reality.
+      </p>
+
+      <p className="text-[1.16rem] md:text-[1.3rem] leading-[1.82] text-[#2c2c2c] mb-10">
+        The Grand Prize for Engineering exists to recognize individuals and
+        teams whose work not only advances technology, but creates lasting
+        impact in society.
+      </p>
+
+      <p className="text-[1.1rem] md:text-[1.22rem] leading-[1.9] text-[#555]">
+        It highlights the people, ideas and achievements that move industries
+        forward and shape the future through knowledge, courage and execution.
+      </p>
+    </div>
+  </div>
+</section>
+<section className="bg-[#f3f1ed] px-6 md:px-12 lg:px-20 pt-24 md:pt-28 pb-24 md:pb-28">
+  <div className="max-w-6xl mx-auto">
+    <div className="mb-10 md:mb-12">
+      <p
+        className={`${firaSans.className} text-[13px] uppercase tracking-[0.24em] text-[#a27a26] mb-4`}
+      >
+        WHO?
+      </p>
+
+      <div className="w-14 h-px bg-[#d9a441]" />
+    </div>
+
+    <div className="max-w-4xl mx-auto text-center mb-12 md:mb-14">
+      <h2 className="text-[3rem] md:text-[4.05rem] lg:text-[4.6rem] leading-[1.03] font-serif font-light text-[#1f1f1f] mb-6">
+        The people behind the progress
+      </h2>
+
+      <p className="italic text-[1.22rem] md:text-[1.4rem] leading-[1.45] text-[#5f5a52]">
+        Individuals and teams redefining what engineering can achieve.
+      </p>
+    </div>
+
+    <div className="max-w-3xl mx-auto">
+      <p className="text-[1.16rem] md:text-[1.3rem] leading-[1.82] text-[#2c2c2c] mb-8">
+        The Grand Prize for Engineering recognizes individuals and teams who
+        have distinguished themselves through exceptional work, innovation and
+        leadership. Their contributions push boundaries, solve real-world
+        challenges and create meaningful impact across industries.
+      </p>
+
+      <p className="text-[1.16rem] md:text-[1.3rem] leading-[1.82] text-[#2c2c2c] mb-10">
+        The prize is awarded across five categories: Innovation, Leadership,
+        Sustainability, Rising Star and Role Model of the Year. Together, they
+        reflect the breadth of engineering and the many ways progress is shaped.
+      </p>
+
+      <p className="text-[1.1rem] md:text-[1.22rem] leading-[1.9] text-[#555]">
+        From breakthrough technologies to transformative leadership, each
+        category highlights those who contribute to building a more advanced,
+        sustainable and resilient society.
+      </p>
+    </div>
+  </div>
+</section>
+<section className="relative overflow-hidden px-6 py-28 text-white md:px-12 md:py-32 lg:px-20">
+  <div
+    className="absolute inset-0 bg-cover bg-center"
+    style={{ backgroundImage: "url('/award-group.jpg')" }}
+  />
+
+  <div className="absolute inset-0 bg-black/50" />
+  <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.55),rgba(0,0,0,0.72))]" />
+
+  <div className="relative z-10 mx-auto max-w-4xl text-center">
+    <h2 className="mb-6 font-serif text-[2.4rem] leading-[1.1] md:text-[3.4rem] lg:text-[4rem]">
+      Engineering deserves recognition
+    </h2>
+
+    <p className="mb-10 text-[1.15rem] leading-[1.7] text-[#d0d0d0] md:text-[1.3rem]">
+      The Grand Prize for Engineering highlights the people and ideas that move
+      society forward — not for attention, but for impact.
+    </p>
+
+    <a
+      href="#"
+      className="text-[12px] uppercase tracking-[0.2em] text-[#d9a441] transition-opacity hover:opacity-80"
+    >
+      Explore the categories
+    </a>
+  </div>
+</section>
+<footer className="bg-[#f3f1ed] pt-28 pb-14">
+  <div className="max-w-3xl mx-auto text-center px-6">
+    <p className="text-[1.05rem] md:text-[1.15rem] text-[#3e3c38] leading-[1.9]">
+      Engineering Day – Sweden’s first official day for engineers. We celebrate our engineers and their powers of innovation, creativity and hard work. The event is also a forum for knowledge-sharing and networking.
+    </p>
+
+    <p className="mt-5 text-sm text-black/40 italic tracking-[0.02em]">
+      A part of Ny Teknik
+    </p>
+
+    {/* Socials */}
+    <div className="flex justify-center items-center gap-8 mt-12">
+      <a
+        href="https://www.linkedin.com/company/ingenj%C3%B6rsdagen/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="opacity-60 hover:opacity-100 transition duration-200"
+      >
+        <img
+          src="/Linkedin.svg"
+          alt="LinkedIn"
+          className="h-5 w-5 object-contain"
+        />
+      </a>
+
+      <a
+        href="https://www.instagram.com/engineeringdaysweden/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="opacity-60 hover:opacity-100 transition duration-200"
+      >
+        <img
+          src="/Instagram.png"
+          alt="Instagram"
+          className="h-5 w-5 object-contain"
+        />
+      </a>
+
+      <a
+        href="https://open.spotify.com/show/6FcEbcTbMfue0FLgwIoM8a?si=5d52f0a791e14f04"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="opacity-60 hover:opacity-100 transition duration-200"
+      >
+        <img
+          src="/Spotify.png"
+          alt="Spotify"
+          className="h-5 w-5 object-contain"
+        />
+      </a>
+
+      <a
+        href="https://www.nyteknik.se/ingenjorsdagen"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="opacity-60 hover:opacity-100 transition duration-200"
+      >
+        <img
+          src="/Website.png"
+          alt="Ny Teknik"
+          className="h-5 w-5 object-contain"
+        />
+      </a>
+    </div>
+
+    <div className="mt-12 text-[11px] tracking-[0.12em] text-black/30 uppercase">
+      © 2026 Ny Teknik
+    </div>
+  </div>
+</footer>
+    </main>
   );
 }
