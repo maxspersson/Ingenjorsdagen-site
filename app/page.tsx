@@ -159,7 +159,7 @@ export default function Home() {
         </div>
 
         <div className="relative px-6 md:px-12 lg:px-20">
-          <div className="max-w-7xl mx-auto min-h-[78vh] flex items-center py-24 md:py-28 lg:py-32">
+          <div className="max-w-7xl mx-auto min-h-[78vh] flex items-center pt-12 pb-24 md:pt-16 md:pb-28 lg:pt-20 lg:pb-32">
             <div className="max-w-4xl">
               <p
                 className={`${firaSans.className} text-[11px] uppercase tracking-[0.28em] text-[#d9a441] mb-8`}
@@ -200,8 +200,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section className="bg-[#f3f1ed] px-6 md:px-12 lg:px-20 py-24 md:py-28 lg:py-32">
-  <div className="max-w-7xl mx-auto">
+<section className="bg-[#f3f1ed] px-6 md:px-12 lg:px-20 pt-24 pb-12 md:pt-28 md:pb-16 lg:pt-32 lg:pb-1">  <div className="max-w-7xl mx-auto">
     <div className="max-w-3xl mb-16 md:mb-20">
       <p
         className={`${firaSans.className} text-[11px] uppercase tracking-[0.24em] text-[#a27a26] mb-5`}
@@ -276,6 +275,37 @@ export default function Home() {
           your network and be part of a wider engineering community.
         </p>
       </div>
+    </div>
+  </div>
+</section>
+<section className="bg-[#f3f1ed] px-6 md:px-12 lg:px-20 py-24 md:py-28 lg:py-32">
+  <div className="max-w-7xl mx-auto">
+<div className="max-w-3xl mb-8 md:mb-10">      <p
+        className={`${firaSans.className} text-[11px] uppercase tracking-[0.24em] text-[#a27a26] mb-6`}
+      >
+        Why it matters
+      </p>
+
+      <h2 className="text-[2.4rem] md:text-[3.6rem] lg:text-[4.2rem] leading-[1.02] font-serif font-light text-[#1f1f1f] max-w-4xl">
+        Engineering is shaping the future.
+        <br />
+        But rarely in one place.
+      </h2>
+    </div>
+
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 max-w-5xl">
+      <p className="text-[1.05rem] md:text-[1.12rem] leading-[1.9] text-[#4c4a46]">
+        Engineering Day exists to bring together the people building the
+        systems our society depends on. It creates a shared space for engineers
+        across industries to exchange knowledge, challenge ideas and accelerate
+        progress.
+      </p>
+
+      <p className="text-[1.05rem] md:text-[1.12rem] leading-[1.9] text-[#4c4a46]">
+        By connecting companies, individuals and disciplines, the platform
+        strengthens the role of engineering in shaping a sustainable, resilient
+        and forward-looking society.
+      </p>
     </div>
   </div>
 </section>
