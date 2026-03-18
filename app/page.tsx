@@ -327,16 +327,15 @@ export default function Home() {
           scrolled ? "bg-white/85 backdrop-blur-md shadow-md" : "bg-[#efefef]"
         }`}
       >
-        <div className="flex justify-center pt-10 pb-6">
-          <img
-            src="/EngineeringDay-logo.png"
-            alt="Engineering Day"
-            className={`w-auto transition-all duration-300 ${
-              scrolled ? "h-20 md:h-24" : "h-24 md:h-28"
-            }`}
-          />
-        </div>
-
+<div className="flex justify-center pt-10 pb-6">
+  <img
+    src="EngineeringDay-Logo.png"
+    alt="Engineering Day"
+    className={`w-auto transition-all duration-300 ${
+      scrolled ? "h-20 md:h-24" : "h-24 md:h-28"
+    }`}
+  />
+</div>
         <div className="border-t border-[#d9a441] px-10 py-3 flex justify-between items-center">
           <div
             className={`${firaSans.className} text-[10px] font-medium tracking-[0.18em] uppercase`}
