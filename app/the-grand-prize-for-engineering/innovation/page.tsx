@@ -58,8 +58,7 @@ export default function InnovationPage() {
   />
 </section>
 
-  <section className="bg-[#f3f1ed] px-6 md:px-12 lg:px-20 pt0 md:pt0 pb-12 md:pb-16">
-        <div className="max-w-6xl mx-auto">
+<section className="bg-[#f3f1ed] px-6 md:px-12 lg:px-20 pt-24 md:pt-28 pb-24 md:pb-28">        <div className="max-w-6xl mx-auto">
           <div className="mb-10 md:mb-12">
             <p
               className={`${firaSans.className} text-[13px] uppercase tracking-[0.24em] text-[#a27a26] mb-4`}

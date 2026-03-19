@@ -51,7 +51,7 @@ export default function LeadershipPage() {
         />
       </section>
 
-      <section className="bg-[#f3f1ed] px-6 md:px-12 lg:px-20 pt-24 md:pt-28 pb-24 md:pb-28">
+<section className="bg-[#f3f1ed] px-6 md:px-12 lg:px-20 pt-24 md:pt-28 pb-24 md:pb-28">
         <div className="max-w-6xl mx-auto">
           <div className="mb-10 md:mb-12">
             <p
@@ -92,7 +92,7 @@ export default function LeadershipPage() {
         </div>
       </section>
 
-      <section className="bg-[#f3f1ed] px-6 md:px-12 lg:px-20 pt-0 pb-24 md:pb-28">
+      <section className="bg-[#f3f1ed] px-6 md:px-12 lg:px-20 pt-12 pb-24 md:pb-28">
         <div className="max-w-6xl mx-auto">
           <div className="mb-10 md:mb-12">
             <p
@@ -134,7 +134,7 @@ export default function LeadershipPage() {
         </div>
       </section>
 
-      <section className="bg-[#f3f1ed] px-6 md:px-12 lg:px-20 pt-0 pb-24 md:pb-28">
+      <section className="bg-[#f3f1ed] px-6 md:px-12 lg:px-20 pt-12 pb-24 md:pb-28">
         <div className="max-w-6xl mx-auto">
           <div className="mb-10 md:mb-12">
             <p
