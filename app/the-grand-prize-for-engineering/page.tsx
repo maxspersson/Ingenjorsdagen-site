@@ -258,6 +258,131 @@ Engineering that matters
     </div>
   </div>
 </section>
+<section
+  id="categories"
+  className="bg-[#f3f1ed] px-6 md:px-12 lg:px-20 pt-24 md:pt-28 pb-24 md:pb-28"
+>
+  <div className="max-w-6xl mx-auto">
+    <div className="mb-10 md:mb-12">
+      <p
+        className={`${firaSans.className} text-[13px] uppercase tracking-[0.24em] text-[#a27a26] mb-4`}
+      >
+        WHAT?
+      </p>
+
+      <div className="w-14 h-px bg-[#d9a441]" />
+    </div>
+
+    <div className="max-w-4xl mx-auto text-center mb-14 md:mb-16">
+      <h2 className="text-[3rem] md:text-[4.05rem] lg:text-[4.6rem] leading-[1.03] font-serif font-light text-[#1f1f1f] mb-6">
+        Five ways engineering
+        <br />
+        <span className="block">makes an impact</span>
+      </h2>
+
+      <p className="italic text-[1.22rem] md:text-[1.4rem] leading-[1.45] text-[#5f5a52]">
+        Explore the five award categories within The Grand Prize for Engineering.
+      </p>
+    </div>
+
+    <div className="max-w-4xl mx-auto border-t border-black/10">
+      <a
+        href="/the-grand-prize-for-engineering/innovation"
+        className="group grid grid-cols-1 md:grid-cols-[1fr_auto] items-end gap-4 border-b border-black/10 py-7 md:py-8 transition-colors hover:text-[#a27a26]"
+      >
+        <div>
+          <h3 className="font-serif text-[1.9rem] md:text-[2.4rem] leading-[1.05]">
+            Innovation
+          </h3>
+          <p className="mt-2 text-[1rem] md:text-[1.08rem] leading-[1.7] text-[#5a5a5a] group-hover:text-[#6a6256]">
+            For breakthrough ideas, technologies and solutions with the power to create real-world change.
+          </p>
+        </div>
+        <span
+          className={`${firaSans.className} text-[11px] uppercase tracking-[0.18em] text-[#8b8276] group-hover:text-[#a27a26]`}
+        >
+          Read more
+        </span>
+      </a>
+
+      <a
+        href="/the-grand-prize-for-engineering/leadership"
+        className="group grid grid-cols-1 md:grid-cols-[1fr_auto] items-end gap-4 border-b border-black/10 py-7 md:py-8 transition-colors hover:text-[#a27a26]"
+      >
+        <div>
+          <h3 className="font-serif text-[1.9rem] md:text-[2.4rem] leading-[1.05]">
+            Leadership
+          </h3>
+          <p className="mt-2 text-[1rem] md:text-[1.08rem] leading-[1.7] text-[#5a5a5a] group-hover:text-[#6a6256]">
+            For leaders who create progress by combining technical understanding with vision, courage and direction.
+          </p>
+        </div>
+        <span
+          className={`${firaSans.className} text-[11px] uppercase tracking-[0.18em] text-[#8b8276] group-hover:text-[#a27a26]`}
+        >
+          Read more
+        </span>
+      </a>
+
+      <a
+        href="/the-grand-prize-for-engineering/sustainability"
+        className="group grid grid-cols-1 md:grid-cols-[1fr_auto] items-end gap-4 border-b border-black/10 py-7 md:py-8 transition-colors hover:text-[#a27a26]"
+      >
+        <div>
+          <h3 className="font-serif text-[1.9rem] md:text-[2.4rem] leading-[1.05]">
+            Sustainability
+          </h3>
+          <p className="mt-2 text-[1rem] md:text-[1.08rem] leading-[1.7] text-[#5a5a5a] group-hover:text-[#6a6256]">
+            For engineering that helps accelerate the transition toward a more sustainable and resilient society.
+          </p>
+        </div>
+        <span
+          className={`${firaSans.className} text-[11px] uppercase tracking-[0.18em] text-[#8b8276] group-hover:text-[#a27a26]`}
+        >
+          Read more
+        </span>
+      </a>
+
+      <a
+        href="/the-grand-prize-for-engineering/rising-star"
+        className="group grid grid-cols-1 md:grid-cols-[1fr_auto] items-end gap-4 border-b border-black/10 py-7 md:py-8 transition-colors hover:text-[#a27a26]"
+      >
+        <div>
+          <h3 className="font-serif text-[1.9rem] md:text-[2.4rem] leading-[1.05]">
+            Rising Star
+          </h3>
+          <p className="mt-2 text-[1rem] md:text-[1.08rem] leading-[1.7] text-[#5a5a5a] group-hover:text-[#6a6256]">
+            For emerging engineers whose ideas, leadership or technical achievements point clearly toward the future.
+          </p>
+        </div>
+        <span
+          className={`${firaSans.className} text-[11px] uppercase tracking-[0.18em] text-[#8b8276] group-hover:text-[#a27a26]`}
+        >
+          Read more
+        </span>
+      </a>
+
+      <a
+        href="/the-grand-prize-for-engineering/role-model-of-the-year"
+        className="group grid grid-cols-1 md:grid-cols-[1fr_auto] items-end gap-4 border-b border-black/10 py-7 md:py-8 transition-colors hover:text-[#a27a26]"
+      >
+        <div>
+          <h3 className="font-serif text-[1.9rem] md:text-[2.4rem] leading-[1.05]">
+            Role Model of the Year
+          </h3>
+          <p className="mt-2 text-[1rem] md:text-[1.08rem] leading-[1.7] text-[#5a5a5a] group-hover:text-[#6a6256]">
+            For those who inspire others through leadership, expertise and a clear commitment to positive change.
+          </p>
+        </div>
+        <span
+          className={`${firaSans.className} text-[11px] uppercase tracking-[0.18em] text-[#8b8276] group-hover:text-[#a27a26]`}
+        >
+          Read more
+        </span>
+      </a>
+    </div>
+  </div>
+</section>
 <section className="relative overflow-hidden px-6 py-28 text-white md:px-12 md:py-32 lg:px-20">
   <div
     className="absolute inset-0 bg-cover bg-center"
@@ -277,12 +402,12 @@ Engineering that matters
       society forward — not for attention, but for impact.
     </p>
 
-    <a
-      href="#"
-      className="text-[12px] uppercase tracking-[0.2em] text-[#d9a441] transition-opacity hover:opacity-80"
-    >
-      Explore the categories
-    </a>
+<a
+  href="/engineering-day-2026"
+  className="inline-block mt-6 text-[11px] uppercase tracking-[0.2em] text-[#a27a26] hover:text-[#d9a441] transition-colors"
+>
+  The winners will be celebrated at SPACE, Stockholm · October 21
+</a>
   </div>
 </section>
 <footer className="bg-[#f3f1ed] pt-28 pb-14">
