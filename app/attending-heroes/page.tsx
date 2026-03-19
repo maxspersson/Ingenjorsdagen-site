@@ -415,18 +415,18 @@ function SpeakerCard({
           {person.format}
         </p>
 
-        <h3 className="mt-2 font-serif text-[1.3rem] leading-[1.1] text-[#1f1f1f]">
+        <h3 className="mt-2 font-serif text-[1.22rem] leading-[1.1] text-[#1f1f1f] sm:text-[1.3rem]">
           {person.name}
         </h3>
 
-        <p className="mt-1 text-[0.95rem] leading-[1.6] text-[#5a5a5a]">
+        <p className="mt-1 text-[0.92rem] leading-[1.6] text-[#5a5a5a] sm:text-[0.95rem]">
           {person.title}, {person.company}
         </p>
 
         <button
           type="button"
           onClick={() => onOpen(person)}
-          className={`${firaSans.className} mt-4 text-[11px] uppercase tracking-[0.18em] text-[#a27a26] transition-colors hover:text-[#d9a441]`}
+          className={`${firaSans.className} mt-4 text-[10px] uppercase tracking-[0.16em] text-[#a27a26] transition-colors hover:text-[#d9a441] sm:text-[11px] sm:tracking-[0.18em]`}
         >
           Read more
         </button>
@@ -445,20 +445,20 @@ function SectionHeader({
   intro?: string;
 }) {
   return (
-    <div className="mb-10 md:mb-12">
+    <div className="mb-9 md:mb-12">
       <p
-        className={`${firaSans.className} mb-4 text-[13px] uppercase tracking-[0.24em] text-[#a27a26]`}
+        className={`${firaSans.className} mb-4 text-[12px] uppercase tracking-[0.22em] text-[#a27a26] md:text-[13px] md:tracking-[0.24em]`}
       >
         {label}
       </p>
-      <div className="mb-8 h-px w-14 bg-[#d9a441]" />
+      <div className="mb-7 h-px w-14 bg-[#d9a441] md:mb-8" />
 
-      <h2 className="font-serif text-[2.4rem] leading-[1.04] font-light text-[#1f1f1f] md:text-[3.2rem] lg:text-[3.7rem]">
+      <h2 className="font-serif text-[2.05rem] font-light leading-[1.04] text-[#1f1f1f] sm:text-[2.35rem] md:text-[3.2rem] lg:text-[3.7rem]">
         {title}
       </h2>
 
       {intro ? (
-        <p className="mt-5 max-w-3xl text-[1.04rem] leading-[1.78] text-[#5a5a5a] md:text-[1.12rem]">
+        <p className="mt-4 max-w-3xl text-[1rem] leading-[1.75] text-[#5a5a5a] md:mt-5 md:text-[1.12rem] md:leading-[1.78]">
           {intro}
         </p>
       ) : null}
@@ -480,24 +480,27 @@ function SessionSection({
   onOpen: (person: Person) => void;
 }) {
   return (
-    <section className="px-6 pb-24 md:px-12 lg:px-20">
+    <section className="px-5 pb-20 md:px-12 md:pb-24 lg:px-20">
       <div className="mx-auto max-w-6xl">
         <SectionHeader label={label} title={title} intro={intro} />
 
-        <div className="space-y-16 md:space-y-20">
+        <div className="space-y-14 md:space-y-20">
           {sessions.map((session) => (
-            <div key={session.title} className="border-t border-black/10 pt-8 md:pt-10">
-              <h3 className="font-serif text-[1.9rem] leading-[1.08] text-[#1f1f1f] md:text-[2.25rem]">
+            <div
+              key={session.title}
+              className="border-t border-black/10 pt-7 md:pt-10"
+            >
+              <h3 className="font-serif text-[1.55rem] leading-[1.08] text-[#1f1f1f] sm:text-[1.75rem] md:text-[2.25rem]">
                 {session.title}
               </h3>
 
               {session.description ? (
-                <p className="mt-4 max-w-3xl text-[1rem] leading-[1.78] text-[#5a5a5a] md:text-[1.05rem]">
+                <p className="mt-4 max-w-3xl text-[0.98rem] leading-[1.75] text-[#5a5a5a] md:text-[1.05rem] md:leading-[1.78]">
                   {session.description}
                 </p>
               ) : null}
 
-              <div className="mt-8 grid gap-10 md:grid-cols-2 xl:grid-cols-3">
+              <div className="mt-7 grid gap-8 sm:gap-10 md:mt-8 md:grid-cols-2 xl:grid-cols-3">
                 {session.people.map((person) => (
                   <SpeakerCard
                     key={`${person.name}-${person.session}`}
@@ -522,21 +525,21 @@ export default function AttendingHeroesPage() {
       <SiteHeader />
 
       {/* HERO */}
-      <section className="px-6 pb-18 pt-24 md:px-12 md:pb-20 lg:px-20">
+      <section className="px-5 pt-20 pb-14 md:px-12 md:pt-24 md:pb-20 lg:px-20">
         <div className="mx-auto max-w-5xl text-center">
           <p
-            className={`${firaSans.className} mb-6 text-[11px] uppercase tracking-[0.3em] text-[#d9a441]`}
+            className={`${firaSans.className} mb-5 text-[10px] uppercase tracking-[0.24em] text-[#d9a441] sm:text-[11px] sm:tracking-[0.3em] md:mb-6`}
           >
             Attending heroes
           </p>
 
-          <h1 className="font-serif text-[3rem] leading-[1.05] text-[#1f1f1f] md:text-[4.4rem] lg:text-[5.1rem]">
+          <h1 className="font-serif text-[2.55rem] leading-[1.04] text-[#1f1f1f] sm:text-[3rem] md:text-[4.4rem] lg:text-[5.1rem]">
             Voices shaping
             <br />
             Engineering Day 2026
           </h1>
 
-          <p className="mx-auto mt-6 max-w-2xl text-[1.12rem] leading-[1.65] text-[#5f5a52] md:text-[1.2rem]">
+          <p className="mx-auto mt-5 max-w-[22rem] text-[1rem] leading-[1.6] text-[#5f5a52] sm:mt-6 sm:max-w-[30rem] sm:text-[1.08rem] md:max-w-2xl md:text-[1.2rem] md:leading-[1.65]">
             Engineers, leaders and innovators contributing to talks, panels,
             fireside conversations, masterclasses and the wider programme
             throughout the day.
@@ -545,7 +548,7 @@ export default function AttendingHeroesPage() {
       </section>
 
       {/* FEATURED */}
-      <section className="px-6 pb-24 md:px-12 lg:px-20">
+      <section className="px-5 pb-20 md:px-12 md:pb-24 lg:px-20">
         <div className="mx-auto max-w-6xl">
           <SectionHeader
             label="Featured"
@@ -553,7 +556,7 @@ export default function AttendingHeroesPage() {
             intro="A first look at some of the people helping shape the conversations on stage and throughout the programme."
           />
 
-          <div className="grid gap-10 md:grid-cols-2 xl:grid-cols-3">
+          <div className="grid gap-8 sm:gap-10 md:grid-cols-2 xl:grid-cols-3">
             {featuredPeople.map((person) => (
               <SpeakerCard
                 key={`${person.name}-${person.session}`}
@@ -566,7 +569,7 @@ export default function AttendingHeroesPage() {
       </section>
 
       {/* MODERATOR */}
-      <section className="px-6 pb-24 md:px-12 lg:px-20">
+      <section className="px-5 pb-20 md:px-12 md:pb-24 lg:px-20">
         <div className="mx-auto max-w-6xl">
           <SectionHeader
             label="Moderator"
@@ -574,7 +577,7 @@ export default function AttendingHeroesPage() {
             intro="Guiding the programme, shaping the transitions and making each conversation land."
           />
 
-          <div className="grid max-w-sm gap-10">
+          <div className="grid max-w-sm gap-8 sm:gap-10">
             {moderator.map((person) => (
               <SpeakerCard
                 key={`${person.name}-${person.session}`}
@@ -587,7 +590,7 @@ export default function AttendingHeroesPage() {
       </section>
 
       {/* HERO TALKS */}
-      <section className="px-6 pb-24 md:px-12 lg:px-20">
+      <section className="px-5 pb-20 md:px-12 md:pb-24 lg:px-20">
         <div className="mx-auto max-w-6xl">
           <SectionHeader
             label="Hero talks"
@@ -595,7 +598,7 @@ export default function AttendingHeroesPage() {
             intro="A series of talks from partners and speakers sharing ideas, experience and practical insight from different parts of engineering."
           />
 
-          <div className="grid gap-10 md:grid-cols-2 xl:grid-cols-3">
+          <div className="grid gap-8 sm:gap-10 md:grid-cols-2 xl:grid-cols-3">
             {heroTalks.map((person) => (
               <SpeakerCard
                 key={`${person.name}-${person.session}`}
@@ -635,7 +638,7 @@ export default function AttendingHeroesPage() {
       />
 
       {/* KEYNOTE */}
-      <section className="px-6 pb-32 md:px-12 lg:px-20">
+      <section className="px-5 pb-24 md:px-12 md:pb-32 lg:px-20">
         <div className="mx-auto max-w-6xl">
           <SectionHeader
             label="Keynote"
@@ -643,7 +646,7 @@ export default function AttendingHeroesPage() {
             intro="The keynote brings the day together — reflecting on the conversations, insights and what comes next."
           />
 
-          <div className="grid max-w-sm gap-10">
+          <div className="grid max-w-sm gap-8 sm:gap-10">
             {keynote.map((person) => (
               <SpeakerCard
                 key={`${person.name}-${person.session}`}
@@ -657,12 +660,12 @@ export default function AttendingHeroesPage() {
 
       {/* MODAL */}
       {selectedPerson ? (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/55 px-6 py-10">
-          <div className="relative max-h-[90vh] w-full max-w-4xl overflow-y-auto bg-[#f3f1ed] shadow-2xl">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/55 px-4 py-4 sm:px-6 sm:py-8 md:px-6 md:py-10">
+          <div className="relative max-h-[92vh] w-full max-w-4xl overflow-y-auto bg-[#f3f1ed] shadow-2xl">
             <button
               type="button"
               onClick={() => setSelectedPerson(null)}
-              className={`${firaSans.className} absolute right-6 top-6 text-[11px] uppercase tracking-[0.18em] text-[#8b8276] transition-colors hover:text-[#a27a26]`}
+              className={`${firaSans.className} absolute right-4 top-4 z-20 text-[10px] uppercase tracking-[0.16em] text-[#8b8276] transition-colors hover:text-[#a27a26] sm:right-6 sm:top-6 sm:text-[11px] sm:tracking-[0.18em]`}
             >
               Close
             </button>
@@ -670,56 +673,56 @@ export default function AttendingHeroesPage() {
             <div className="grid md:grid-cols-[0.95fr_1.05fr]">
               <div className="bg-[#e7e2d8]">
                 <img
-  src={selectedPerson.image}
-  alt={selectedPerson.name}
-  className="w-full h-full object-cover"
-/>
+                  src={selectedPerson.image}
+                  alt={selectedPerson.name}
+                  className="h-[280px] w-full object-cover sm:h-[360px] md:h-full"
+                />
               </div>
 
-              <div className="px-8 py-10 md:px-12 md:py-14">
+              <div className="px-5 py-6 sm:px-8 sm:py-8 md:px-12 md:py-14">
                 <p
-                  className={`${firaSans.className} text-[10px] uppercase tracking-[0.18em] text-[#8b8276]`}
+                  className={`${firaSans.className} text-[10px] uppercase tracking-[0.16em] text-[#8b8276] md:tracking-[0.18em]`}
                 >
                   {selectedPerson.format}
                 </p>
 
-                <h2 className="mt-3 font-serif text-[2.3rem] leading-[1.05] text-[#1f1f1f] md:text-[2.8rem]">
+                <h2 className="mt-3 font-serif text-[1.95rem] leading-[1.05] text-[#1f1f1f] sm:text-[2.2rem] md:text-[2.8rem]">
                   {selectedPerson.name}
                 </h2>
 
-                <p className="mt-3 text-[1rem] leading-[1.75] text-[#5a5a5a]">
+                <p className="mt-3 text-[0.98rem] leading-[1.72] text-[#5a5a5a] md:text-[1rem] md:leading-[1.75]">
                   {selectedPerson.title}, {selectedPerson.company}
                 </p>
 
-                <div className="mt-8 border-t border-black/10 pt-8">
+                <div className="mt-6 border-t border-black/10 pt-6 md:mt-8 md:pt-8">
                   <p
-                    className={`${firaSans.className} text-[10px] uppercase tracking-[0.18em] text-[#8b8276]`}
+                    className={`${firaSans.className} text-[10px] uppercase tracking-[0.16em] text-[#8b8276] md:tracking-[0.18em]`}
                   >
                     Session
                   </p>
-                  <p className="mt-2 font-serif text-[1.4rem] leading-[1.2] text-[#1f1f1f]">
+                  <p className="mt-2 font-serif text-[1.2rem] leading-[1.18] text-[#1f1f1f] sm:text-[1.3rem] md:text-[1.4rem]">
                     {selectedPerson.session}
                   </p>
                 </div>
 
-                <div className="mt-8 border-t border-black/10 pt-8">
+                <div className="mt-6 border-t border-black/10 pt-6 md:mt-8 md:pt-8">
                   <p
-                    className={`${firaSans.className} text-[10px] uppercase tracking-[0.18em] text-[#8b8276]`}
+                    className={`${firaSans.className} text-[10px] uppercase tracking-[0.16em] text-[#8b8276] md:tracking-[0.18em]`}
                   >
                     Focus
                   </p>
-                  <p className="mt-3 text-[1.02rem] leading-[1.82] text-[#2c2c2c]">
+                  <p className="mt-3 text-[0.98rem] leading-[1.78] text-[#2c2c2c] md:text-[1.02rem] md:leading-[1.82]">
                     {selectedPerson.focus}
                   </p>
                 </div>
 
-                <div className="mt-8 border-t border-black/10 pt-8">
+                <div className="mt-6 border-t border-black/10 pt-6 md:mt-8 md:pt-8">
                   <p
-                    className={`${firaSans.className} text-[10px] uppercase tracking-[0.18em] text-[#8b8276]`}
+                    className={`${firaSans.className} text-[10px] uppercase tracking-[0.16em] text-[#8b8276] md:tracking-[0.18em]`}
                   >
                     About
                   </p>
-                  <p className="mt-3 text-[1rem] leading-[1.82] text-[#555]">
+                  <p className="mt-3 text-[0.96rem] leading-[1.78] text-[#555] md:text-[1rem] md:leading-[1.82]">
                     {selectedPerson.bio}
                   </p>
                 </div>
@@ -735,76 +738,76 @@ export default function AttendingHeroesPage() {
           />
         </div>
       ) : null}
-      <footer className="bg-[#f3f1ed] pt-28 pb-14">
-  <div className="max-w-3xl mx-auto text-center px-6">
-    <p className="text-[1.05rem] md:text-[1.15rem] text-[#3e3c38] leading-[1.9]">
-      Engineering Day – Sweden’s first official day for engineers. We celebrate our engineers and their powers of innovation, creativity and hard work. The event is also a forum for knowledge-sharing and networking.
-    </p>
 
-    <p className="mt-5 text-sm text-black/40 italic tracking-[0.02em]">
-      A part of Ny Teknik
-    </p>
+      <footer className="bg-[#f3f1ed] pt-20 pb-12 md:pt-28 md:pb-14">
+        <div className="mx-auto max-w-3xl px-5 text-center md:px-6">
+          <p className="text-[0.98rem] leading-[1.82] text-[#3e3c38] sm:text-[1.02rem] md:text-[1.15rem] md:leading-[1.9]">
+            Engineering Day – Sweden’s first official day for engineers. We celebrate our engineers and their powers of innovation, creativity and hard work. The event is also a forum for knowledge-sharing and networking.
+          </p>
 
-    {/* Socials */}
-    <div className="flex justify-center items-center gap-8 mt-12">
-      <a
-        href="https://www.linkedin.com/company/ingenj%C3%B6rsdagen/"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="opacity-60 hover:opacity-100 transition duration-200"
-      >
-        <img
-          src="/Linkedin.svg"
-          alt="LinkedIn"
-          className="h-5 w-5 object-contain"
-        />
-      </a>
+          <p className="mt-4 text-[13px] italic tracking-[0.02em] text-black/40 md:mt-5 md:text-sm">
+            A part of Ny Teknik
+          </p>
 
-      <a
-        href="https://www.instagram.com/engineeringdaysweden/"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="opacity-60 hover:opacity-100 transition duration-200"
-      >
-        <img
-          src="/Instagram.png"
-          alt="Instagram"
-          className="h-5 w-5 object-contain"
-        />
-      </a>
+          <div className="mt-10 flex items-center justify-center gap-7 md:mt-12 md:gap-8">
+            <a
+              href="https://www.linkedin.com/company/ingenj%C3%B6rsdagen/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="opacity-60 transition duration-200 hover:opacity-100"
+            >
+              <img
+                src="/Linkedin.svg"
+                alt="LinkedIn"
+                className="h-5 w-5 object-contain"
+              />
+            </a>
 
-      <a
-        href="https://open.spotify.com/show/6FcEbcTbMfue0FLgwIoM8a?si=5d52f0a791e14f04"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="opacity-60 hover:opacity-100 transition duration-200"
-      >
-        <img
-          src="/Spotify.png"
-          alt="Spotify"
-          className="h-5 w-5 object-contain"
-        />
-      </a>
+            <a
+              href="https://www.instagram.com/engineeringdaysweden/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="opacity-60 transition duration-200 hover:opacity-100"
+            >
+              <img
+                src="/Instagram.png"
+                alt="Instagram"
+                className="h-5 w-5 object-contain"
+              />
+            </a>
 
-      <a
-        href="https://www.nyteknik.se/ingenjorsdagen"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="opacity-60 hover:opacity-100 transition duration-200"
-      >
-        <img
-          src="/Website.png"
-          alt="Ny Teknik"
-          className="h-5 w-5 object-contain"
-        />
-      </a>
-    </div>
+            <a
+              href="https://open.spotify.com/show/6FcEbcTbMfue0FLgwIoM8a?si=5d52f0a791e14f04"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="opacity-60 transition duration-200 hover:opacity-100"
+            >
+              <img
+                src="/Spotify.png"
+                alt="Spotify"
+                className="h-5 w-5 object-contain"
+              />
+            </a>
 
-    <div className="mt-12 text-[11px] tracking-[0.12em] text-black/30 uppercase">
-      © 2026 Ny Teknik
-    </div>
-  </div>
-</footer>
+            <a
+              href="https://www.nyteknik.se/ingenjorsdagen"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="opacity-60 transition duration-200 hover:opacity-100"
+            >
+              <img
+                src="/Website.png"
+                alt="Ny Teknik"
+                className="h-5 w-5 object-contain"
+              />
+            </a>
+          </div>
+
+          <div className="mt-10 text-[10px] uppercase tracking-[0.12em] text-black/30 md:mt-12 md:text-[11px]">
+            © 2026 Ny Teknik
+          </div>
+        </div>
+      </footer>
     </main>
   );
 }

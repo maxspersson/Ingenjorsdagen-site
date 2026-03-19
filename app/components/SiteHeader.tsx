@@ -29,8 +29,7 @@ export default function SiteHeader() {
   return (
     <nav
       className={`sticky top-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-white/85 backdrop-blur-md shadow-md" : "bg-[#efefef]/92"
-      }`}
+scrolled ? "bg-white/85 backdrop-blur-md shadow-md" : "bg-white"      }`}
     >
       <div className="flex justify-center px-6 pt-6 pb-5 md:pt-10 md:pb-6">
         <a href="/">
@@ -200,7 +199,7 @@ export default function SiteHeader() {
       </div>
 
       {mobileMenuOpen && (
-        <div className="xl:hidden border-t border-[#d9a441] bg-[#efefef]/95 px-4 sm:px-6 py-2">
+        <div className="xl:hidden border-t border-[#d9a441] bg-white px-4 sm:px-6 py-2">
           <div
             className={`${firaSans.className} flex flex-col text-[11px] font-medium tracking-[0.14em] uppercase`}
           >
