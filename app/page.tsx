@@ -68,7 +68,7 @@ export default function Home() {
         </h1>
 
         <p className="mt-8 max-w-2xl text-[1.1rem] md:text-[1.22rem] leading-[1.9] text-white/72">
-          Ingenjörsdagen is more than a single event. It is a platform for
+          Engineering Day is more than a single event. It is a platform for
           conversations, recognition, talent and the engineering ideas shaping
           what comes next.
         </p>
