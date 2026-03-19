@@ -219,16 +219,23 @@ export default function SiteHeader() {
             </a>
 
             <div className="border-b border-black/8 py-4">
-              <button
-                type="button"
-                onClick={() => setGrandPrizeOpen((prev) => !prev)}
-                className="flex w-full items-center justify-between text-left"
-              >
-                <span>THE GRAND PRIZE FOR ENGINEERING</span>
-                <span className="text-[#d9a441] text-sm leading-none">
+              <div className="flex items-center justify-between gap-4">
+                <a
+                  href="/the-grand-prize-for-engineering"
+                  className="flex-1 text-left"
+                >
+                  THE GRAND PRIZE FOR ENGINEERING
+                </a>
+
+                <button
+                  type="button"
+                  aria-label="Toggle Grand Prize submenu"
+                  onClick={() => setGrandPrizeOpen((prev) => !prev)}
+                  className="shrink-0 text-[#d9a441] text-sm leading-none"
+                >
                   {grandPrizeOpen ? "−" : "+"}
-                </span>
-              </button>
+                </button>
+              </div>
 
               {grandPrizeOpen && (
                 <div className="mt-4 flex flex-col border-l border-[#d9a441]/40 pl-4 text-[10px] tracking-[0.12em] text-black/70">
@@ -267,16 +274,20 @@ export default function SiteHeader() {
             </div>
 
             <div className="border-b border-black/8 py-4">
-              <button
-                type="button"
-                onClick={() => setPreEventsOpen((prev) => !prev)}
-                className="flex w-full items-center justify-between text-left"
-              >
-                <span>PRE-EVENTS</span>
-                <span className="text-[#d9a441] text-sm leading-none">
+              <div className="flex items-center justify-between gap-4">
+                <a href="/pre-events" className="flex-1 text-left">
+                  PRE-EVENTS
+                </a>
+
+                <button
+                  type="button"
+                  aria-label="Toggle Pre-events submenu"
+                  onClick={() => setPreEventsOpen((prev) => !prev)}
+                  className="shrink-0 text-[#d9a441] text-sm leading-none"
+                >
                   {preEventsOpen ? "−" : "+"}
-                </span>
-              </button>
+                </button>
+              </div>
 
               {preEventsOpen && (
                 <div className="mt-4 flex flex-col border-l border-[#d9a441]/40 pl-4 text-[10px] tracking-[0.12em] text-black/70">

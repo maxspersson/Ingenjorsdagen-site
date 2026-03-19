@@ -42,18 +42,18 @@ export default function RisingStarPage() {
     <main className="min-h-screen bg-[#f3f1ed] text-[#1f1f1f]">
       <SiteHeader />
 
-      <section className="relative min-h-[82vh] overflow-hidden">
+      <section className="relative min-h-[44vh] overflow-hidden sm:min-h-[52vh] md:min-h-[82vh]">
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: "url('/rising-star-2026.png')" }}
         />
       </section>
 
-      <section className="bg-[#f3f1ed] px-6 md:px-12 lg:px-20 pt-24 md:pt-28 pb-24 md:pb-28">
-        <div className="max-w-6xl mx-auto">
-          <div className="mb-10 md:mb-12">
+      <section className="bg-[#f3f1ed] px-5 pt-20 pb-20 md:px-12 md:pt-28 md:pb-28 lg:px-20">
+        <div className="mx-auto max-w-6xl">
+          <div className="mb-9 md:mb-12">
             <p
-              className={`${firaSans.className} mb-4 text-[13px] uppercase tracking-[0.24em] text-[#a27a26]`}
+              className={`${firaSans.className} mb-4 text-[12px] uppercase tracking-[0.22em] text-[#a27a26] md:text-[13px] md:tracking-[0.24em]`}
             >
               WHY?
             </p>
@@ -61,19 +61,19 @@ export default function RisingStarPage() {
             <div className="h-px w-14 bg-[#d9a441]" />
           </div>
 
-          <div className="mx-auto mb-12 max-w-4xl text-center md:mb-14">
-            <h2 className="mb-6 font-serif text-[3rem] font-light leading-[1.03] text-[#1f1f1f] md:text-[4.05rem] lg:text-[4.6rem]">
+          <div className="mx-auto mb-10 max-w-4xl text-center md:mb-14">
+            <h2 className="mb-5 font-serif text-[2.2rem] font-light leading-[1.03] text-[#1f1f1f] sm:text-[2.6rem] md:mb-6 md:text-[4.05rem] lg:text-[4.6rem]">
               Why rising stars matter
             </h2>
 
-            <p className="text-[1.22rem] italic leading-[1.45] text-[#5f5a52] md:text-[1.4rem]">
+            <p className="mx-auto max-w-[22rem] text-[1.06rem] italic leading-[1.5] text-[#5f5a52] sm:max-w-[30rem] sm:text-[1.14rem] md:max-w-none md:text-[1.4rem]">
               Young engineers with new ideas, leadership and commitment are
               essential to the future.
             </p>
           </div>
 
           <div className="mx-auto max-w-3xl">
-            <p className="mb-8 text-[1.16rem] leading-[1.82] text-[#2c2c2c] md:text-[1.3rem]">
+            <p className="mb-7 text-[1.02rem] leading-[1.78] text-[#2c2c2c] sm:text-[1.08rem] md:mb-8 md:text-[1.3rem] md:leading-[1.82]">
               To meet the major challenges facing society and infrastructure, we
               need young engineers with new ideas, leadership and commitment. By
               highlighting the technical talents of the future, this award aims
@@ -81,7 +81,7 @@ export default function RisingStarPage() {
               and contribute to more sustainable development.
             </p>
 
-            <p className="mb-8 text-[1.16rem] leading-[1.82] text-[#2c2c2c] md:text-[1.3rem]">
+            <p className="mb-7 text-[1.02rem] leading-[1.78] text-[#2c2c2c] sm:text-[1.08rem] md:mb-8 md:text-[1.3rem] md:leading-[1.82]">
               The prize is intended to recognize innovative perspectives and
               solutions in technology and sustainability, with a particular
               focus on the engineer’s role in shaping the future of transport
@@ -90,7 +90,7 @@ export default function RisingStarPage() {
               engineering path where they can make a difference.
             </p>
 
-            <p className="text-[1.1rem] leading-[1.9] text-[#555] md:text-[1.22rem]">
+            <p className="text-[1rem] leading-[1.82] text-[#555] sm:text-[1.05rem] md:text-[1.22rem] md:leading-[1.9]">
               The award was previously called “The Grand Prize for Engineering –
               Student”, but changed its name in 2024 to Rising Star in order to
               better reflect the next generation of engineers.
@@ -99,11 +99,11 @@ export default function RisingStarPage() {
         </div>
       </section>
 
-      <section className="bg-[#f3f1ed] px-6 pb-24 pt-0 md:px-12 md:pb-28 lg:px-20">
+      <section className="bg-[#f3f1ed] px-5 pb-20 pt-0 md:px-12 md:pb-28 lg:px-20">
         <div className="mx-auto max-w-6xl">
-          <div className="mb-10 md:mb-12">
+          <div className="mb-9 md:mb-12">
             <p
-              className={`${firaSans.className} mb-4 text-[13px] uppercase tracking-[0.24em] text-[#a27a26]`}
+              className={`${firaSans.className} mb-4 text-[12px] uppercase tracking-[0.22em] text-[#a27a26] md:text-[13px] md:tracking-[0.24em]`}
             >
               WHO?
             </p>
@@ -111,19 +111,19 @@ export default function RisingStarPage() {
             <div className="h-px w-14 bg-[#d9a441]" />
           </div>
 
-          <div className="mx-auto mb-12 max-w-4xl text-center md:mb-14">
-            <h2 className="mb-6 font-serif text-[3rem] font-light leading-[1.03] text-[#1f1f1f] md:text-[4.05rem] lg:text-[4.6rem]">
+          <div className="mx-auto mb-10 max-w-4xl text-center md:mb-14">
+            <h2 className="mb-5 font-serif text-[2.2rem] font-light leading-[1.03] text-[#1f1f1f] sm:text-[2.6rem] md:mb-6 md:text-[4.05rem] lg:text-[4.6rem]">
               Who can win?
             </h2>
 
-            <p className="text-[1.22rem] italic leading-[1.45] text-[#5f5a52] md:text-[1.4rem]">
+            <p className="mx-auto max-w-[24rem] text-[1.06rem] italic leading-[1.5] text-[#5f5a52] sm:max-w-[31rem] sm:text-[1.14rem] md:max-w-none md:text-[1.4rem]">
               An individual or team that has made a significant impact early in
               their career or during their studies.
             </p>
           </div>
 
           <div className="mx-auto max-w-3xl">
-            <p className="mb-8 text-[1.16rem] leading-[1.82] text-[#2c2c2c] md:text-[1.3rem]">
+            <p className="mb-7 text-[1.02rem] leading-[1.78] text-[#2c2c2c] sm:text-[1.08rem] md:mb-8 md:text-[1.3rem] md:leading-[1.82]">
               The Rising Star award is presented to an individual or a team that
               has made a significant impact early in their career or during
               their studies. The winner is someone who, through innovation,
@@ -131,14 +131,14 @@ export default function RisingStarPage() {
               strong desire to influence their industry and society at large.
             </p>
 
-            <p className="mb-8 text-[1.16rem] leading-[1.82] text-[#2c2c2c] md:text-[1.3rem]">
+            <p className="mb-7 text-[1.02rem] leading-[1.78] text-[#2c2c2c] sm:text-[1.08rem] md:mb-8 md:text-[1.3rem] md:leading-[1.82]">
               We are looking for people whose work has developed an innovative
               idea or solution, demonstrated impressive leadership and inspired
               others, or engaged with sustainability, inclusion or societal
               development.
             </p>
 
-            <p className="text-[1.1rem] leading-[1.9] text-[#555] md:text-[1.22rem]">
+            <p className="text-[1rem] leading-[1.82] text-[#555] sm:text-[1.05rem] md:text-[1.22rem] md:leading-[1.9]">
               The nominee must be a student or have started their career within
               the past three years.
             </p>
@@ -146,11 +146,11 @@ export default function RisingStarPage() {
         </div>
       </section>
 
-      <section className="bg-[#f3f1ed] px-6 pb-24 pt-0 md:px-12 md:pb-28 lg:px-20">
+      <section className="bg-[#f3f1ed] px-5 pb-20 pt-0 md:px-12 md:pb-28 lg:px-20">
         <div className="mx-auto max-w-6xl">
-          <div className="mb-10 md:mb-12">
+          <div className="mb-9 md:mb-12">
             <p
-              className={`${firaSans.className} mb-4 text-[13px] uppercase tracking-[0.24em] text-[#a27a26]`}
+              className={`${firaSans.className} mb-4 text-[12px] uppercase tracking-[0.22em] text-[#a27a26] md:text-[13px] md:tracking-[0.24em]`}
             >
               CRITERIA
             </p>
@@ -158,72 +158,72 @@ export default function RisingStarPage() {
             <div className="h-px w-14 bg-[#d9a441]" />
           </div>
 
-          <div className="mx-auto mb-14 max-w-4xl text-center md:mb-16">
-            <h2 className="mb-6 font-serif text-[3rem] font-light leading-[1.03] text-[#1f1f1f] md:text-[4.05rem] lg:text-[4.6rem]">
+          <div className="mx-auto mb-10 max-w-4xl text-center md:mb-16">
+            <h2 className="mb-5 font-serif text-[2.2rem] font-light leading-[1.03] text-[#1f1f1f] sm:text-[2.6rem] md:mb-6 md:text-[4.05rem] lg:text-[4.6rem]">
               What defines the award
             </h2>
 
-            <p className="text-[1.22rem] italic leading-[1.45] text-[#5f5a52] md:text-[1.4rem]">
+            <p className="mx-auto max-w-[22rem] text-[1.06rem] italic leading-[1.5] text-[#5f5a52] sm:max-w-[28rem] sm:text-[1.14rem] md:max-w-none md:text-[1.4rem]">
               The fundamental criteria for nomination.
             </p>
           </div>
 
           <div className="mx-auto max-w-4xl border-t border-black/10">
-            <div className="grid grid-cols-1 gap-5 border-b border-black/10 py-7 md:grid-cols-[220px_1fr] md:py-8">
+            <div className="grid grid-cols-1 gap-3 border-b border-black/10 py-6 md:grid-cols-[220px_1fr] md:gap-5 md:py-8">
               <p
-                className={`${firaSans.className} text-[12px] uppercase tracking-[0.18em] text-[#8b8276]`}
+                className={`${firaSans.className} text-[11px] uppercase tracking-[0.16em] text-[#8b8276] md:text-[12px] md:tracking-[0.18em]`}
               >
                 Connection to Sweden
               </p>
-              <p className="text-[1.05rem] leading-[1.85] text-[#2c2c2c] md:text-[1.12rem]">
+              <p className="text-[0.98rem] leading-[1.78] text-[#2c2c2c] sm:text-[1.02rem] md:text-[1.12rem] md:leading-[1.85]">
                 The person or the solution must have a strong connection to
                 Sweden through place of residence, development or another clear
                 link.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 gap-5 border-b border-black/10 py-7 md:grid-cols-[220px_1fr] md:py-8">
+            <div className="grid grid-cols-1 gap-3 border-b border-black/10 py-6 md:grid-cols-[220px_1fr] md:gap-5 md:py-8">
               <p
-                className={`${firaSans.className} text-[12px] uppercase tracking-[0.18em] text-[#8b8276]`}
+                className={`${firaSans.className} text-[11px] uppercase tracking-[0.16em] text-[#8b8276] md:text-[12px] md:tracking-[0.18em]`}
               >
                 Societal benefit
               </p>
-              <p className="text-[1.05rem] leading-[1.85] text-[#2c2c2c] md:text-[1.12rem]">
+              <p className="text-[0.98rem] leading-[1.78] text-[#2c2c2c] sm:text-[1.02rem] md:text-[1.12rem] md:leading-[1.85]">
                 The work must have a positive impact on society or the
                 environment.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 gap-5 border-b border-black/10 py-7 md:grid-cols-[220px_1fr] md:py-8">
+            <div className="grid grid-cols-1 gap-3 border-b border-black/10 py-6 md:grid-cols-[220px_1fr] md:gap-5 md:py-8">
               <p
-                className={`${firaSans.className} text-[12px] uppercase tracking-[0.18em] text-[#8b8276]`}
+                className={`${firaSans.className} text-[11px] uppercase tracking-[0.16em] text-[#8b8276] md:text-[12px] md:tracking-[0.18em]`}
               >
                 Ethics and sustainability
               </p>
-              <p className="text-[1.05rem] leading-[1.85] text-[#2c2c2c] md:text-[1.12rem]">
+              <p className="text-[0.98rem] leading-[1.78] text-[#2c2c2c] sm:text-[1.02rem] md:text-[1.12rem] md:leading-[1.85]">
                 The solution must meet high ethical standards and promote
                 sustainable development.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 gap-5 border-b border-black/10 py-7 md:grid-cols-[220px_1fr] md:py-8">
+            <div className="grid grid-cols-1 gap-3 border-b border-black/10 py-6 md:grid-cols-[220px_1fr] md:gap-5 md:py-8">
               <p
-                className={`${firaSans.className} text-[12px] uppercase tracking-[0.18em] text-[#8b8276]`}
+                className={`${firaSans.className} text-[11px] uppercase tracking-[0.16em] text-[#8b8276] md:text-[12px] md:tracking-[0.18em]`}
               >
                 Current work
               </p>
-              <p className="text-[1.05rem] leading-[1.85] text-[#2c2c2c] md:text-[1.12rem]">
+              <p className="text-[0.98rem] leading-[1.78] text-[#2c2c2c] sm:text-[1.02rem] md:text-[1.12rem] md:leading-[1.85]">
                 Nominees must have been active in the area during the past year.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 gap-5 border-b border-black/10 py-7 md:grid-cols-[220px_1fr] md:py-8">
+            <div className="grid grid-cols-1 gap-3 border-b border-black/10 py-6 md:grid-cols-[220px_1fr] md:gap-5 md:py-8">
               <p
-                className={`${firaSans.className} text-[12px] uppercase tracking-[0.18em] text-[#8b8276]`}
+                className={`${firaSans.className} text-[11px] uppercase tracking-[0.16em] text-[#8b8276] md:text-[12px] md:tracking-[0.18em]`}
               >
                 Note
               </p>
-              <p className="text-[1.05rem] leading-[1.85] text-[#2c2c2c] md:text-[1.12rem]">
+              <p className="text-[0.98rem] leading-[1.78] text-[#2c2c2c] sm:text-[1.02rem] md:text-[1.12rem] md:leading-[1.85]">
                 Employees of Trafikverket cannot be nominated.
               </p>
             </div>
@@ -231,11 +231,11 @@ export default function RisingStarPage() {
         </div>
       </section>
 
-      <section className="bg-[#f3f1ed] px-6 pb-24 pt-12 md:px-12 md:pb-28 md:pt-16 lg:px-20">
+      <section className="bg-[#f3f1ed] px-5 pb-20 pt-10 md:px-12 md:pb-28 md:pt-16 lg:px-20">
         <div className="mx-auto max-w-6xl">
-          <div className="mb-10 md:mb-12">
+          <div className="mb-9 md:mb-12">
             <p
-              className={`${firaSans.className} mb-4 text-[13px] uppercase tracking-[0.24em] text-[#a27a26]`}
+              className={`${firaSans.className} mb-4 text-[12px] uppercase tracking-[0.22em] text-[#a27a26] md:text-[13px] md:tracking-[0.24em]`}
             >
               HALL OF FAME
             </p>
@@ -243,36 +243,36 @@ export default function RisingStarPage() {
             <div className="h-px w-14 bg-[#d9a441]" />
           </div>
 
-          <div className="mx-auto mb-14 max-w-4xl text-center md:mb-16">
-            <h2 className="mb-6 font-serif text-[3rem] font-light leading-[1.03] text-[#1f1f1f] md:text-[4.05rem] lg:text-[4.6rem]">
+          <div className="mx-auto mb-10 max-w-4xl text-center md:mb-16">
+            <h2 className="mb-5 font-serif text-[2.2rem] font-light leading-[1.03] text-[#1f1f1f] sm:text-[2.6rem] md:mb-6 md:text-[4.05rem] lg:text-[4.6rem]">
               Previous winners
             </h2>
 
-            <p className="text-[1.22rem] italic leading-[1.45] text-[#5f5a52] md:text-[1.4rem]">
+            <p className="mx-auto max-w-[24rem] text-[1.06rem] italic leading-[1.5] text-[#5f5a52] sm:max-w-[31rem] sm:text-[1.14rem] md:max-w-none md:text-[1.4rem]">
               A selection of individuals and teams previously recognized by the
               award.
             </p>
           </div>
 
-          <div className="mx-auto mb-12 max-w-5xl overflow-hidden rounded-[28px] border border-black/10 bg-white md:mb-14">
-            <div className="border-b border-black/10 px-6 py-6 md:px-8 md:py-7">
+          <div className="mx-auto mb-10 max-w-5xl overflow-hidden rounded-[22px] border border-black/10 bg-white md:mb-14 md:rounded-[28px]">
+            <div className="border-b border-black/10 px-5 py-5 md:px-8 md:py-7">
               <p
-                className={`${firaSans.className} mb-3 text-[11px] uppercase tracking-[0.2em] text-[#a27a26]`}
+                className={`${firaSans.className} mb-3 text-[10px] uppercase tracking-[0.18em] text-[#a27a26] md:text-[11px] md:tracking-[0.2em]`}
               >
                 Featured winner · 2025
               </p>
 
-              <h3 className="mb-3 font-serif text-[2rem] leading-[1.08] text-[#1f1f1f] md:text-[2.7rem]">
+              <h3 className="mb-3 font-serif text-[1.7rem] leading-[1.08] text-[#1f1f1f] sm:text-[1.95rem] md:text-[2.7rem]">
                 Jonatan Persson, Helios Innovation
               </h3>
 
-              <p className="text-[0.98rem] text-[#6a6256] md:text-[1.04rem]">
+              <p className="text-[0.94rem] text-[#6a6256] md:text-[1.04rem]">
                 Presented by Trafikverket
               </p>
             </div>
 
-            <div className="px-6 py-7 md:px-8 md:py-9">
-              <p className="mb-6 text-[1.06rem] leading-[1.9] text-[#2c2c2c] md:text-[1.14rem]">
+            <div className="px-5 py-6 md:px-8 md:py-9">
+              <p className="mb-5 text-[1rem] leading-[1.82] text-[#2c2c2c] sm:text-[1.03rem] md:mb-6 md:text-[1.14rem] md:leading-[1.9]">
                 In just a few years, Jonatan Persson has gone from student to
                 founder of Helios Innovation. The company develops a technology
                 that uses waste heat to purify industrial wastewater — a
@@ -281,7 +281,7 @@ export default function RisingStarPage() {
                 young, courageous and entrepreneurial.
               </p>
 
-              <p className="text-[1.04rem] leading-[1.9] text-[#555] md:text-[1.1rem]">
+              <p className="text-[0.98rem] leading-[1.82] text-[#555] sm:text-[1rem] md:text-[1.1rem] md:leading-[1.9]">
                 He has already received several awards, but most importantly,
                 his innovation works in practice and drives industry toward a
                 more sustainable future.
@@ -293,31 +293,31 @@ export default function RisingStarPage() {
             {hallOfFame.map((item) => (
               <div
                 key={item.year}
-                className="grid grid-cols-1 gap-5 border-b border-black/10 py-8 md:grid-cols-[120px_1fr] md:py-9"
+                className="grid grid-cols-1 gap-4 border-b border-black/10 py-7 md:grid-cols-[120px_1fr] md:gap-5 md:py-9"
               >
                 <div>
                   <p
-                    className={`${firaSans.className} text-[12px] uppercase tracking-[0.18em] text-[#a27a26]`}
+                    className={`${firaSans.className} text-[11px] uppercase tracking-[0.16em] text-[#a27a26] md:text-[12px] md:tracking-[0.18em]`}
                   >
                     {item.year}
                   </p>
                 </div>
 
                 <div>
-                  <h3 className="mb-2 font-serif text-[1.6rem] leading-[1.1] text-[#1f1f1f] md:text-[2rem]">
+                  <h3 className="mb-2 font-serif text-[1.4rem] leading-[1.12] text-[#1f1f1f] sm:text-[1.52rem] md:text-[2rem]">
                     {item.winner}
                   </h3>
 
-                  <p className="mb-5 text-[0.96rem] text-[#6a6256] md:text-[1rem]">
+                  <p className="mb-4 text-[0.92rem] text-[#6a6256] md:mb-5 md:text-[1rem]">
                     {item.presentedBy}
                   </p>
 
-                  <p className="mb-4 text-[1rem] leading-[1.85] text-[#2c2c2c] md:text-[1.06rem]">
+                  <p className="mb-4 text-[0.98rem] leading-[1.8] text-[#2c2c2c] sm:text-[1rem] md:text-[1.06rem] md:leading-[1.85]">
                     {item.summary}
                   </p>
 
                   {item.jury ? (
-                    <p className="text-[0.98rem] leading-[1.85] text-[#555] md:text-[1.04rem]">
+                    <p className="text-[0.96rem] leading-[1.8] text-[#555] sm:text-[0.98rem] md:text-[1.04rem] md:leading-[1.85]">
                       {item.jury}
                     </p>
                   ) : null}
@@ -328,20 +328,20 @@ export default function RisingStarPage() {
         </div>
       </section>
 
-      <footer className="bg-[#f3f1ed] pt-28 pb-14">
-        <div className="mx-auto max-w-3xl px-6 text-center">
-          <p className="text-[1.05rem] leading-[1.9] text-[#3e3c38] md:text-[1.15rem]">
+      <footer className="bg-[#f3f1ed] pt-20 pb-12 md:pt-28 md:pb-14">
+        <div className="mx-auto max-w-3xl px-5 text-center md:px-6">
+          <p className="text-[0.98rem] leading-[1.82] text-[#3e3c38] sm:text-[1.02rem] md:text-[1.15rem] md:leading-[1.9]">
             Engineering Day – Sweden’s first official day for engineers. We
             celebrate our engineers and their powers of innovation, creativity
             and hard work. The event is also a forum for knowledge-sharing and
             networking.
           </p>
 
-          <p className="mt-5 text-sm italic tracking-[0.02em] text-black/40">
+          <p className="mt-4 text-[13px] italic tracking-[0.02em] text-black/40 md:mt-5 md:text-sm">
             A part of Ny Teknik
           </p>
 
-          <div className="mt-12 flex items-center justify-center gap-8">
+          <div className="mt-10 flex items-center justify-center gap-7 md:mt-12 md:gap-8">
             <a
               href="https://www.linkedin.com/company/ingenj%C3%B6rsdagen/"
               target="_blank"
@@ -395,7 +395,7 @@ export default function RisingStarPage() {
             </a>
           </div>
 
-          <div className="mt-12 text-[11px] uppercase tracking-[0.12em] text-black/30">
+          <div className="mt-10 text-[10px] uppercase tracking-[0.12em] text-black/30 md:mt-12 md:text-[11px]">
             © 2026 Ny Teknik
           </div>
         </div>
