@@ -280,7 +280,7 @@ className="h-[192px] lg:h-[180px] w-auto object-contain"      />
   </div>
 </section>
 
-      <footer className="border-t border-black/8 bg-[#f3f1ed] pt-20 pb-12 md:pt-24 md:pb-14 lg:pt-28">
+      <footer className="bg-[#f3f1ed] pt0 pb-12 md:pt0 md:pb-14">
         <div className="mx-auto max-w-3xl px-5 text-center md:px-6">
           <p className="text-[1rem] leading-[1.85] text-[#3e3c38] md:text-[1.12rem]">
             Engineering Day is Sweden&apos;s first official day for engineers.

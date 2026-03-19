@@ -308,7 +308,7 @@ export default function Page() {
         </div>
       </section>
 
-      <footer className="bg-[#f3f1ed] pt-20 md:pt-24 lg:pt-28 pb-12 md:pb-14">
+      <footer className="bg-[#f3f1ed] pt0 pb-12 md:pt0 md:pb-14">
         <div className="max-w-3xl mx-auto text-center px-5 md:px-6">
           <p className="text-[1rem] md:text-[1.15rem] text-[#3e3c38] leading-[1.85] md:leading-[1.9]">
             Engineering Day – Sweden&apos;s first official day for engineers. We

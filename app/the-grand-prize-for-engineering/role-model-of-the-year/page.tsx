@@ -268,7 +268,7 @@ export default function RoleModelOfTheYearPage() {
         </div>
       </section>
 
-      <footer className="bg-[#f3f1ed] pt-20 pb-12 md:pt-28 md:pb-14">
+      <footer className="bg-[#f3f1ed] pt0 pb-12 md:pt0 md:pb-14">
         <div className="mx-auto max-w-3xl px-5 text-center md:px-6">
           <p className="text-[0.98rem] leading-[1.82] text-[#3e3c38] sm:text-[1.02rem] md:text-[1.15rem] md:leading-[1.9]">
             Engineering Day - Sweden's first official day for engineers. We
