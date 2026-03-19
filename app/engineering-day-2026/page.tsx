@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Fira_Sans } from "next/font/google";
+import SiteHeader from "@/app/components/SiteHeader";
 
 const firaSans = Fira_Sans({
   subsets: ["latin"],
@@ -283,17 +284,12 @@ const partners = [
 ];
 
 export default function Home() {
-  const [scrolled, setScrolled] = useState(false);
   const [activeMasterclass, setActiveMasterclass] = useState<number | null>(
     null
   );
   const [activeProgramme, setActiveProgramme] = useState<string | null>(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setActiveMasterclass(null);
@@ -301,11 +297,9 @@ export default function Home() {
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
     window.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
@@ -322,132 +316,7 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-[#f3f1ed] text-[#1f1f1f]">
-      <nav
-  className={`sticky top-0 z-50 transition-all duration-300 ${
-    scrolled ? "bg-white/85 backdrop-blur-md shadow-md" : "bg-[#efefef]"
-  }`}
->
-  <div className="flex justify-center pt-10 pb-6">
-    <a href="/">
-      <img
-        src="/EngineeringDay-Logo.png"
-        alt="Engineering Day"
-        className={`w-auto transition-all duration-300 ${
-          scrolled ? "h-[104px] md:h-[112px]" : "h-[144px] md:h-[152px]"
-        }`}
-      />
-    </a>
-  </div>
-
-  <div className="border-t border-[#d9a441] px-10 py-3 flex justify-between items-center">
-    <div
-      className={`${firaSans.className} text-[10px] font-medium tracking-[0.18em] uppercase`}
-    >
-      STOCKHOLM, 21 OCTOBER 2026
-    </div>
-
-    <div
-      className={`${firaSans.className} flex items-center gap-8 text-[10px] font-medium tracking-[0.16em] uppercase`}
-    >
-      <a
-        href="/engineering-day-2026"
-        className="hover:text-[#d9a441] transition-colors"
-      >
-        ENGINEERING DAY 2026
-      </a>
-
-      <a href="#" className="hover:text-[#d9a441] transition-colors">
-        ATTENDING HEROES
-      </a>
-
-      {/* GRAND PRIZE */}
-      <div className="relative group flex items-center gap-2">
-        <a
-          href="/the-grand-prize-for-engineering"
-          className="uppercase hover:text-[#d9a441] transition-colors"
-        >
-          THE GRAND PRIZE FOR ENGINEERING
-        </a>
-
-        <span className="text-[9px]">▾</span>
-
-        <div className="invisible absolute left-0 top-full z-50 mt-3 w-80 translate-y-2 bg-white opacity-0 shadow-xl ring-1 ring-black/5 transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
-          <div className="py-3">
-            <a
-              href="/the-grand-prize-for-engineering/innovation"
-              className="block px-5 py-3 text-[11px] uppercase tracking-[0.12em] hover:bg-[#f7f3ea] hover:text-[#d9a441]"
-            >
-              INNOVATION
-            </a>
-
-            <a
-              href="/the-grand-prize-for-engineering/leadership"
-              className="block px-5 py-3 text-[11px] uppercase tracking-[0.12em] hover:bg-[#f7f3ea] hover:text-[#d9a441]"
-            >
-              LEADERSHIP
-            </a>
-
-            <a
-              href="/the-grand-prize-for-engineering/sustainability"
-              className="block px-5 py-3 text-[11px] uppercase tracking-[0.12em] hover:bg-[#f7f3ea] hover:text-[#d9a441]"
-            >
-              SUSTAINABILITY
-            </a>
-
-            <a
-              href="/the-grand-prize-for-engineering/rising-star"
-              className="block px-5 py-3 text-[11px] uppercase tracking-[0.12em] hover:bg-[#f7f3ea] hover:text-[#d9a441]"
-            >
-              RISING STAR
-            </a>
-
-            <a
-              href="/the-grand-prize-for-engineering/role-model-of-the-year"
-              className="block px-5 py-3 text-[11px] uppercase tracking-[0.12em] hover:bg-[#f7f3ea] hover:text-[#d9a441]"
-            >
-              ROLE MODEL OF THE YEAR
-            </a>
-          </div>
-        </div>
-      </div>
-
-      {/* PRE EVENTS */}
-      <div className="relative group">
-        <button className="flex items-center gap-2 uppercase hover:text-[#d9a441] transition-colors">
-          <span>PRE-EVENTS</span>
-          <span className="text-[9px]">▾</span>
-        </button>
-
-        <div className="invisible absolute left-0 top-full z-50 mt-3 w-72 translate-y-2 bg-white opacity-0 shadow-xl ring-1 ring-black/5 transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
-          <div className="py-3">
-            <a
-              href="#"
-              className="block px-5 py-3 text-[11px] uppercase tracking-[0.12em] hover:bg-[#f7f3ea] hover:text-[#d9a441]"
-            >
-              CAREER DAY @ GÖTEBORG
-            </a>
-            <a
-              href="#"
-              className="block px-5 py-3 text-[11px] uppercase tracking-[0.12em] hover:bg-[#f7f3ea] hover:text-[#d9a441]"
-            >
-              CAREER DAY @ MALMÖ
-            </a>
-            <a
-              href="#"
-              className="block px-5 py-3 text-[11px] uppercase tracking-[0.12em] hover:bg-[#f7f3ea] hover:text-[#d9a441]"
-            >
-              CAREER DAY @ STOCKHOLM
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <a href="#" className="hover:text-[#d9a441] transition-colors">
-        CONTACT
-      </a>
-    </div>
-  </div>
-</nav>
+      <SiteHeader />
 
       <section className="relative min-h-[85vh] flex items-center justify-center text-center text-white px-6">
         <div
@@ -818,7 +687,7 @@ export default function Home() {
                                         {subItem.meta ? (
                                           <span className="text-[#746f64]">
                                             {" "}
-                                            — {subItem.meta}
+                                            - {subItem.meta}
                                           </span>
                                         ) : null}
                                       </p>
@@ -873,126 +742,127 @@ export default function Home() {
         </div>
       </section>
 
-<section className="relative overflow-hidden bg-[#efe9e1] px-6 md:px-12 lg:px-20 pt-12 md:pt-14 pb-28 md:pb-32">  <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(217,164,65,0.03),rgba(217,164,65,0.1),rgba(217,164,65,0.03))]" />
-  <div className="relative max-w-6xl mx-auto">
-    <div className="mb-16 md:mb-20">
-      <p
-        className={`${firaSans.className} text-center text-[0.88rem] md:text-[0.95rem] uppercase tracking-[0.34em] text-[#2d2b27]`}
-      >
-        FOUNDING PARTNERS 2026
-      </p>
-    </div>
+      <section className="bg-[#f3f1ed] px-6 md:px-12 lg:px-20 pt-12 md:pt-14 pb-28 md:pb-32">
+  <div className="max-w-6xl mx-auto">
+          <div className="mb-16 md:mb-20">
+            <p
+className={`${firaSans.className} text-center text-[0.88rem] md:text-[0.95rem] uppercase tracking-[0.34em] text-[#d9a441]`}            >
+              FOUNDING PARTNERS 2026
+            </p>
+          </div>
 
-    <div className="max-w-5xl mx-auto grid grid-cols-5 gap-6 md:gap-8 items-start justify-items-center mb-20 md:mb-24">
-      {foundingPartners.map((partner) => (
-        <div key={partner.name} className="group flex justify-center">
-          <div className="relative flex h-[142px] w-[142px] md:h-[158px] md:w-[158px] items-center justify-center transition-transform duration-300 group-hover:-translate-y-[3px]">
-            <img
-              src={partner.logo}
-              alt={partner.name}
-              className="h-full w-full object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.16)]"
-            />
+          <div className="max-w-5xl mx-auto grid grid-cols-5 gap-6 md:gap-8 items-start justify-items-center mb-20 md:mb-24">
+            {foundingPartners.map((partner) => (
+              <div key={partner.name} className="group flex justify-center">
+                <div className="relative flex h-[142px] w-[142px] md:h-[158px] md:w-[158px] items-center justify-center transition-transform duration-300 group-hover:-translate-y-[3px]">
+                  <img
+                    src={partner.logo}
+                    alt={partner.name}
+                    className="h-full w-full object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.16)]"
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="border-t border-black/6 pt-16 md:pt-20">
+            <div className="text-center mb-12 md:mb-14">
+              <p
+className={`${firaSans.className} text-center text-[0.88rem] md:text-[0.95rem] uppercase tracking-[0.34em] text-[#d9a441]`}              >
+                PARTNERS
+              </p>
+            </div>
+
+            <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-x-14 gap-y-12 md:gap-y-14 items-center justify-items-center">
+              {partners.map((partner) => (
+                <div
+                  key={partner.name}
+                  className="flex items-center justify-center h-[90px] md:h-[110px] w-full transition-transform duration-300 hover:-translate-y-[2px]"
+                >
+                  <img
+                    src={`/${partner.logo}`}
+                    alt={partner.name}
+                    className="h-12 md:h-14 w-auto object-contain"
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      ))}
-    </div>
+      </section>
 
-    <div className="border-t border-black/6 pt-16 md:pt-20">
-      <div className="text-center mb-12 md:mb-14">
-        <p
-          className={`${firaSans.className} text-[0.88rem] md:text-[0.95rem] uppercase tracking-[0.34em] text-[#2d2b27]`}
-        >
-          PARTNERS
-        </p>
-      </div>
+      <footer className="bg-[#f3f1ed] pt-28 pb-14">
+        <div className="max-w-3xl mx-auto text-center px-6">
+          <p className="text-[1.05rem] md:text-[1.15rem] text-[#3e3c38] leading-[1.9]">
+            Engineering Day - Sweden&apos;s first official day for engineers. We
+            celebrate our engineers and their powers of innovation, creativity
+            and hard work. The event is also a forum for knowledge-sharing and
+            networking.
+          </p>
 
-      <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-x-14 gap-y-12 md:gap-y-14 items-center justify-items-center">
-{partners.map((partner) => (
-  <div
-    key={partner.name}
-    className="flex items-center justify-center h-[90px] md:h-[110px] w-full transition-transform duration-300 hover:-translate-y-[2px]"
-  >
-    <img
-      src={`/${partner.logo}`}
-      alt={partner.name}
-      className="h-12 md:h-14 w-auto object-contain"
-    />
-  </div>
-))}
-      </div>
-    </div>
-  </div>
-</section>
-<footer className="bg-[#f3f1ed] pt-28 pb-14">
-  <div className="max-w-3xl mx-auto text-center px-6">
-    <p className="text-[1.05rem] md:text-[1.15rem] text-[#3e3c38] leading-[1.9]">
-      Engineering Day – Sweden’s first official day for engineers. We celebrate our engineers and their powers of innovation, creativity and hard work. The event is also a forum for knowledge-sharing and networking.
-    </p>
+          <p className="mt-5 text-sm text-black/40 italic tracking-[0.02em]">
+            A part of Ny Teknik
+          </p>
 
-    <p className="mt-5 text-sm text-black/40 italic tracking-[0.02em]">
-      A part of Ny Teknik
-    </p>
+          <div className="flex justify-center items-center gap-8 mt-12">
+            <a
+              href="https://www.linkedin.com/company/ingenj%C3%B6rsdagen/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="opacity-60 hover:opacity-100 transition duration-200"
+            >
+              <img
+                src="/Linkedin.svg"
+                alt="LinkedIn"
+                className="h-5 w-5 object-contain"
+              />
+            </a>
 
-    {/* Socials */}
-    <div className="flex justify-center items-center gap-8 mt-12">
-      <a
-        href="https://www.linkedin.com/company/ingenj%C3%B6rsdagen/"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="opacity-60 hover:opacity-100 transition duration-200"
-      >
-        <img
-          src="/Linkedin.svg"
-          alt="LinkedIn"
-          className="h-5 w-5 object-contain"
-        />
-      </a>
+            <a
+              href="https://www.instagram.com/engineeringdaysweden/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="opacity-60 hover:opacity-100 transition duration-200"
+            >
+              <img
+                src="/Instagram.png"
+                alt="Instagram"
+                className="h-5 w-5 object-contain"
+              />
+            </a>
 
-      <a
-        href="https://www.instagram.com/engineeringdaysweden/"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="opacity-60 hover:opacity-100 transition duration-200"
-      >
-        <img
-          src="/Instagram.png"
-          alt="Instagram"
-          className="h-5 w-5 object-contain"
-        />
-      </a>
+            <a
+              href="https://open.spotify.com/show/6FcEbcTbMfue0FLgwIoM8a?si=5d52f0a791e14f04"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="opacity-60 hover:opacity-100 transition duration-200"
+            >
+              <img
+                src="/Spotify.png"
+                alt="Spotify"
+                className="h-5 w-5 object-contain"
+              />
+            </a>
 
-      <a
-        href="https://open.spotify.com/show/6FcEbcTbMfue0FLgwIoM8a?si=5d52f0a791e14f04"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="opacity-60 hover:opacity-100 transition duration-200"
-      >
-        <img
-          src="/Spotify.png"
-          alt="Spotify"
-          className="h-5 w-5 object-contain"
-        />
-      </a>
+            <a
+              href="https://www.nyteknik.se/ingenjorsdagen"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="opacity-60 hover:opacity-100 transition duration-200"
+            >
+              <img
+                src="/Website.png"
+                alt="Ny Teknik"
+                className="h-5 w-5 object-contain"
+              />
+            </a>
+          </div>
 
-      <a
-        href="https://www.nyteknik.se/ingenjorsdagen"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="opacity-60 hover:opacity-100 transition duration-200"
-      >
-        <img
-          src="/Website.png"
-          alt="Ny Teknik"
-          className="h-5 w-5 object-contain"
-        />
-      </a>
-    </div>
-
-    <div className="mt-12 text-[11px] tracking-[0.12em] text-black/30 uppercase">
-      © 2026 Ny Teknik
-    </div>
-  </div>
-</footer>
+          <div className="mt-12 text-[11px] tracking-[0.12em] text-black/30 uppercase">
+            © 2026 Ny Teknik
+          </div>
+        </div>
+      </footer>
     </main>
   );
 }
