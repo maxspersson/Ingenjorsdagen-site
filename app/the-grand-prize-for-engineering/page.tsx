@@ -152,26 +152,46 @@ export default function SiteHeader() {
   </div>
 </nav>
 
- <section className="relative min-h-screen overflow-hidden bg-[#0f0f10] text-white">
-  <div
-    className="absolute inset-0 bg-cover bg-center"
-    style={{ backgroundImage: "url('/grand-prize-statuettes.jpg')" }}
-  />
+ <section className="relative overflow-hidden bg-[#0f0e0d] text-[#f4efe7]">
+  {/* VIDEO */}
+  <div className="absolute inset-0">
+    <video
+      className="h-full w-full object-cover"
+      autoPlay
+      muted
+      loop
+      playsInline
+    >
+      <source src="/grand-prize-for-engineering.mp4" type="video/mp4" />
+    </video>
+  </div>
 
-  <div className="absolute inset-0 bg-black/68" />
-  <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.34),rgba(0,0,0,0.12),rgba(0,0,0,0.44))]" />
+  {/* LIGHTER OVERLAY */}
+  <div className="absolute inset-0 bg-black/42" />
 
-  <div className="relative z-10 flex min-h-screen items-center justify-center px-6 text-center">
-    <div className="max-w-[1200px] -mt-28 md:-mt-24 lg:-mt-20">
-<h1 className="font-serif text-white text-center leading-[1.05]">
-  <span className="block text-[2.2rem] md:text-[3.8rem] lg:text-[4.8rem] tracking-[0.12em] opacity-90">
-    The Grand Prize for
-  </span>
+  {/* GOLD ATMOSPHERE */}
+  <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(217,164,65,0.12),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(255,255,255,0.04),transparent_24%)]" />
 
-  <span className="mt-4 block text-[3.2rem] md:text-[6rem] lg:text-[7.2rem] tracking-[-0.02em]">
-    Engineering
-  </span>
-</h1>
+  {/* DEPTH */}
+  <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.34)_0%,rgba(0,0,0,0.18)_40%,rgba(0,0,0,0.42)_100%)]" />
+
+  <div className="relative px-6 md:px-12 lg:px-20">
+    <div className="mx-auto flex min-h-[82vh] max-w-7xl items-center pt-20 pb-32">
+      <div className="max-w-4xl">
+        <p
+          className={`${firaSans.className} mb-8 text-[11px] uppercase tracking-[0.28em] text-[#d9a441]`}
+        >
+          The Grand Prize for Engineering
+        </p>
+
+        <h1 className="font-serif text-[3.5rem] leading-[0.96] font-light tracking-[-0.03em] text-[#f7f1e8] md:text-[5.1rem] lg:text-[6.2rem]">
+          Celebrating the people
+          <br />
+          behind the progress
+        </h1>
+        <p className="mt-8 max-w-xl text-[15px] leading-relaxed text-[#d6d0c7]">
+Since 2021, we have celebrated the engineers, ideas and achievements that turn innovation into real-world impact.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -393,7 +413,7 @@ Engineering that matters
     style={{ backgroundImage: "url('/award-group.jpg')" }}
   />
 
-  <div className="absolute inset-0 bg-black/50" />
+  <div className="absolute inset-0 bg-black/90" />
   <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.55),rgba(0,0,0,0.72))]" />
 
   <div className="relative z-10 mx-auto max-w-4xl text-center">
