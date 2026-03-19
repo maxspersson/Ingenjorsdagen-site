@@ -12,7 +12,7 @@ export default function GoteborgPage() {
       <SiteHeader />
 
       {/* HERO */}
-      <section className="relative min-h-[85vh] overflow-hidden bg-[#0f0f10] text-white">
+      <section className="relative min-h-[54vh] overflow-hidden bg-[#0f0f10] text-white sm:min-h-[62vh] md:min-h-[85vh]">
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: "url('/pre-events-goteborg.jpg')" }}
@@ -21,76 +21,76 @@ export default function GoteborgPage() {
         <div className="absolute inset-0 bg-black/40" />
         <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.32),rgba(0,0,0,0.14),rgba(0,0,0,0.44))]" />
 
-        <div className="relative z-10 flex min-h-[85vh] items-center justify-center px-6 text-center">
-          <div className="max-w-[1100px] -mt-16 md:-mt-12">
+        <div className="relative z-10 flex min-h-[54vh] items-center justify-center px-5 text-center sm:min-h-[62vh] md:min-h-[85vh] md:px-6">
+          <div className="max-w-[1100px] -mt-8 sm:-mt-10 md:-mt-12">
             <p
-              className={`${firaSans.className} mb-6 text-[11px] uppercase tracking-[0.28em] text-[#d9a441]`}
+              className={`${firaSans.className} mb-5 text-[10px] uppercase tracking-[0.24em] text-[#d9a441] sm:text-[11px] sm:tracking-[0.28em] md:mb-6`}
             >
               Göteborg · 27 April 2026
             </p>
 
-            <h1 className="font-serif text-white leading-[1.02]">
-              <span className="block text-[2.6rem] md:text-[4.8rem] lg:text-[5.8rem] tracking-[-0.02em]">
+            <h1 className="font-serif leading-[1.02] text-white">
+              <span className="block text-[2.2rem] tracking-[-0.02em] sm:text-[2.8rem] md:text-[4.8rem] lg:text-[5.8rem]">
                 Career Day
               </span>
 
-              <span className="mt-2 block text-[1.6rem] md:text-[2.4rem] lg:text-[2.8rem] italic text-white/90">
+              <span className="mt-2 block text-[1.35rem] italic text-white/90 sm:text-[1.65rem] md:text-[2.4rem] lg:text-[2.8rem]">
                 @ Göteborg
               </span>
             </h1>
 
-            <p className="mx-auto mt-6 max-w-2xl text-[1.1rem] leading-[1.6] text-white/80 md:text-[1.3rem]">
-              A focused career fair at Radisson Blu, bringing together engineers,
-              tech professionals and companies ready to recruit.
+            <p className="mx-auto mt-5 max-w-[22rem] text-[1rem] leading-[1.58] text-white/80 sm:mt-6 sm:max-w-[30rem] sm:text-[1.08rem] md:max-w-2xl md:text-[1.3rem] md:leading-[1.6]">
+              A focused career fair at Radisson Blu, bringing together
+              engineers, tech professionals and companies ready to recruit.
             </p>
           </div>
         </div>
       </section>
 
       {/* FACTS */}
-      <section className="bg-[#f3f1ed] px-6 pb-12 pt-20 md:px-12 md:pt-24 lg:px-20">
-        <div className="mx-auto max-w-4xl border-t border-black/10 pt-10">
-          <div className="grid grid-cols-1 gap-y-10 text-center md:grid-cols-4 md:gap-x-12 md:gap-y-0">
+      <section className="bg-[#f3f1ed] px-5 pt-16 pb-10 md:px-12 md:pt-24 md:pb-12 lg:px-20">
+        <div className="mx-auto max-w-4xl border-t border-black/10 pt-8 md:pt-10">
+          <div className="grid grid-cols-1 gap-y-8 text-center md:grid-cols-4 md:gap-x-12 md:gap-y-0">
             <div>
               <p
-                className={`${firaSans.className} text-[10px] uppercase tracking-[0.18em] text-[#8b8276]`}
+                className={`${firaSans.className} text-[10px] uppercase tracking-[0.16em] text-[#8b8276] md:tracking-[0.18em]`}
               >
                 Date
               </p>
-              <p className="mt-2 font-serif text-[1.4rem] text-[#1f1f1f]">
+              <p className="mt-2 font-serif text-[1.25rem] text-[#1f1f1f] sm:text-[1.32rem] md:text-[1.4rem]">
                 27 April
               </p>
             </div>
 
             <div>
               <p
-                className={`${firaSans.className} text-[10px] uppercase tracking-[0.18em] text-[#8b8276]`}
+                className={`${firaSans.className} text-[10px] uppercase tracking-[0.16em] text-[#8b8276] md:tracking-[0.18em]`}
               >
                 Location
               </p>
-              <p className="mt-2 font-serif text-[1.4rem] text-[#1f1f1f]">
+              <p className="mt-2 font-serif text-[1.25rem] text-[#1f1f1f] sm:text-[1.32rem] md:text-[1.4rem]">
                 Radisson Blu
               </p>
             </div>
 
             <div>
               <p
-                className={`${firaSans.className} text-[10px] uppercase tracking-[0.18em] text-[#8b8276]`}
+                className={`${firaSans.className} text-[10px] uppercase tracking-[0.16em] text-[#8b8276] md:tracking-[0.18em]`}
               >
                 Time
               </p>
-              <p className="mt-2 font-serif text-[1.4rem] text-[#1f1f1f]">
+              <p className="mt-2 font-serif text-[1.25rem] text-[#1f1f1f] sm:text-[1.32rem] md:text-[1.4rem]">
                 09:00 - 12:00
               </p>
             </div>
 
             <div>
               <p
-                className={`${firaSans.className} text-[10px] uppercase tracking-[0.18em] text-[#8b8276]`}
+                className={`${firaSans.className} text-[10px] uppercase tracking-[0.16em] text-[#8b8276] md:tracking-[0.18em]`}
               >
                 Admission
               </p>
-              <p className="mt-2 font-serif text-[1.4rem] text-[#1f1f1f]">
+              <p className="mt-2 font-serif text-[1.25rem] text-[#1f1f1f] sm:text-[1.32rem] md:text-[1.4rem]">
                 Free
               </p>
             </div>
@@ -99,11 +99,11 @@ export default function GoteborgPage() {
       </section>
 
       {/* CONTENT */}
-      <section className="bg-[#f3f1ed] px-6 py-24 md:px-12 md:py-28 lg:px-20">
+      <section className="bg-[#f3f1ed] px-5 py-20 md:px-12 md:py-28 lg:px-20">
         <div className="mx-auto max-w-6xl">
-          <div className="mb-10 md:mb-12">
+          <div className="mb-9 md:mb-12">
             <p
-              className={`${firaSans.className} mb-4 text-[13px] uppercase tracking-[0.24em] text-[#a27a26]`}
+              className={`${firaSans.className} mb-4 text-[12px] uppercase tracking-[0.22em] text-[#a27a26] md:text-[13px] md:tracking-[0.24em]`}
             >
               Göteborg
             </p>
@@ -111,21 +111,21 @@ export default function GoteborgPage() {
             <div className="h-px w-14 bg-[#d9a441]" />
           </div>
 
-          <div className="mx-auto mb-12 max-w-4xl text-center md:mb-14">
-            <h2 className="font-serif text-[3rem] leading-[1.03] font-light text-[#1f1f1f] md:text-[4.05rem] lg:text-[4.6rem]">
+          <div className="mx-auto mb-10 max-w-4xl text-center md:mb-14">
+            <h2 className="mb-5 font-serif text-[2.2rem] font-light leading-[1.03] text-[#1f1f1f] sm:text-[2.6rem] md:mb-6 md:text-[4.05rem] lg:text-[4.6rem]">
               Where engineering
               <br />
               meets industry
             </h2>
 
-            <p className="text-[1.22rem] italic leading-[1.45] text-[#5f5a52] md:text-[1.4rem]">
+            <p className="mx-auto max-w-[24rem] text-[1.06rem] italic leading-[1.5] text-[#5f5a52] sm:max-w-[31rem] sm:text-[1.14rem] md:max-w-none md:text-[1.4rem]">
               A focused morning for direct meetings, new opportunities and
               meaningful conversations.
             </p>
           </div>
 
           <div className="mx-auto max-w-3xl">
-            <p className="mb-8 text-[1.16rem] leading-[1.82] text-[#2c2c2c] md:text-[1.3rem]">
+            <p className="mb-7 text-[1.02rem] leading-[1.78] text-[#2c2c2c] sm:text-[1.08rem] md:mb-8 md:text-[1.3rem] md:leading-[1.82]">
               Göteborg has long been one of Sweden’s strongest industrial and
               engineering cities. Career Day @ Göteborg is designed to reflect
               that context, bringing together engineers, tech professionals and
@@ -133,26 +133,26 @@ export default function GoteborgPage() {
               conversations.
             </p>
 
-            <p className="mb-10 text-[1.16rem] leading-[1.82] text-[#2c2c2c] md:text-[1.3rem]">
+            <p className="mb-8 text-[1.02rem] leading-[1.78] text-[#2c2c2c] sm:text-[1.08rem] md:mb-10 md:text-[1.3rem] md:leading-[1.82]">
               At Radisson Blu, visitors can meet companies that are actively
               recruiting, explore new roles and discover where their skills can
               create value. The setting is intentionally focused, making space
               for real interaction rather than crowded exhibition noise.
             </p>
 
-            <p className="text-[1.1rem] leading-[1.9] text-[#555] md:text-[1.22rem]">
+            <p className="text-[1rem] leading-[1.82] text-[#555] sm:text-[1.05rem] md:text-[1.22rem] md:leading-[1.9]">
               Whether you are looking for your next role or simply want to
               understand where the market is moving, Career Day offers a more
               direct way to connect with the people and companies shaping what
               comes next.
             </p>
 
-            <div className="mt-16 text-center">
+            <div className="mt-12 text-center md:mt-16">
               <a
                 href="https://nyteknikgroup.confetti.events/career-day-goteborg-2026"
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`${firaSans.className} text-[15px] uppercase tracking-[0.22em] text-[#a27a26] transition-colors hover:text-[#d9a441]`}
+                className={`${firaSans.className} text-[13px] uppercase tracking-[0.2em] text-[#a27a26] transition-colors hover:text-[#d9a441] md:text-[15px] md:tracking-[0.22em]`}
               >
                 View event details & register
               </a>
@@ -162,20 +162,20 @@ export default function GoteborgPage() {
       </section>
 
       {/* FOOTER */}
-      <footer className="bg-[#f3f1ed] pt-28 pb-14">
-        <div className="mx-auto max-w-3xl px-6 text-center">
-          <p className="text-[1.05rem] leading-[1.9] text-[#3e3c38] md:text-[1.15rem]">
+      <footer className="bg-[#f3f1ed] pt-20 pb-12 md:pt-28 md:pb-14">
+        <div className="mx-auto max-w-3xl px-5 text-center md:px-6">
+          <p className="text-[0.98rem] leading-[1.82] text-[#3e3c38] sm:text-[1.02rem] md:text-[1.15rem] md:leading-[1.9]">
             Engineering Day – Sweden’s first official day for engineers. We
             celebrate our engineers and their powers of innovation, creativity
             and hard work. The event is also a forum for knowledge-sharing and
             networking.
           </p>
 
-          <p className="mt-5 text-sm italic tracking-[0.02em] text-black/40">
+          <p className="mt-4 text-[13px] italic tracking-[0.02em] text-black/40 md:mt-5 md:text-sm">
             A part of Ny Teknik
           </p>
 
-          <div className="mt-12 flex items-center justify-center gap-8">
+          <div className="mt-10 flex items-center justify-center gap-7 md:mt-12 md:gap-8">
             <a
               href="https://www.linkedin.com/company/ingenj%C3%B6rsdagen/"
               target="_blank"
@@ -229,7 +229,7 @@ export default function GoteborgPage() {
             </a>
           </div>
 
-          <div className="mt-12 text-[11px] uppercase tracking-[0.12em] text-black/30">
+          <div className="mt-10 text-[10px] uppercase tracking-[0.12em] text-black/30 md:mt-12 md:text-[11px]">
             © 2026 Ny Teknik
           </div>
         </div>
