@@ -32,10 +32,10 @@ const featuredPeople: Person[] = [
     title: "Chief Technology Officer",
     company: "Nordic Systems",
     image: "/speaker1.jpg",
-    format: "Hero Talk",
-    session: "Hero Talk",
+    format: "Keynote",
+    session: "Closing keynote",
     focus:
-      "How engineering organisations can stay ambitious while navigating pressure, complexity and long-term responsibility.",
+      "A final reflection on engineering, leadership and what the conversations of the day reveal about where the field is heading next.",
     bio:
       "Anna Svensson leads technology and engineering strategy at Nordic Systems. Her work focuses on scaling technical capability, building resilient teams and ensuring that engineering remains close to both execution and long-term direction.",
   },
@@ -43,7 +43,7 @@ const featuredPeople: Person[] = [
     name: "Johan Berg",
     title: "Moderator",
     company: "Engineering Day",
-    image: "/speaker2.jpg",
+    image: "/johan-berg.jpg",
     format: "Moderator",
     session: "Main stage",
     focus:
@@ -234,7 +234,7 @@ const firesideSessions: SessionGroup[] = [
           "Why long-term engineering value is often decided early, in architecture, trade-offs and technical priorities.",
         bio:
           "Helena Söder has deep experience in architecture, systems design and long-horizon product development across technically demanding environments.",
-        },
+      },
       {
         name: "Mikael Strand",
         title: "Engineering Advisor",
@@ -318,6 +318,44 @@ const masterclassSessions: SessionGroup[] = [
           "What engineering leaders need when clarity, direction and execution all need to happen at once.",
         bio:
           "Erik Johansson leads engineering teams focused on digital transformation, technical quality and operational resilience.",
+      },
+    ],
+  },
+  {
+    title: "Masterclass: Sustainable systems in practice",
+    description:
+      "A focused session on how sustainability ambitions are translated into engineering decisions, trade-offs and measurable outcomes.",
+    people: [
+      {
+        name: "Sara Lind",
+        title: "Sustainability Lead",
+        company: "Green Industry",
+        image: "/speaker7.jpg",
+        format: "Masterclass",
+        session: "Sustainable systems in practice",
+        focus:
+          "How engineering teams can work with sustainability in concrete ways, without turning it into a parallel track.",
+        bio:
+          "Sara Lind works with engineering-led sustainability strategy, helping organisations connect technology choices with long-term environmental and societal impact.",
+      },
+    ],
+  },
+  {
+    title: "Masterclass: Product, systems and execution",
+    description:
+      "On how engineering, product and technical execution can align more clearly in organisations where complexity keeps growing.",
+    people: [
+      {
+        name: "Lisa Andersson",
+        title: "Head of Product and Engineering",
+        company: "Innovation AB",
+        image: "/speaker3.jpg",
+        format: "Masterclass",
+        session: "Product, systems and execution",
+        focus:
+          "How to build stronger connections between engineering decisions, product direction and long-term delivery capability.",
+        bio:
+          "Lisa Andersson works at the intersection of product development, engineering and strategy. She is known for building teams and structures that turn technical ambition into real progress.",
       },
     ],
   },
@@ -527,6 +565,27 @@ export default function AttendingHeroesPage() {
         </div>
       </section>
 
+      {/* MODERATOR */}
+      <section className="px-6 pb-24 md:px-12 lg:px-20">
+        <div className="mx-auto max-w-6xl">
+          <SectionHeader
+            label="Moderator"
+            title="Holding the day together"
+            intro="Guiding the programme, shaping the transitions and making each conversation land."
+          />
+
+          <div className="grid max-w-sm gap-10">
+            {moderator.map((person) => (
+              <SpeakerCard
+                key={`${person.name}-${person.session}`}
+                person={person}
+                onOpen={setSelectedPerson}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* HERO TALKS */}
       <section className="px-6 pb-24 md:px-12 lg:px-20">
         <div className="mx-auto max-w-6xl">
@@ -575,27 +634,6 @@ export default function AttendingHeroesPage() {
         onOpen={setSelectedPerson}
       />
 
-      {/* MODERATOR */}
-      <section className="px-6 pb-24 md:px-12 lg:px-20">
-        <div className="mx-auto max-w-6xl">
-          <SectionHeader
-            label="Moderator"
-            title="Holding the day together"
-            intro="Guiding the programme, shaping the transitions and making each conversation land."
-          />
-
-          <div className="grid max-w-sm gap-10">
-            {moderator.map((person) => (
-              <SpeakerCard
-                key={`${person.name}-${person.session}`}
-                person={person}
-                onOpen={setSelectedPerson}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* KEYNOTE */}
       <section className="px-6 pb-32 md:px-12 lg:px-20">
         <div className="mx-auto max-w-6xl">
@@ -632,10 +670,10 @@ export default function AttendingHeroesPage() {
             <div className="grid md:grid-cols-[0.95fr_1.05fr]">
               <div className="bg-[#e7e2d8]">
                 <img
-                  src={selectedPerson.image}
-                  alt={selectedPerson.name}
-                  className="aspect-[4/5] w-full object-cover"
-                />
+  src={selectedPerson.image}
+  alt={selectedPerson.name}
+  className="w-full h-full object-cover"
+/>
               </div>
 
               <div className="px-8 py-10 md:px-12 md:py-14">
@@ -697,6 +735,76 @@ export default function AttendingHeroesPage() {
           />
         </div>
       ) : null}
+      <footer className="bg-[#f3f1ed] pt-28 pb-14">
+  <div className="max-w-3xl mx-auto text-center px-6">
+    <p className="text-[1.05rem] md:text-[1.15rem] text-[#3e3c38] leading-[1.9]">
+      Engineering Day – Sweden’s first official day for engineers. We celebrate our engineers and their powers of innovation, creativity and hard work. The event is also a forum for knowledge-sharing and networking.
+    </p>
+
+    <p className="mt-5 text-sm text-black/40 italic tracking-[0.02em]">
+      A part of Ny Teknik
+    </p>
+
+    {/* Socials */}
+    <div className="flex justify-center items-center gap-8 mt-12">
+      <a
+        href="https://www.linkedin.com/company/ingenj%C3%B6rsdagen/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="opacity-60 hover:opacity-100 transition duration-200"
+      >
+        <img
+          src="/Linkedin.svg"
+          alt="LinkedIn"
+          className="h-5 w-5 object-contain"
+        />
+      </a>
+
+      <a
+        href="https://www.instagram.com/engineeringdaysweden/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="opacity-60 hover:opacity-100 transition duration-200"
+      >
+        <img
+          src="/Instagram.png"
+          alt="Instagram"
+          className="h-5 w-5 object-contain"
+        />
+      </a>
+
+      <a
+        href="https://open.spotify.com/show/6FcEbcTbMfue0FLgwIoM8a?si=5d52f0a791e14f04"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="opacity-60 hover:opacity-100 transition duration-200"
+      >
+        <img
+          src="/Spotify.png"
+          alt="Spotify"
+          className="h-5 w-5 object-contain"
+        />
+      </a>
+
+      <a
+        href="https://www.nyteknik.se/ingenjorsdagen"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="opacity-60 hover:opacity-100 transition duration-200"
+      >
+        <img
+          src="/Website.png"
+          alt="Ny Teknik"
+          className="h-5 w-5 object-contain"
+        />
+      </a>
+    </div>
+
+    <div className="mt-12 text-[11px] tracking-[0.12em] text-black/30 uppercase">
+      © 2026 Ny Teknik
+    </div>
+  </div>
+</footer>
     </main>
   );
 }

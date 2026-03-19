@@ -187,7 +187,7 @@ export default function PreEventsPage() {
                 <p
                   className={`${firaSans.className} text-[10px] uppercase tracking-[0.18em] text-[#8b8276]`}
                 >
-                  Stockholm · 22 April 2026
+                  Stockholm · 22 April 2026 · Kulturhuset
                 </p>
 
                 <h3 className="mt-2 font-serif text-[1.9rem] leading-[1.05] md:text-[2.4rem]">
@@ -215,7 +215,7 @@ export default function PreEventsPage() {
                 <p
                   className={`${firaSans.className} text-[10px] uppercase tracking-[0.18em] text-[#8b8276]`}
                 >
-                  Göteborg · 27 April 2026
+                  Göteborg · 27 April 2026 · Radisson Blu
                 </p>
 
                 <h3 className="mt-2 font-serif text-[1.9rem] leading-[1.05] md:text-[2.4rem]">

@@ -58,7 +58,7 @@ export default function SiteHeader() {
             ENGINEERING DAY 2026
           </a>
 
-          <a href="#" className="transition-colors hover:text-[#d9a441]">
+          <a href="/attending-heroes" className="transition-colors hover:text-[#d9a441]">
             ATTENDING HEROES
           </a>
 

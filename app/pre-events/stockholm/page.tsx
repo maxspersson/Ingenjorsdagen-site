@@ -60,6 +60,7 @@ export default function StockholmPage() {
                 22 April
               </p>
             </div>
+            
 
             <div>
               <p className={`${firaSans.className} text-[10px] uppercase tracking-[0.18em] text-[#8b8276]`}>
