@@ -203,57 +203,82 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="bg-[#f3f1ed] px-5 py-18 sm:py-20 md:px-12 md:py-24 lg:px-20 lg:py-28">
-        <div className="mx-auto max-w-7xl">
-          <p
-            className={`${firaSans.className} mb-10 text-center text-[11px] uppercase tracking-[0.28em] text-[#d9a441] md:mb-14 md:text-[13px]`}
-          >
-            Founding Partners 2026
-          </p>
+<section className="bg-[#f3f1ed] px-6 md:px-12 lg:px-20 py-24">
+  <div className="max-w-6xl mx-auto">
+    <p className="text-[#d9a441] uppercase tracking-[0.3em] text-[10px] md:text-sm text-center">
+      FOUNDING PARTNERS 2026
+    </p>
 
-          <div className="grid grid-cols-2 gap-x-8 gap-y-10 py-4 sm:grid-cols-3 md:flex md:flex-wrap md:items-center md:justify-center md:gap-x-14 md:gap-y-10 md:py-8 lg:gap-x-20">
-            <div className="flex items-center justify-center">
-              <img
-                src="/Saab-Logo.png"
-                alt="Saab"
-                className="h-[54px] w-auto object-contain sm:h-[62px] md:h-[72px] lg:h-[82px]"
-              />
-            </div>
+    {/* Mobil: 3 + 2 */}
+    <div className="mt-10 md:hidden">
+      <div className="grid grid-cols-3 justify-items-center gap-x-4 gap-y-10">
+        <img
+          src="/Saab-Logo.png"
+          alt="Saab"
+          className="h-[92px] w-auto object-contain"
+        />
 
-            <div className="flex items-center justify-center">
-              <img
-                src="/Varopreem-Logo.png"
-                alt="VAROPreem"
-                className="h-[54px] w-auto object-contain sm:h-[62px] md:h-[72px] lg:h-[82px]"
-              />
-            </div>
+        <img
+          src="/Varopreem-Logo.png"
+          alt="VAROPreem"
+          className="h-[92px] w-auto object-contain"
+        />
 
-            <div className="flex items-center justify-center">
-              <img
-                src="/Skanska-Logo.png"
-                alt="Skanska"
-                className="h-[54px] w-auto object-contain sm:h-[62px] md:h-[72px] lg:h-[82px]"
-              />
-            </div>
+        <img
+          src="/Skanska-Logo.png"
+          alt="Skanska"
+          className="h-[92px] w-auto object-contain"
+        />
+      </div>
 
-            <div className="flex items-center justify-center">
-              <img
-                src="/Sweco-Logo.png"
-                alt="Sweco"
-                className="h-[54px] w-auto object-contain sm:h-[62px] md:h-[72px] lg:h-[82px]"
-              />
-            </div>
+      <div className="mt-10 flex items-center justify-center gap-12">
+        <img
+          src="/Sweco-Logo.png"
+          alt="Sweco"
+          className="h-[92px] w-auto object-contain"
+        />
 
-            <div className="col-span-2 flex items-center justify-center sm:col-span-1">
-              <img
-                src="/Trafikverket-Logo.png"
-                alt="Trafikverket"
-                className="h-[54px] w-auto object-contain sm:h-[62px] md:h-[72px] lg:h-[82px]"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
+        <img
+          src="/Trafikverket-Logo.png"
+          alt="Trafikverket"
+          className="h-[92px] w-auto object-contain"
+        />
+      </div>
+    </div>
+
+    {/* Desktop: 5 på rad */}
+    <div className="mt-14 hidden md:flex items-center justify-center gap-18 lg:gap-24">
+      <img
+        src="/Saab-Logo.png"
+        alt="Saab"
+className="h-[192px] lg:h-[180px] w-auto object-contain"      />
+
+      <img
+        src="/Varopreem-Logo.png"
+        alt="VAROPreem"
+        className="h-[192px] lg:h-[180px] w-auto object-contain"
+      />
+
+      <img
+        src="/Skanska-Logo.png"
+        alt="Skanska"
+        className="h-[192px] lg:h-[180px] w-auto object-contain"
+      />
+
+      <img
+        src="/Sweco-Logo.png"
+        alt="Sweco"
+        className="h-[192px] lg:h-[180px] w-auto object-contain"
+      />
+
+      <img
+        src="/Trafikverket-Logo.png"
+        alt="Trafikverket"
+        className="h-[192px] lg:h-[180px] w-auto object-contain"
+      />
+    </div>
+  </div>
+</section>
 
       <footer className="border-t border-black/8 bg-[#f3f1ed] pt-20 pb-12 md:pt-24 md:pb-14 lg:pt-28">
         <div className="mx-auto max-w-3xl px-5 text-center md:px-6">
