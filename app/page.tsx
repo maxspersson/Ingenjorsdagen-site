@@ -14,63 +14,84 @@ export default function Home() {
       <SiteHeader />
 
       <section className="relative overflow-hidden bg-[#161514] text-[#f4efe7]">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(217,164,65,0.18),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(255,255,255,0.06),transparent_22%)]" />
+  {/* VIDEO BACKGROUND */}
+  <div className="absolute inset-0">
+    <video
+      className="h-full w-full object-cover"
+      autoPlay
+      muted
+      loop
+      playsInline
+    >
+      <source src="/engineering-day.mp4" type="video/mp4" />
+    </video>
+  </div>
 
-        <div className="absolute inset-0 opacity-[0.08]">
-          <div
-            className="h-full w-full"
-            style={{
-              backgroundImage: `
-                linear-gradient(to right, rgba(255,255,255,0.18) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255,255,255,0.18) 1px, transparent 1px)
-              `,
-              backgroundSize: "64px 64px",
-            }}
-          />
+  {/* DARK BASE OVERLAY */}
+  <div className="absolute inset-0 bg-black/68" />
+
+  {/* GOLD / LIGHT ATMOSPHERE */}
+  <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(217,164,65,0.16),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(255,255,255,0.05),transparent_22%)]" />
+
+  {/* GRID */}
+  <div className="absolute inset-0 opacity-[0.06]">
+    <div
+      className="h-full w-full"
+      style={{
+        backgroundImage: `
+          linear-gradient(to right, rgba(255,255,255,0.18) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(255,255,255,0.18) 1px, transparent 1px)
+        `,
+        backgroundSize: "64px 64px",
+      }}
+    />
+  </div>
+
+  {/* EXTRA DEPTH */}
+  <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.34),rgba(0,0,0,0.28),rgba(0,0,0,0.56))]" />
+
+  <div className="relative px-6 md:px-12 lg:px-20">
+    <div className="max-w-7xl mx-auto min-h-[78vh] flex items-center pt-12 pb-24 md:pt-16 md:pb-28 lg:pt-20 lg:pb-32">
+      <div className="max-w-4xl">
+        <p
+          className={`${firaSans.className} text-[11px] uppercase tracking-[0.28em] text-[#d9a441] mb-8`}
+        >
+          A PLATFORM FOR ENGINEERING
+        </p>
+
+        <h1 className="text-[3.6rem] md:text-[5.4rem] lg:text-[6.8rem] leading-[0.96] font-serif font-light tracking-[-0.03em] text-[#f7f1e8]">
+          Engineering,
+          <br />
+          ideas and the future
+          <br />
+          built into one platform.
+        </h1>
+
+        <p className="mt-8 max-w-2xl text-[1.1rem] md:text-[1.22rem] leading-[1.9] text-white/72">
+          Ingenjörsdagen is more than a single event. It is a platform for
+          conversations, recognition, talent and the engineering ideas shaping
+          what comes next.
+        </p>
+
+        <div className="mt-12 flex flex-col gap-4 sm:flex-row">
+          <a
+            href="/engineering-day-2026"
+            className={`${firaSans.className} inline-flex min-h-[54px] items-center justify-center px-8 bg-[#d9a441] text-white text-[11px] font-medium tracking-[0.24em] uppercase hover:bg-[#c8932f] transition-colors`}
+          >
+            Explore Engineering Day 2026
+          </a>
+
+          <a
+            href="/the-grand-prize-for-engineering"
+            className={`${firaSans.className} inline-flex min-h-[54px] items-center justify-center px-8 border border-white/18 bg-white/5 text-[#f7f1e8] text-[11px] font-medium tracking-[0.24em] uppercase hover:bg-white/10 transition-colors`}
+          >
+            The Grand Prize for Engineering
+          </a>
         </div>
-
-        <div className="relative px-6 md:px-12 lg:px-20">
-          <div className="max-w-7xl mx-auto min-h-[78vh] flex items-center pt-12 pb-24 md:pt-16 md:pb-28 lg:pt-20 lg:pb-32">
-            <div className="max-w-4xl">
-              <p
-                className={`${firaSans.className} text-[11px] uppercase tracking-[0.28em] text-[#d9a441] mb-8`}
-              >
-                A PLATFORM FOR ENGINEERING
-              </p>
-
-              <h1 className="text-[3.6rem] md:text-[5.4rem] lg:text-[6.8rem] leading-[0.96] font-serif font-light tracking-[-0.03em] text-[#f7f1e8]">
-                Engineering,
-                <br />
-                ideas and the future
-                <br />
-                built into one platform.
-              </h1>
-
-              <p className="mt-8 max-w-2xl text-[1.1rem] md:text-[1.22rem] leading-[1.9] text-white/72">
-                Ingenjörsdagen is more than a single event. It is a platform for
-                conversations, recognition, talent and the engineering ideas
-                shaping what comes next.
-              </p>
-
-              <div className="mt-12 flex flex-col sm:flex-row gap-4">
-                <a
-                  href="/engineering-day-2026"
-                  className={`${firaSans.className} inline-flex items-center justify-center min-h-[54px] px-8 bg-[#d9a441] text-white text-[11px] font-medium tracking-[0.24em] uppercase hover:bg-[#c8932f] transition-colors`}
-                >
-                  Explore Engineering Day 2026
-                </a>
-
-                <a
-                  href="/the-grand-prize-for-engineering"
-                  className={`${firaSans.className} inline-flex items-center justify-center min-h-[54px] px-8 border border-white/18 bg-white/5 text-[#f7f1e8] text-[11px] font-medium tracking-[0.24em] uppercase hover:bg-white/10 transition-colors`}
-                >
-                  The Grand Prize for Engineering
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      </div>
+    </div>
+  </div>
+</section>
 
       <section className="bg-[#f3f1ed] px-6 md:px-12 lg:px-20 pt-24 pb-12 md:pt-28 md:pb-16 lg:pt-32 lg:pb-1">
         <div className="max-w-7xl mx-auto">
@@ -185,6 +206,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+  
 
       <section className="bg-[#f3f1ed] px-6 md:px-12 lg:px-20 py-24 md:py-28 lg:py-32">
   <div className="max-w-7xl mx-auto">
