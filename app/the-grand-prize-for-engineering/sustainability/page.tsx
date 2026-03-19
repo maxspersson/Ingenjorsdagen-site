@@ -319,11 +319,6 @@ export default function SustainabilityPage() {
                     {item.summary}
                   </p>
 
-                  {item.jury ? (
-                    <p className="text-[0.98rem] leading-[1.85] text-[#555] md:text-[1.04rem]">
-                      {item.jury}
-                    </p>
-                  ) : null}
                 </div>
               </div>
             ))}
