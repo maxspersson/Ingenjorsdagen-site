@@ -51,12 +51,15 @@ export default function InnovationPage() {
     <main className="min-h-screen bg-[#f3f1ed] text-[#1f1f1f]">
       <SiteHeader />
 
-      <section className="relative min-h-[44vh] sm:min-h-[52vh] md:min-h-[82vh] overflow-hidden">
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('/innovation-2026.png')" }}
-        />
-      </section>
+<section className="relative min-h-[44vh] overflow-hidden bg-[#f3f1ed] sm:min-h-[52vh] md:min-h-[82vh]">
+  <div
+    className="absolute inset-0 bg-no-repeat bg-center bg-contain md:bg-cover md:bg-center"
+    style={{
+      backgroundImage: "url('/innovation-2026.png')",
+      backgroundPosition: "center top",
+    }}
+  />
+</section>
 
       <section className="bg-[#f3f1ed] px-5 md:px-12 lg:px-20 pt-20 md:pt-28 pb-20 md:pb-28">
         <div className="max-w-6xl mx-auto">

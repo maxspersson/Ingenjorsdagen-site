@@ -42,12 +42,15 @@ export default function RisingStarPage() {
     <main className="min-h-screen bg-[#f3f1ed] text-[#1f1f1f]">
       <SiteHeader />
 
-      <section className="relative min-h-[44vh] overflow-hidden sm:min-h-[52vh] md:min-h-[82vh]">
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('/rising-star-2026.png')" }}
-        />
-      </section>
+<section className="relative min-h-[44vh] overflow-hidden bg-[#f3f1ed] sm:min-h-[52vh] md:min-h-[82vh]">
+  <div
+    className="absolute inset-0 bg-no-repeat bg-center bg-contain md:bg-cover md:bg-center"
+    style={{
+      backgroundImage: "url('/rising-star-2026.png')",
+      backgroundPosition: "center top",
+    }}
+  />
+</section>
 
       <section className="bg-[#f3f1ed] px-5 pt-20 pb-20 md:px-12 md:pt-28 md:pb-28 lg:px-20">
         <div className="mx-auto max-w-6xl">
