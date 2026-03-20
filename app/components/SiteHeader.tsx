@@ -111,7 +111,7 @@ export default function SiteHeader() {
                 THE GRAND PRIZE FOR ENGINEERING
               </a>
 
-              <button className="text-[9px]">▾</button>
+              <button type="button" className="text-[9px]">▾</button>
 
               <div className="invisible absolute left-0 top-full z-50 w-80 pt-3 opacity-0 transition-[opacity,visibility] duration-200 group-hover:visible group-hover:opacity-100">
                 <div className="bg-white shadow-xl ring-1 ring-black/5">
@@ -145,7 +145,7 @@ export default function SiteHeader() {
                 PRE-EVENTS
               </a>
 
-              <button className="text-[9px]">▾</button>
+              <button type="button" className="text-[9px]">▾</button>
 
               <div className="invisible absolute left-0 top-full z-50 w-72 pt-3 opacity-0 transition-[opacity,visibility] duration-200 group-hover:visible group-hover:opacity-100">
                 <div className="bg-white shadow-xl ring-1 ring-black/5">
