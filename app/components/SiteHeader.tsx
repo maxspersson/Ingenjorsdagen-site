@@ -29,18 +29,26 @@ export default function SiteHeader() {
   return (
     <nav
   className={`sticky top-0 z-50 text-[#1f1f1f] transition-all duration-300 ${
-    scrolled ? "bg-white/85 backdrop-blur-md shadow-md" : "bg-white"
+    scrolled
+  ? "bg-white/95 backdrop-blur-md shadow-sm"
+  : "bg-white"
   }`}
 >
-      <div className="flex justify-center px-6 pt-6 pb-5 md:pt-10 md:pb-6">
+      <div
+  className={`flex justify-center px-6 transition-all duration-300 ${
+    scrolled
+      ? "pt-3 pb-2 md:pt-4 md:pb-3"
+      : "pt-6 pb-5 md:pt-10 md:pb-6"
+  }`}
+>
         <a href="/">
           <img
             src="/EngineeringDay-Logo.png"
             alt="Engineering Day"
             className={`w-auto transition-all duration-300 ${
-              scrolled
-                ? "h-[72px] sm:h-[82px] md:h-[112px]"
-                : "h-[92px] sm:h-[104px] md:h-[152px]"
+scrolled
+  ? "h-[64px] sm:h-[72px] md:h-[96px]"
+  : "h-[92px] sm:h-[104px] md:h-[152px]"
             }`}
           />
         </a>

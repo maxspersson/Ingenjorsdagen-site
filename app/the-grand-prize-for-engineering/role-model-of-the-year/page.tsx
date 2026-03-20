@@ -13,14 +13,17 @@ export default function RoleModelOfTheYearPage() {
     <main className="min-h-screen bg-[#f3f1ed] text-[#1f1f1f]">
       <SiteHeader />
 
-<section className="relative min-h-[44vh] overflow-hidden bg-[#f3f1ed] sm:min-h-[52vh] md:min-h-[82vh]">
+<section className="relative min-h-[44vh] overflow-hidden bg-[#f3f1ed] sm:min-h-[52vh] md:min-h-[70vh] lg:min-h-[82vh]">
   <div
-    className="absolute inset-0 bg-no-repeat bg-center bg-contain md:bg-cover"
-    style={{ backgroundImage: "url('/role-model-of-the-year-2026.png')" }}
+    className="absolute inset-0 bg-no-repeat bg-center bg-contain lg:bg-cover lg:bg-center"
+    style={{
+      backgroundImage: "url('/role-model-of-the-year-2026.png')",
+      backgroundPosition: "left center",
+    }}
   />
 </section>
 
-      <section className="bg-[#f3f1ed] px-5 pt-20 pb-20 md:px-12 md:pt-28 md:pb-28 lg:px-20">
+      <section className="bg-[#f3f1ed] px-5 md:px-12 lg:px-20 pt-14 md:pt-28 pb-20 md:pb-28">
         <div className="mx-auto max-w-6xl">
           <div className="mb-9 md:mb-12">
             <p
