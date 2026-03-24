@@ -5,6 +5,7 @@ import { Fira_Sans } from "next/font/google";
 import SiteHeader from "@/app/components/SiteHeader";
 import { client } from "@/sanity/lib/client";
 import { partnersQuery } from "@/sanity/lib/queries";
+import { programmeQuery } from "@/sanity/lib/queries";
 
 const firaSans = Fira_Sans({
   subsets: ["latin"],
@@ -136,8 +137,22 @@ const masterclasses = [
     ),
   },
 ];
+type ProgrammeSubItem = {
+  time: string;
+  title: string;
+  meta?: string;
+};
 
-const programme = [
+type ProgrammeItem = {
+  id: string;
+  time: string;
+  title: string;
+  description?: string;
+  detailsLabel?: string;
+  detailsText?: string;
+  subItems?: ProgrammeSubItem[];
+};
+const programme: ProgrammeItem[] = [
   {
     id: "registration-masterclass",
     time: "11:30",
@@ -269,6 +284,7 @@ export default function EngineeringDayPage() {
   );
   const [activeProgramme, setActiveProgramme] = useState<string | null>(null);
   const [sanityPartners, setSanityPartners] = useState<any[]>([]);
+  const [sanityProgramme, setSanityProgramme] = useState<ProgrammeItem[]>([]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -294,6 +310,15 @@ export default function EngineeringDayPage() {
 
   loadPartners();
 }, []);
+useEffect(() => {
+  async function loadProgramme() {
+    const data = await client.fetch(programmeQuery);
+    console.log("Sanity programme:", data);
+    setSanityProgramme(data);
+  }
+
+  loadProgramme();
+}, []);
 
   const handleMasterclassClick = (index: number) => {
     setActiveMasterclass((prev) => (prev === index ? null : index));
@@ -310,6 +335,10 @@ const foundingPartnersFromSanity = sanityPartners.filter(
 const partnersFromSanity = sanityPartners.filter(
   (partner) => partner.tier === "partner"
 );
+const programmeToRender: ProgrammeItem[] = programme.map((defaultItem) => {
+  const sanityItem = sanityProgramme.find((item) => item.id === defaultItem.id);
+  return sanityItem || defaultItem;
+});
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#f3f1ed] text-[#1f1f1f]">
       <SiteHeader />
@@ -635,7 +664,7 @@ const partnersFromSanity = sanityPartners.filter(
 
           <div className="border-t border-black/5 pt-8 md:pt-12">
             <div className="mx-auto max-w-5xl">
-              {programme.map((item) => {
+              {programmeToRender.map((item) => {
                 const isActive = activeProgramme === item.id;
                 const hasExpandableContent =
                   item.subItems || item.detailsText || item.detailsLabel;

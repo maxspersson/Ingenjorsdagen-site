@@ -17,3 +17,19 @@ export const partnersQuery = groq`
     }
   }
 `
+
+export const programmeQuery = groq`
+  *[_type == "programmeItem"] | order(order asc) {
+    id,
+    time,
+    title,
+    description,
+    detailsLabel,
+    detailsText,
+    subItems[] {
+      time,
+      title,
+      meta
+    }
+  }
+`
