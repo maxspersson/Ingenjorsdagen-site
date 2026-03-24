@@ -259,31 +259,9 @@ const programme = [
   },
 ];
 
-const foundingPartners = [
-  { name: "Saab", logo: "Saab-Logo.png" },
-  { name: "VAROPreem", logo: "Varopreem-Logo.png" },
-  { name: "Skanska", logo: "Skanska-Logo.png" },
-  { name: "Sweco", logo: "Sweco-Logo.png" },
-  { name: "Trafikverket", logo: "Trafikverket-Logo.png" },
-];
 
-const partners = [
-  {
-    name: "Energimyndigheten",
-    logo: "Energimyndigheten-Logo.png",
-    className: "max-h-[74px] md:max-h-[84px]",
-  },
-  {
-    name: "BAE Systems",
-    logo: "BAESystems-Logo.png",
-    className: "max-h-[34px] md:max-h-[38px]",
-  },
-  {
-    name: "Axis Communications",
-    logo: "Axis-Logo.png",
-    className: "max-h-[44px] md:max-h-[50px]",
-  },
-];
+
+
 
 export default function EngineeringDayPage() {
   const [activeMasterclass, setActiveMasterclass] = useState<number | null>(
