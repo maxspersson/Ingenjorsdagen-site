@@ -308,13 +308,14 @@ export default function EngineeringDayPage() {
   }, []);
 
   useEffect(() => {
-    async function loadPartners() {
-      const data = await client.fetch(partnersQuery);
-      setSanityPartners(data);
-    }
+  async function loadPartners() {
+    const data = await client.fetch(partnersQuery);
+    console.log("Sanity partners:", data);
+    setSanityPartners(data);
+  }
 
-    loadPartners();
-  }, []);
+  loadPartners();
+}, []);
 
   const handleMasterclassClick = (index: number) => {
     setActiveMasterclass((prev) => (prev === index ? null : index));
@@ -325,9 +326,14 @@ export default function EngineeringDayPage() {
   };
 
   const rows = [masterclasses.slice(0, 2), masterclasses.slice(2, 4)];
-
+const foundingPartnersFromSanity = sanityPartners.filter(
+  (partner) => partner.tier === "founding"
+);
+const partnersFromSanity = sanityPartners.filter(
+  (partner) => partner.tier === "partner"
+);
   return (
-    <main className="min-h-screen bg-[#f3f1ed] text-[#1f1f1f]">
+    <main className="min-h-screen overflow-x-hidden bg-[#f3f1ed] text-[#1f1f1f]">
       <SiteHeader />
 
       <section className="relative flex min-h-[58vh] items-center justify-center px-5 text-center text-white sm:min-h-[66vh] md:min-h-[85vh] md:px-6">
@@ -793,12 +799,12 @@ export default function EngineeringDayPage() {
           <div className="mx-auto mb-16 max-w-5xl md:mb-24">
             <div className="md:hidden">
               <div className="grid grid-cols-3 justify-items-center gap-x-4 gap-y-8 sm:gap-x-6">
-                {foundingPartners.slice(0, 3).map((partner) => (
+                {foundingPartnersFromSanity.slice(0, 3).map((partner) => (
                   <div key={partner.name} className="group flex justify-center">
                     <div className="relative flex h-[112px] w-[112px] items-center justify-center transition-transform duration-300 group-hover:-translate-y-[3px] sm:h-[126px] sm:w-[126px]">
                       <img
-                        src={partner.logo}
-                        alt={partner.name}
+  src={partner.logo?.asset?.url}
+  alt={partner.alt || partner.name}
                         className="h-full w-full object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.16)]"
                       />
                     </div>
@@ -807,12 +813,12 @@ export default function EngineeringDayPage() {
               </div>
 
               <div className="mt-8 flex justify-center gap-x-8 sm:gap-x-12">
-                {foundingPartners.slice(3, 5).map((partner) => (
+                {foundingPartnersFromSanity.slice(3, 5).map((partner) => (
                   <div key={partner.name} className="group flex justify-center">
                     <div className="relative flex h-[112px] w-[112px] items-center justify-center transition-transform duration-300 group-hover:-translate-y-[3px] sm:h-[126px] sm:w-[126px]">
                       <img
-                        src={partner.logo}
-                        alt={partner.name}
+  src={partner.logo?.asset?.url}
+  alt={partner.alt || partner.name}
                         className="h-full w-full object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.16)]"
                       />
                     </div>
@@ -822,12 +828,12 @@ export default function EngineeringDayPage() {
             </div>
 
             <div className="hidden md:grid md:grid-cols-5 md:gap-8 md:items-start md:justify-items-center">
-              {foundingPartners.map((partner) => (
+              {foundingPartnersFromSanity.map((partner) => (
                 <div key={partner.name} className="group flex justify-center">
                   <div className="relative flex h-[158px] w-[158px] items-center justify-center transition-transform duration-300 group-hover:-translate-y-[3px]">
                     <img
-                      src={partner.logo}
-                      alt={partner.name}
+  src={partner.logo?.asset?.url}
+  alt={partner.alt || partner.name}
                       className="h-full w-full object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.16)]"
                     />
                   </div>
@@ -845,21 +851,26 @@ export default function EngineeringDayPage() {
               </p>
             </div>
 
-            <div className="mx-auto grid max-w-4xl grid-cols-2 items-center justify-items-center gap-x-8 gap-y-10 md:grid-cols-3 md:gap-x-14 md:gap-y-14">
-              {partners.map((partner, index) => (
+            <div className="mx-auto grid max-w-6xl grid-cols-2 items-center justify-items-center gap-x-8 gap-y-10 md:grid-cols-5 md:gap-x-10 md:gap-y-12">
+              {partnersFromSanity.map((partner, index) => (
                 <div
                   key={partner.name}
                   className={`flex h-[78px] w-full items-center justify-center transition-transform duration-300 hover:-translate-y-[2px] md:h-[110px] ${
-                    partners.length % 2 === 1 && index === partners.length - 1
+                   partnersFromSanity.length % 2 === 1 &&
+index === partnersFromSanity.length - 1
                       ? "col-span-2"
                       : ""
                   } md:col-span-1`}
                 >
-                  <img
-                    src={`/${partner.logo}`}
-                    alt={partner.name}
-                    className="h-10 w-auto object-contain md:h-14"
-                  />
+                  {partner.logo?.asset?.url ? (
+  <img
+    src={partner.logo.asset.url}
+    alt={partner.alt || partner.name}
+    className="h-10 w-auto object-contain md:h-14"
+  />
+) : (
+  <span className="text-sm text-red-500">{partner.name} missing logo</span>
+)}
                 </div>
               ))}
             </div>

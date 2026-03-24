@@ -8,7 +8,7 @@ const firaSans = Fira_Sans({
 
 export default function GoteborgPage() {
   return (
-    <main className="min-h-screen bg-[#f3f1ed]">
+    <main className="min-h-screen overflow-x-hidden bg-[#f3f1ed] text-[#1f1f1f]">
       <SiteHeader />
 
       {/* HERO */}

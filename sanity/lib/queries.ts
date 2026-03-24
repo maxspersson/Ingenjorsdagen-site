@@ -1,4 +1,4 @@
-import { groq } from "next-sanity";
+import { groq } from 'next-sanity'
 
 export const partnersQuery = groq`
   *[_type == "partner"] | order(order asc) {
@@ -7,6 +7,13 @@ export const partnersQuery = groq`
     url,
     tier,
     order,
-    logo
+    logoVariant,
+    alt,
+    logo {
+      asset->{
+        _id,
+        url
+      }
+    }
   }
-`;
+`

@@ -10,7 +10,7 @@ const firaSans = Fira_Sans({
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#f3f1ed] text-[#1f1f1f]">
+    <main className="min-h-screen overflow-x-hidden bg-[#f3f1ed] text-[#1f1f1f]">
       <SiteHeader />
 
       <section className="relative overflow-hidden bg-[#161514] text-[#f4efe7]">

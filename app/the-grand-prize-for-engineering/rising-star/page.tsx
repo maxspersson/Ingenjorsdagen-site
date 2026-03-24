@@ -39,7 +39,7 @@ const hallOfFame = [
 
 export default function RisingStarPage() {
   return (
-    <main className="min-h-screen bg-[#f3f1ed] text-[#1f1f1f]">
+    <main className="min-h-screen overflow-x-hidden bg-[#f3f1ed] text-[#1f1f1f]">
       <SiteHeader />
 
 <section className="relative min-h-[44vh] overflow-hidden bg-[#f3f1ed] sm:min-h-[52vh] md:min-h-[70vh] lg:min-h-[82vh]">

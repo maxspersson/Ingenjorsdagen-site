@@ -521,7 +521,7 @@ export default function AttendingHeroesPage() {
   const [selectedPerson, setSelectedPerson] = useState<Person | null>(null);
 
   return (
-    <main className="min-h-screen bg-[#f3f1ed]">
+   <main className="min-h-screen overflow-x-hidden bg-[#f3f1ed]">
       <SiteHeader />
 
       {/* HERO */}

@@ -10,7 +10,7 @@ const firaSans = Fira_Sans({
 
 export default function ContactUsPage() {
   return (
-    <main className="min-h-screen bg-[#f3f1ed] text-[#1f1f1f]">
+    <main className="min-h-screen overflow-x-hidden bg-[#f3f1ed] text-[#1f1f1f]">
       <SiteHeader />
 
       <section className="bg-[#f3f1ed] px-5 pt-20 pb-14 md:px-12 md:pt-28 md:pb-20 lg:px-20">
