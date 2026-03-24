@@ -819,7 +819,7 @@ const partnersFromSanity = sanityPartners.filter(
                       <img
   src={partner.logo?.asset?.url}
   alt={partner.alt || partner.name}
-                        className="h-full w-full object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.16)]"
+                       className="h-full w-full object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.16)]"
                       />
                     </div>
                   </div>
@@ -851,11 +851,11 @@ const partnersFromSanity = sanityPartners.filter(
               </p>
             </div>
 
-            <div className="mx-auto grid max-w-6xl grid-cols-2 items-center justify-items-center gap-x-8 gap-y-10 md:grid-cols-5 md:gap-x-10 md:gap-y-12">
+            <div className="mx-auto grid max-w-6xl grid-cols-2 items-center justify-items-center gap-x-4 gap-y-8 px-2 md:grid-cols-5 md:gap-x-10 md:gap-y-12 md:px-0">
               {partnersFromSanity.map((partner, index) => (
                 <div
                   key={partner.name}
-                  className={`flex h-[78px] w-full items-center justify-center transition-transform duration-300 hover:-translate-y-[2px] md:h-[110px] ${
+                 className={`flex h-[96px] w-full items-center justify-center transition-transform duration-300 hover:-translate-y-[2px] md:h-[110px] ${
                    partnersFromSanity.length % 2 === 1 &&
 index === partnersFromSanity.length - 1
                       ? "col-span-2"
@@ -866,7 +866,7 @@ index === partnersFromSanity.length - 1
   <img
     src={partner.logo.asset.url}
     alt={partner.alt || partner.name}
-    className="h-10 w-auto object-contain md:h-14"
+    className="max-h-[70%] max-w-[78%] object-contain md:max-h-[70%] md:max-w-[70%]"
   />
 ) : (
   <span className="text-sm text-red-500">{partner.name} missing logo</span>
