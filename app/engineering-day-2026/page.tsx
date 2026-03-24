@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { Fira_Sans } from "next/font/google";
 import SiteHeader from "@/app/components/SiteHeader";
+import { client } from "@/sanity/lib/client";
+import { partnersQuery } from "@/sanity/lib/queries";
 
 const firaSans = Fira_Sans({
   subsets: ["latin"],
@@ -283,11 +285,12 @@ const partners = [
   },
 ];
 
-export default function Home() {
+export default function EngineeringDayPage() {
   const [activeMasterclass, setActiveMasterclass] = useState<number | null>(
     null
   );
   const [activeProgramme, setActiveProgramme] = useState<string | null>(null);
+  const [sanityPartners, setSanityPartners] = useState<any[]>([]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -302,6 +305,15 @@ export default function Home() {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
+  }, []);
+
+  useEffect(() => {
+    async function loadPartners() {
+      const data = await client.fetch(partnersQuery);
+      setSanityPartners(data);
+    }
+
+    loadPartners();
   }, []);
 
   const handleMasterclassClick = (index: number) => {
@@ -436,171 +448,171 @@ export default function Home() {
             </p>
           </div>
 
-<div className="border-t border-black/5 pt-10 md:pt-14">
-  <div className="space-y-7 md:space-y-10">
-    {rows.map((row, rowIndex) => {
-      const rowStartIndex = rowIndex * 2;
-      const rowEndIndex = rowStartIndex + row.length - 1;
-      const rowHasActive =
-        activeMasterclass !== null &&
-        activeMasterclass >= rowStartIndex &&
-        activeMasterclass <= rowEndIndex;
+          <div className="border-t border-black/5 pt-10 md:pt-14">
+            <div className="space-y-7 md:space-y-10">
+              {rows.map((row, rowIndex) => {
+                const rowStartIndex = rowIndex * 2;
+                const rowEndIndex = rowStartIndex + row.length - 1;
+                const rowHasActive =
+                  activeMasterclass !== null &&
+                  activeMasterclass >= rowStartIndex &&
+                  activeMasterclass <= rowEndIndex;
 
-      const selectedMasterclass =
-        rowHasActive && activeMasterclass !== null
-          ? masterclasses[activeMasterclass]
-          : null;
+                const selectedMasterclass =
+                  rowHasActive && activeMasterclass !== null
+                    ? masterclasses[activeMasterclass]
+                    : null;
 
-      return (
-        <div key={rowIndex} className="space-y-4 md:space-y-5">
-          <div className="grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-6 lg:gap-8">
-            {row.map((item, cardOffset) => {
-              const index = rowStartIndex + cardOffset;
-              const isActive = activeMasterclass === index;
+                return (
+                  <div key={rowIndex} className="space-y-4 md:space-y-5">
+                    <div className="grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-6 lg:gap-8">
+                      {row.map((item, cardOffset) => {
+                        const index = rowStartIndex + cardOffset;
+                        const isActive = activeMasterclass === index;
 
-              return (
-                <div key={item.id} className="space-y-4">
-                  <button
-                    type="button"
-                    onClick={() => handleMasterclassClick(index)}
-                    aria-expanded={isActive}
-                    className={`group relative w-full overflow-hidden rounded-[24px] text-left transition-all duration-300 md:rounded-[28px] ${
-                      isActive
-                        ? "shadow-[0_18px_46px_rgba(0,0,0,0.16)] ring-1 ring-[#d9a441]/70"
-                        : "shadow-[0_14px_34px_rgba(0,0,0,0.10)] ring-1 ring-black/5 hover:-translate-y-[3px] hover:shadow-[0_18px_42px_rgba(0,0,0,0.14)]"
-                    }`}
-                  >
-                    <div
-                      className="relative h-[330px] bg-cover bg-center sm:h-[350px] md:h-[380px]"
-                      style={{ backgroundImage: `url('${item.image}')` }}
-                    >
-                      <div
-                        className={`absolute inset-0 transition-all duration-300 ${
-                          isActive
-                            ? "bg-gradient-to-b from-black/15 via-black/38 to-black/78"
-                            : "bg-gradient-to-b from-black/20 via-black/42 to-black/80"
-                        }`}
-                      />
-
-                      <div className="relative z-10 flex h-full flex-col justify-between p-5 text-white sm:p-6 md:p-8">
-                        <div>
-                          <p
-                            className={`${firaSans.className} mb-3 text-[9px] uppercase tracking-[0.2em] text-white/80 sm:text-[10px] md:mb-4 md:text-[11px] md:tracking-[0.24em]`}
-                          >
-                            {item.kicker}
-                          </p>
-
-                          <h3 className="max-w-[30rem] font-serif text-[1.62rem] font-semibold leading-[1.05] sm:text-[1.8rem] md:text-[2.15rem]">
-                            {item.title}
-                          </h3>
-                        </div>
-
-                        <div>
-                          <div className="mb-5 flex items-center gap-3 md:mb-6 md:gap-4">
-                            <img
-                              src={item.avatar}
-                              alt={item.speaker}
-                              className="h-[56px] w-[56px] rounded-full border border-white/80 object-cover md:h-[70px] md:w-[70px]"
-                            />
-
-                            <div className="leading-[1.35]">
-                              <p className="text-[1rem] font-semibold md:text-[1.12rem]">
-                                {item.speaker}
-                              </p>
-                              <p className="text-[0.9rem] text-white/90 md:text-[1rem]">
-                                {item.role}
-                              </p>
-                              {item.company ? (
-                                <p className="text-[0.9rem] text-white/90 md:text-[1rem]">
-                                  {item.company}
-                                </p>
-                              ) : null}
-                            </div>
-                          </div>
-
-                          <div className="flex items-center justify-between border-t border-white/20 pt-4">
-                            <span className="text-[0.94rem] text-white/95 md:text-[0.98rem]">
-                              {isActive ? "Close details" : "Read details"}
-                            </span>
-
-                            <span
-                              className={`flex h-9 w-9 items-center justify-center rounded-full border text-[1.05rem] text-white transition-all duration-300 md:h-10 md:w-10 md:text-[1.15rem] ${
+                        return (
+                          <div key={item.id} className="space-y-4">
+                            <button
+                              type="button"
+                              onClick={() => handleMasterclassClick(index)}
+                              aria-expanded={isActive}
+                              className={`group relative w-full overflow-hidden rounded-[24px] text-left transition-all duration-300 md:rounded-[28px] ${
                                 isActive
-                                  ? "rotate-45 border-[#d9a441] bg-[#d9a441]/10"
-                                  : "border-white/55 group-hover:border-white/80"
+                                  ? "shadow-[0_18px_46px_rgba(0,0,0,0.16)] ring-1 ring-[#d9a441]/70"
+                                  : "shadow-[0_14px_34px_rgba(0,0,0,0.10)] ring-1 ring-black/5 hover:-translate-y-[3px] hover:shadow-[0_18px_42px_rgba(0,0,0,0.14)]"
                               }`}
                             >
+                              <div
+                                className="relative h-[330px] bg-cover bg-center sm:h-[350px] md:h-[380px]"
+                                style={{ backgroundImage: `url('${item.image}')` }}
+                              >
+                                <div
+                                  className={`absolute inset-0 transition-all duration-300 ${
+                                    isActive
+                                      ? "bg-gradient-to-b from-black/15 via-black/38 to-black/78"
+                                      : "bg-gradient-to-b from-black/20 via-black/42 to-black/80"
+                                  }`}
+                                />
+
+                                <div className="relative z-10 flex h-full flex-col justify-between p-5 text-white sm:p-6 md:p-8">
+                                  <div>
+                                    <p
+                                      className={`${firaSans.className} mb-3 text-[9px] uppercase tracking-[0.2em] text-white/80 sm:text-[10px] md:mb-4 md:text-[11px] md:tracking-[0.24em]`}
+                                    >
+                                      {item.kicker}
+                                    </p>
+
+                                    <h3 className="max-w-[30rem] font-serif text-[1.62rem] font-semibold leading-[1.05] sm:text-[1.8rem] md:text-[2.15rem]">
+                                      {item.title}
+                                    </h3>
+                                  </div>
+
+                                  <div>
+                                    <div className="mb-5 flex items-center gap-3 md:mb-6 md:gap-4">
+                                      <img
+                                        src={item.avatar}
+                                        alt={item.speaker}
+                                        className="h-[56px] w-[56px] rounded-full border border-white/80 object-cover md:h-[70px] md:w-[70px]"
+                                      />
+
+                                      <div className="leading-[1.35]">
+                                        <p className="text-[1rem] font-semibold md:text-[1.12rem]">
+                                          {item.speaker}
+                                        </p>
+                                        <p className="text-[0.9rem] text-white/90 md:text-[1rem]">
+                                          {item.role}
+                                        </p>
+                                        {item.company ? (
+                                          <p className="text-[0.9rem] text-white/90 md:text-[1rem]">
+                                            {item.company}
+                                          </p>
+                                        ) : null}
+                                      </div>
+                                    </div>
+
+                                    <div className="flex items-center justify-between border-t border-white/20 pt-4">
+                                      <span className="text-[0.94rem] text-white/95 md:text-[0.98rem]">
+                                        {isActive ? "Close details" : "Read details"}
+                                      </span>
+
+                                      <span
+                                        className={`flex h-9 w-9 items-center justify-center rounded-full border text-[1.05rem] text-white transition-all duration-300 md:h-10 md:w-10 md:text-[1.15rem] ${
+                                          isActive
+                                            ? "rotate-45 border-[#d9a441] bg-[#d9a441]/10"
+                                            : "border-white/55 group-hover:border-white/80"
+                                        }`}
+                                      >
+                                        +
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </button>
+
+                            {isActive ? (
+                              <div className="overflow-hidden rounded-[24px] border border-black/5 bg-[#f8f6f2] shadow-[0_14px_40px_rgba(0,0,0,0.07)] md:hidden">
+                                <div className="px-5 py-6">
+                                  <div className="mb-6 flex items-start justify-between gap-6">
+                                    <p
+                                      className={`${firaSans.className} text-[10px] uppercase tracking-[0.2em] text-[#a27a26]`}
+                                    >
+                                      MASTERCLASS DETAILS
+                                    </p>
+
+                                    <button
+                                      type="button"
+                                      onClick={() => setActiveMasterclass(null)}
+                                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-black/10 text-[1rem] text-[#1f1f1f] transition-colors hover:border-[#d9a441] hover:text-[#d9a441]"
+                                      aria-label="Close masterclass details"
+                                    >
+                                      +
+                                    </button>
+                                  </div>
+
+                                  <div className="max-w-[52rem] text-[0.98rem] leading-[1.85] text-[#434343]">
+                                    {item.body}
+                                  </div>
+                                </div>
+                              </div>
+                            ) : null}
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    {selectedMasterclass ? (
+                      <div className="hidden overflow-hidden rounded-[28px] border border-black/5 bg-[#f8f6f2] shadow-[0_14px_40px_rgba(0,0,0,0.07)] md:block">
+                        <div className="px-10 py-10 lg:px-12 lg:py-11">
+                          <div className="mb-7 flex items-start justify-between gap-6">
+                            <p
+                              className={`${firaSans.className} text-[11px] uppercase tracking-[0.22em] text-[#a27a26]`}
+                            >
+                              MASTERCLASS DETAILS
+                            </p>
+
+                            <button
+                              type="button"
+                              onClick={() => setActiveMasterclass(null)}
+                              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-black/10 text-[1.05rem] text-[#1f1f1f] transition-colors hover:border-[#d9a441] hover:text-[#d9a441]"
+                              aria-label="Close masterclass details"
+                            >
                               +
-                            </span>
+                            </button>
+                          </div>
+
+                          <div className="max-w-[52rem] text-[1.08rem] leading-[1.95] text-[#434343]">
+                            {selectedMasterclass.body}
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </button>
-
-                  {isActive ? (
-                    <div className="overflow-hidden rounded-[24px] border border-black/5 bg-[#f8f6f2] shadow-[0_14px_40px_rgba(0,0,0,0.07)] md:hidden">
-                      <div className="px-5 py-6">
-                        <div className="mb-6 flex items-start justify-between gap-6">
-                          <p
-                            className={`${firaSans.className} text-[10px] uppercase tracking-[0.2em] text-[#a27a26]`}
-                          >
-                            MASTERCLASS DETAILS
-                          </p>
-
-                          <button
-                            type="button"
-                            onClick={() => setActiveMasterclass(null)}
-                            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-black/10 text-[1rem] text-[#1f1f1f] transition-colors hover:border-[#d9a441] hover:text-[#d9a441]"
-                            aria-label="Close masterclass details"
-                          >
-                            +
-                          </button>
-                        </div>
-
-                        <div className="max-w-[52rem] text-[0.98rem] leading-[1.85] text-[#434343]">
-                          {item.body}
-                        </div>
-                      </div>
-                    </div>
-                  ) : null}
-                </div>
-              );
-            })}
-          </div>
-
-          {selectedMasterclass ? (
-            <div className="hidden overflow-hidden rounded-[28px] border border-black/5 bg-[#f8f6f2] shadow-[0_14px_40px_rgba(0,0,0,0.07)] md:block">
-              <div className="px-10 py-10 lg:px-12 lg:py-11">
-                <div className="mb-7 flex items-start justify-between gap-6">
-                  <p
-                    className={`${firaSans.className} text-[11px] uppercase tracking-[0.22em] text-[#a27a26]`}
-                  >
-                    MASTERCLASS DETAILS
-                  </p>
-
-                  <button
-                    type="button"
-                    onClick={() => setActiveMasterclass(null)}
-                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-black/10 text-[1.05rem] text-[#1f1f1f] transition-colors hover:border-[#d9a441] hover:text-[#d9a441]"
-                    aria-label="Close masterclass details"
-                  >
-                    +
-                  </button>
-                </div>
-
-                <div className="max-w-[52rem] text-[1.08rem] leading-[1.95] text-[#434343]">
-                  {selectedMasterclass.body}
-                </div>
-              </div>
+                    ) : null}
+                  </div>
+                );
+              })}
             </div>
-          ) : null}
+          </div>
         </div>
-      );
-    })}
-  </div>
-</div>
-</div>
       </section>
 
       <section className="bg-[#f3f1ed] px-5 pt-20 pb-24 md:px-12 md:pt-28 md:pb-32 lg:px-20">
@@ -769,167 +781,164 @@ export default function Home() {
       </section>
 
       <section className="bg-[#f3f1ed] px-5 pt-10 pb-24 md:px-12 md:pt-14 md:pb-32 lg:px-20">
-  <div className="mx-auto max-w-6xl">
-    <div className="mb-14 md:mb-20">
-      <p
-  className={`${firaSans.className} text-center text-[0.76rem] uppercase tracking-[0.26em] text-[#d9a441] sm:text-[0.82rem] md:text-[0.95rem] md:tracking-[0.34em]`}
->
-  FOUNDING PARTNERS 2026
-</p>
-</div>
+        <div className="mx-auto max-w-6xl">
+          <div className="mb-14 md:mb-20">
+            <p
+              className={`${firaSans.className} text-center text-[0.76rem] uppercase tracking-[0.26em] text-[#d9a441] sm:text-[0.82rem] md:text-[0.95rem] md:tracking-[0.34em]`}
+            >
+              FOUNDING PARTNERS 2026
+            </p>
+          </div>
 
-{/* FOUNDING PARTNERS */}
-<div className="mx-auto mb-16 max-w-5xl md:mb-24">
-  {/* Mobile: 3 + 2 */}
-  <div className="md:hidden">
-    <div className="grid grid-cols-3 justify-items-center gap-x-4 gap-y-8 sm:gap-x-6">
-      {foundingPartners.slice(0, 3).map((partner) => (
-        <div key={partner.name} className="group flex justify-center">
-          <div className="relative flex h-[112px] w-[112px] items-center justify-center transition-transform duration-300 group-hover:-translate-y-[3px] sm:h-[126px] sm:w-[126px]">
-            <img
-              src={partner.logo}
-              alt={partner.name}
-              className="h-full w-full object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.16)]"
-            />
+          <div className="mx-auto mb-16 max-w-5xl md:mb-24">
+            <div className="md:hidden">
+              <div className="grid grid-cols-3 justify-items-center gap-x-4 gap-y-8 sm:gap-x-6">
+                {foundingPartners.slice(0, 3).map((partner) => (
+                  <div key={partner.name} className="group flex justify-center">
+                    <div className="relative flex h-[112px] w-[112px] items-center justify-center transition-transform duration-300 group-hover:-translate-y-[3px] sm:h-[126px] sm:w-[126px]">
+                      <img
+                        src={partner.logo}
+                        alt={partner.name}
+                        className="h-full w-full object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.16)]"
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-8 flex justify-center gap-x-8 sm:gap-x-12">
+                {foundingPartners.slice(3, 5).map((partner) => (
+                  <div key={partner.name} className="group flex justify-center">
+                    <div className="relative flex h-[112px] w-[112px] items-center justify-center transition-transform duration-300 group-hover:-translate-y-[3px] sm:h-[126px] sm:w-[126px]">
+                      <img
+                        src={partner.logo}
+                        alt={partner.name}
+                        className="h-full w-full object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.16)]"
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="hidden md:grid md:grid-cols-5 md:gap-8 md:items-start md:justify-items-center">
+              {foundingPartners.map((partner) => (
+                <div key={partner.name} className="group flex justify-center">
+                  <div className="relative flex h-[158px] w-[158px] items-center justify-center transition-transform duration-300 group-hover:-translate-y-[3px]">
+                    <img
+                      src={partner.logo}
+                      alt={partner.name}
+                      className="h-full w-full object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.16)]"
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="border-t border-black/6 pt-14 md:pt-20">
+            <div className="mb-10 text-center md:mb-14">
+              <p
+                className={`${firaSans.className} text-center text-[0.76rem] uppercase tracking-[0.26em] text-[#d9a441] sm:text-[0.82rem] md:text-[0.95rem] md:tracking-[0.34em]`}
+              >
+                PARTNERS
+              </p>
+            </div>
+
+            <div className="mx-auto grid max-w-4xl grid-cols-2 items-center justify-items-center gap-x-8 gap-y-10 md:grid-cols-3 md:gap-x-14 md:gap-y-14">
+              {partners.map((partner, index) => (
+                <div
+                  key={partner.name}
+                  className={`flex h-[78px] w-full items-center justify-center transition-transform duration-300 hover:-translate-y-[2px] md:h-[110px] ${
+                    partners.length % 2 === 1 && index === partners.length - 1
+                      ? "col-span-2"
+                      : ""
+                  } md:col-span-1`}
+                >
+                  <img
+                    src={`/${partner.logo}`}
+                    alt={partner.name}
+                    className="h-10 w-auto object-contain md:h-14"
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      ))}
-    </div>
+      </section>
 
-    <div className="mt-8 flex justify-center gap-x-8 sm:gap-x-12">
-      {foundingPartners.slice(3, 5).map((partner) => (
-        <div key={partner.name} className="group flex justify-center">
-          <div className="relative flex h-[112px] w-[112px] items-center justify-center transition-transform duration-300 group-hover:-translate-y-[3px] sm:h-[126px] sm:w-[126px]">
-            <img
-              src={partner.logo}
-              alt={partner.name}
-              className="h-full w-full object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.16)]"
-            />
+      <footer className="bg-[#f3f1ed] pt0 pb-12 md:pt0 md:pb-14">
+        <div className="mx-auto max-w-3xl px-5 text-center md:px-6">
+          <p className="text-[0.98rem] leading-[1.82] text-[#3e3c38] sm:text-[1.02rem] md:text-[1.15rem] md:leading-[1.9]">
+            Engineering Day - Sweden&apos;s first official day for engineers. We
+            celebrate our engineers and their powers of innovation, creativity
+            and hard work. The event is also a forum for knowledge-sharing and
+            networking.
+          </p>
+
+          <p className="mt-4 text-[13px] italic tracking-[0.02em] text-black/40 md:mt-5 md:text-sm">
+            A part of Ny Teknik
+          </p>
+
+          <div className="mt-10 flex items-center justify-center gap-7 md:mt-12 md:gap-8">
+            <a
+              href="https://www.linkedin.com/company/ingenj%C3%B6rsdagen/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="opacity-60 transition duration-200 hover:opacity-100"
+            >
+              <img
+                src="/Linkedin.svg"
+                alt="LinkedIn"
+                className="h-5 w-5 object-contain"
+              />
+            </a>
+
+            <a
+              href="https://www.instagram.com/engineeringdaysweden/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="opacity-60 transition duration-200 hover:opacity-100"
+            >
+              <img
+                src="/Instagram.png"
+                alt="Instagram"
+                className="h-5 w-5 object-contain"
+              />
+            </a>
+
+            <a
+              href="https://open.spotify.com/show/6FcEbcTbMfue0FLgwIoM8a?si=5d52f0a791e14f04"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="opacity-60 transition duration-200 hover:opacity-100"
+            >
+              <img
+                src="/Spotify.png"
+                alt="Spotify"
+                className="h-5 w-5 object-contain"
+              />
+            </a>
+
+            <a
+              href="https://www.nyteknik.se/ingenjorsdagen"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="opacity-60 transition duration-200 hover:opacity-100"
+            >
+              <img
+                src="/Website.png"
+                alt="Ny Teknik"
+                className="h-5 w-5 object-contain"
+              />
+            </a>
+          </div>
+
+          <div className="mt-10 text-[10px] uppercase tracking-[0.12em] text-black/30 md:mt-12 md:text-[11px]">
+            © 2026 Ny Teknik
           </div>
         </div>
-      ))}
-    </div>
-  </div>
-
-  {/* Desktop: 5 in one row */}
-  <div className="hidden md:grid md:grid-cols-5 md:gap-8 md:items-start md:justify-items-center">
-    {foundingPartners.map((partner) => (
-      <div key={partner.name} className="group flex justify-center">
-        <div className="relative flex h-[158px] w-[158px] items-center justify-center transition-transform duration-300 group-hover:-translate-y-[3px]">
-          <img
-            src={partner.logo}
-            alt={partner.name}
-            className="h-full w-full object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.16)]"
-          />
-        </div>
-      </div>
-    ))}
-  </div>
-</div>
-
-{/* PARTNERS */}
-<div className="border-t border-black/6 pt-14 md:pt-20">
-  <div className="mb-10 text-center md:mb-14">
-    <p
-      className={`${firaSans.className} text-center text-[0.76rem] uppercase tracking-[0.26em] text-[#d9a441] sm:text-[0.82rem] md:text-[0.95rem] md:tracking-[0.34em]`}
-    >
-      PARTNERS
-    </p>
-  </div>
-
-  <div className="mx-auto grid max-w-4xl grid-cols-2 items-center justify-items-center gap-x-8 gap-y-10 md:grid-cols-3 md:gap-x-14 md:gap-y-14">
-    {partners.map((partner, index) => (
-      <div
-        key={partner.name}
-        className={`flex h-[78px] w-full items-center justify-center transition-transform duration-300 hover:-translate-y-[2px] md:h-[110px] ${
-          partners.length % 2 === 1 && index === partners.length - 1
-            ? "col-span-2"
-            : ""
-        } md:col-span-1`}
-      >
-        <img
-          src={`/${partner.logo}`}
-          alt={partner.name}
-          className="h-10 w-auto object-contain md:h-14"
-        />
-      </div>
-    ))}
-  </div>
-</div>
-</div>
-</section>
-
-<footer className="bg-[#f3f1ed] pt0 pb-12 md:pt0 md:pb-14">  <div className="mx-auto max-w-3xl px-5 text-center md:px-6">
-    <p className="text-[0.98rem] leading-[1.82] text-[#3e3c38] sm:text-[1.02rem] md:text-[1.15rem] md:leading-[1.9]">
-      Engineering Day - Sweden&apos;s first official day for engineers. We
-      celebrate our engineers and their powers of innovation, creativity
-      and hard work. The event is also a forum for knowledge-sharing and
-      networking.
-    </p>
-
-    <p className="mt-4 text-[13px] italic tracking-[0.02em] text-black/40 md:mt-5 md:text-sm">
-      A part of Ny Teknik
-    </p>
-
-    <div className="mt-10 flex items-center justify-center gap-7 md:mt-12 md:gap-8">
-      <a
-        href="https://www.linkedin.com/company/ingenj%C3%B6rsdagen/"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="opacity-60 transition duration-200 hover:opacity-100"
-      >
-        <img
-          src="/Linkedin.svg"
-          alt="LinkedIn"
-          className="h-5 w-5 object-contain"
-        />
-      </a>
-
-      <a
-        href="https://www.instagram.com/engineeringdaysweden/"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="opacity-60 transition duration-200 hover:opacity-100"
-      >
-        <img
-          src="/Instagram.png"
-          alt="Instagram"
-          className="h-5 w-5 object-contain"
-        />
-      </a>
-
-      <a
-        href="https://open.spotify.com/show/6FcEbcTbMfue0FLgwIoM8a?si=5d52f0a791e14f04"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="opacity-60 transition duration-200 hover:opacity-100"
-      >
-        <img
-          src="/Spotify.png"
-          alt="Spotify"
-          className="h-5 w-5 object-contain"
-        />
-      </a>
-
-      <a
-        href="https://www.nyteknik.se/ingenjorsdagen"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="opacity-60 transition duration-200 hover:opacity-100"
-      >
-        <img
-          src="/Website.png"
-          alt="Ny Teknik"
-          className="h-5 w-5 object-contain"
-        />
-      </a>
-    </div>
-
-    <div className="mt-10 text-[10px] uppercase tracking-[0.12em] text-black/30 md:mt-12 md:text-[11px]">
-      © 2026 Ny Teknik
-    </div>
-  </div>
-</footer>
-</main>
+      </footer>
+    </main>
   );
 }
