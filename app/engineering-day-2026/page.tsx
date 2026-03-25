@@ -302,18 +302,24 @@ export default function EngineeringDayPage() {
   }, []);
 
   useEffect(() => {
-  async function loadPartners() {
-    const data = await client.fetch(partnersQuery);
-    console.log("Sanity partners:", data);
-    setSanityPartners(data);
+  async function loadProgramme() {
+    const data = await client.fetch(programmeQuery);
+    console.log(
+      "SANITY FIRESIDE",
+      data.find((item: any) => item.id === "fireside-chat")
+    );
+    setSanityProgramme(data);
   }
 
-  loadPartners();
+  loadProgramme();
 }, []);
 useEffect(() => {
   async function loadProgramme() {
     const data = await client.fetch(programmeQuery);
-    console.log("Sanity programme:", data);
+    console.log(
+      "SANITY PROGRAMME IDS",
+      data.map((item: any) => item.id)
+    );
     setSanityProgramme(data);
   }
 
