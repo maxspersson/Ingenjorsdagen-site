@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Lora } from "next/font/google";
 import "./globals.css";
+import SiteHeader from "@/app/components/SiteHeader";
 
 const lora = Lora({
   subsets: ["latin"],
@@ -19,7 +20,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="sv">
-      <body className={lora.className}>{children}</body>
+      <body className={lora.className}>
+        <SiteHeader />
+
+        <main className="pt-[126px] sm:pt-[140px] md:pt-[186px]">
+          {children}
+        </main>
+      </body>
     </html>
   );
 }
