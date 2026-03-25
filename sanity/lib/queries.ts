@@ -55,3 +55,28 @@ export const masterclassesQuery = groq`
     details
   }
 `
+export const engineeringDayPageQuery = `
+  *[_type == "engineeringDayPage"][0]{
+    hero{
+      dateText,
+      title,
+      subtitle,
+      ctaText,
+      ctaHref
+    },
+    themeSection{
+      kicker,
+      title,
+      subtitle,
+      body
+    },
+    masterclassesIntro{
+      title,
+      body
+    },
+    programmeIntro{
+      title,
+      body
+    }
+  }
+`

@@ -7,6 +7,7 @@ import { client } from "@/sanity/lib/client";
 import { partnersQuery, programmeQuery } from "@/sanity/lib/queries";
 import { masterclassesQuery } from "@/sanity/lib/queries";
 import { PortableText } from "@portabletext/react";
+import { engineeringDayPageQuery } from "@/sanity/lib/queries";
 
 const portableTextComponents = {
   block: {
@@ -309,6 +310,7 @@ export default function EngineeringDayPage() {
   const [sanityPartners, setSanityPartners] = useState<any[]>([]);
   const [sanityProgramme, setSanityProgramme] = useState<ProgrammeItem[]>([]);
   const [sanityMasterclasses, setSanityMasterclasses] = useState<any[]>([]);
+  const [pageData, setPageData] = useState<any>(null);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -355,6 +357,16 @@ export default function EngineeringDayPage() {
   }
 
   loadMasterclasses();
+}, []);
+
+useEffect(() => {
+  async function loadPageData() {
+    const data = await client.fetch(engineeringDayPageQuery);
+    console.log("PAGE DATA", data);
+    setPageData(data);
+  }
+
+  loadPageData();
 }, []);
 
   const handleMasterclassClick = (index: number) => {
@@ -418,24 +430,29 @@ const rows = [
 
         <div className="relative z-10 max-w-4xl py-20 sm:py-24">
           <p className="mb-6 text-[10px] uppercase tracking-[0.28em] text-white/80 sm:text-[11px] sm:tracking-[0.4em] md:mb-8">
-            OCTOBER 21, 2026 – STOCKHOLM
+            {pageData?.hero?.dateText || "OCTOBER 21, 2026 – STOCKHOLM"}
           </p>
 
           <h1 className="mb-8 font-serif text-[2.7rem] font-light leading-[1.02] sm:text-[3.35rem] md:mb-10 md:text-7xl lg:text-8xl">
-            Engineering Day
-            <br />
-            2026
-          </h1>
+  {pageData?.hero?.title || (
+    <>
+      Engineering Day
+      <br />
+      2026
+    </>
+  )}
+</h1>
 
-          <p className="mb-10 text-[1.02rem] opacity-90 sm:text-[1.1rem] md:mb-12 md:text-xl">
-            We the engineers. Together. For the future.
-          </p>
+         <p className="mb-10 text-[1.02rem] opacity-90 sm:text-[1.1rem] md:mb-12 md:text-xl">
+  {pageData?.hero?.subtitle || "We the engineers. Together. For the future."}
+</p>
 
-          <button
-            className={`${firaSans.className} bg-[#d9a441] px-8 py-3 text-[11px] uppercase tracking-[0.24em] text-white shadow-lg transition hover:bg-[#c8932f] sm:px-10 sm:py-3.5 md:px-14 md:py-4 md:text-xs md:tracking-[0.3em]`}
-          >
-            BOOK YOUR SPOT
-          </button>
+<a
+  href={pageData?.hero?.ctaHref || "#"}
+  className={`${firaSans.className} inline-block bg-[#d9a441] px-8 py-3 text-[11px] uppercase tracking-[0.24em] text-white shadow-lg transition hover:bg-[#c8932f] sm:px-10 sm:py-3.5 md:px-14 md:py-4 md:text-xs md:tracking-[0.3em]`}
+>
+  {pageData?.hero?.ctaText || "BOOK YOUR SPOT"}
+</a>
         </div>
       </section>
 
@@ -445,7 +462,7 @@ const rows = [
             <p
               className={`${firaSans.className} mb-4 text-[12px] uppercase tracking-[0.22em] text-[#a27a26] md:text-[13px] md:tracking-[0.24em]`}
             >
-              THIS YEAR&apos;S THEME
+              {pageData?.themeSection?.kicker || "THIS YEAR'S THEME"}
             </p>
 
             <div className="h-px w-14 bg-[#d9a441]" />
@@ -453,39 +470,54 @@ const rows = [
 
           <div className="mx-auto mb-10 max-w-4xl text-center md:mb-14">
             <h2 className="mb-5 font-serif text-[2.35rem] font-light leading-[1.02] text-[#1f1f1f] sm:text-[2.85rem] md:text-[4.25rem] lg:text-[4.85rem]">
-              Engineering Intelligent
-              <br />
-              <span className="block">Machines</span>
-            </h2>
+  {pageData?.themeSection?.title || (
+    <>
+      Engineering Intelligent
+      <br />
+      <span className="block">Machines</span>
+    </>
+  )}
+</h2>
 
             <p className="text-[1.08rem] italic leading-[1.48] text-[#5a5a5a] sm:text-[1.16rem] md:text-[1.48rem]">
-              Where AI enters the physical world
+              {pageData?.themeSection?.subtitle || "Where AI enters the physical world"}
             </p>
           </div>
 
           <div className="mx-auto max-w-3xl">
-            <p className="mb-7 text-[1.03rem] leading-[1.78] text-[#2c2c2c] sm:text-[1.08rem] md:mb-8 md:text-[1.34rem] md:leading-[1.8]">
-              Engineers today face a new kind of problem: how to make
-              intelligent machines function reliably in the messy, unpredictable
-              physical world. AI is no longer confined to controlled
-              environments. It is moving into robots, tools and autonomous
-              systems that must operate safely, respond in real time and
-              interact with people.
-            </p>
+  {pageData?.themeSection?.body ? (
+    <div className="text-[1rem] leading-[1.82] text-[#555] sm:text-[1.05rem] md:text-[1.24rem] md:leading-[1.9]">
+      <PortableText
+        value={pageData.themeSection.body}
+        components={portableTextComponents}
+      />
+    </div>
+  ) : (
+    <>
+      <p className="mb-7 text-[1.03rem] leading-[1.78] text-[#2c2c2c] sm:text-[1.08rem] md:mb-8 md:text-[1.34rem] md:leading-[1.8]">
+        Engineers today face a new kind of problem: how to make
+        intelligent machines function reliably in the messy, unpredictable
+        physical world. AI is no longer confined to controlled
+        environments. It is moving into robots, tools and autonomous
+        systems that must operate safely, respond in real time and
+        interact with people.
+      </p>
 
-            <p className="mb-8 text-[1.03rem] leading-[1.78] text-[#2c2c2c] sm:text-[1.08rem] md:mb-10 md:text-[1.34rem] md:leading-[1.8]">
-              How do we make intelligent machines work in the real world, with
-              real constraints and real consequences?
-            </p>
+      <p className="mb-8 text-[1.03rem] leading-[1.78] text-[#2c2c2c] sm:text-[1.08rem] md:mb-10 md:text-[1.34rem] md:leading-[1.8]">
+        How do we make intelligent machines work in the real world, with
+        real constraints and real consequences?
+      </p>
 
-            <p className="text-[1rem] leading-[1.82] text-[#555] sm:text-[1.05rem] md:text-[1.24rem] md:leading-[1.9]">
-              Engineering Day 2026 brings together engineers working at the
-              center of this shift across robotics, mobility, energy,
-              healthcare and infrastructure. Together we explore what applied
-              machine intelligence means in practice and what this
-              transformation means for the future of engineering.
-            </p>
-          </div>
+      <p className="text-[1rem] leading-[1.82] text-[#555] sm:text-[1.05rem] md:text-[1.24rem] md:leading-[1.9]">
+        Engineering Day 2026 brings together engineers working at the
+        center of this shift across robotics, mobility, energy,
+        healthcare and infrastructure. Together we explore what applied
+        machine intelligence means in practice and what this
+        transformation means for the future of engineering.
+      </p>
+    </>
+  )}
+</div>
         </div>
       </section>
 
@@ -503,29 +535,52 @@ const rows = [
 
           <div className="mx-auto mb-8 max-w-4xl text-center md:mb-12">
             <h2 className="mb-5 font-serif text-[2.1rem] font-light leading-[1.08] text-[#1f1f1f] sm:text-[2.45rem] md:mb-6 md:text-[3.2rem] lg:text-[3.55rem]">
-              Focused sessions.
-              <br />
-              Deeper technical insight.
-            </h2>
+  {pageData?.masterclassesIntro?.title
+  ? pageData.masterclassesIntro.title.split(". ").map((part: string, i: number, arr: string[]) => (
+      <span key={i}>
+        {part}
+        {i < arr.length - 1 && "."}
+        <br />
+      </span>
+    ))
+  : (
+    <>
+      Focused sessions.
+      <br />
+      Deeper technical insight.
+    </>
+  )}
+</h2>
           </div>
 
           <div className="mx-auto mb-10 max-w-3xl md:mb-14">
-            <p className="mb-5 text-[1.02rem] leading-[1.78] text-[#2c2c2c] sm:text-[1.08rem] md:mb-6 md:text-[1.28rem] md:leading-[1.8]">
-              Masterclasses are focused, small-group sessions designed to give
-              engineers deeper insight into real technical challenges.
-            </p>
+  {pageData?.masterclassesIntro?.body ? (
+    <div className="text-[0.98rem] leading-[1.82] text-[#555] sm:text-[1.02rem] md:text-[1.14rem] md:leading-[1.9]">
+      <PortableText
+        value={pageData.masterclassesIntro.body}
+        components={portableTextComponents}
+      />
+    </div>
+  ) : (
+    <>
+      <p className="mb-5 text-[1.02rem] leading-[1.78] text-[#2c2c2c] sm:text-[1.08rem] md:mb-6 md:text-[1.28rem] md:leading-[1.8]">
+        Masterclasses are focused, small-group sessions designed to give
+        engineers deeper insight into real technical challenges.
+      </p>
 
-            <p className="mb-5 text-[1.02rem] leading-[1.78] text-[#2c2c2c] sm:text-[1.08rem] md:mb-6 md:text-[1.28rem] md:leading-[1.8]">
-              Before the main Engineering Day programme begins, participants can
-              join one of four expert-led masterclasses exploring engineering
-              topics in greater depth.
-            </p>
+      <p className="mb-5 text-[1.02rem] leading-[1.78] text-[#2c2c2c] sm:text-[1.08rem] md:mb-6 md:text-[1.28rem] md:leading-[1.8]">
+        Before the main Engineering Day programme begins, participants can
+        join one of four expert-led masterclasses exploring engineering
+        topics in greater depth.
+      </p>
 
-            <p className="text-[0.98rem] leading-[1.82] text-[#555] sm:text-[1.02rem] md:text-[1.14rem] md:leading-[1.9]">
-              Each masterclass lasts <strong>45 minutes</strong> and is limited
-              in size to ensure an engaging and practical learning environment.
-            </p>
-          </div>
+      <p className="text-[0.98rem] leading-[1.82] text-[#555] sm:text-[1.02rem] md:text-[1.14rem] md:leading-[1.9]">
+        Each masterclass lasts <strong>45 minutes</strong> and is limited
+        in size to ensure an engaging and practical learning environment.
+      </p>
+    </>
+  )}
+</div>
 
           <div className="border-t border-black/5 pt-10 md:pt-14">
             <div className="space-y-7 md:space-y-10">
@@ -721,25 +776,48 @@ const rows = [
 
           <div className="mx-auto mb-8 max-w-4xl text-center md:mb-12">
             <h2 className="mb-5 font-serif text-[2.15rem] font-light leading-[1.08] text-[#1f1f1f] sm:text-[2.5rem] md:mb-6 md:text-[3.35rem] lg:text-[3.85rem]">
-              A day designed with
-              <br />
-              clarity, rhythm and depth.
-            </h2>
+  {pageData?.programmeIntro?.title
+    ? pageData.programmeIntro.title.split(". ").map((part: string, i: number, arr: string[]) => (
+        <span key={i}>
+          {part}
+          {i < arr.length - 1 && "."}
+          <br />
+        </span>
+      ))
+    : (
+      <>
+        A day designed with
+        <br />
+        clarity, rhythm and depth.
+      </>
+    )}
+</h2>
           </div>
 
           <div className="mx-auto mb-10 max-w-3xl md:mb-16">
-            <p className="mb-5 text-[1.02rem] leading-[1.78] text-[#2c2c2c] sm:text-[1.08rem] md:mb-6 md:text-[1.28rem] md:leading-[1.8]">
-              The programme moves between focused talks, conversations and
-              shared moments throughout the day, building from technical depth
-              towards broader discussion, recognition and celebration.
-            </p>
+  {pageData?.programmeIntro?.body ? (
+    <div className="text-[0.98rem] leading-[1.82] text-[#555] sm:text-[1.02rem] md:text-[1.14rem] md:leading-[1.9]">
+      <PortableText
+        value={pageData.programmeIntro.body}
+        components={portableTextComponents}
+      />
+    </div>
+  ) : (
+    <>
+      <p className="mb-5 text-[1.02rem] leading-[1.78] text-[#2c2c2c] sm:text-[1.08rem] md:mb-6 md:text-[1.28rem] md:leading-[1.8]">
+        The programme moves between focused talks, conversations and
+        shared moments throughout the day, building from technical depth
+        towards broader discussion, recognition and celebration.
+      </p>
 
-            <p className="text-[0.98rem] leading-[1.82] text-[#555] sm:text-[1.02rem] md:text-[1.14rem] md:leading-[1.9]">
-              Some sessions contain several talks or conversations in sequence.
-              These are shown with smaller undertimes below the main slot to
-              make the flow immediately clear.
-            </p>
-          </div>
+      <p className="text-[0.98rem] leading-[1.82] text-[#555] sm:text-[1.02rem] md:text-[1.14rem] md:leading-[1.9]">
+        Some sessions contain several talks or conversations in sequence.
+        These are shown with smaller undertimes below the main slot to
+        make the flow immediately clear.
+      </p>
+    </>
+  )}
+</div>
 
           <div className="border-t border-black/5 pt-8 md:pt-12">
             <div className="mx-auto max-w-5xl">
