@@ -4,8 +4,7 @@ import { useEffect, useState } from "react";
 import { Fira_Sans } from "next/font/google";
 import SiteHeader from "@/app/components/SiteHeader";
 import { client } from "@/sanity/lib/client";
-import { partnersQuery } from "@/sanity/lib/queries";
-import { programmeQuery } from "@/sanity/lib/queries";
+import { partnersQuery, programmeQuery } from "@/sanity/lib/queries";
 
 const firaSans = Fira_Sans({
   subsets: ["latin"],
@@ -137,6 +136,7 @@ const masterclasses = [
     ),
   },
 ];
+
 type ProgrammeSubItem = {
   time: string;
   title: string;
@@ -152,6 +152,7 @@ type ProgrammeItem = {
   detailsText?: string;
   subItems?: ProgrammeSubItem[];
 };
+
 const programme: ProgrammeItem[] = [
   {
     id: "registration-masterclass",
@@ -274,10 +275,6 @@ const programme: ProgrammeItem[] = [
   },
 ];
 
-
-
-
-
 export default function EngineeringDayPage() {
   const [activeMasterclass, setActiveMasterclass] = useState<number | null>(
     null
@@ -302,29 +299,27 @@ export default function EngineeringDayPage() {
   }, []);
 
   useEffect(() => {
-  async function loadProgramme() {
-    const data = await client.fetch(programmeQuery);
-    console.log(
-      "SANITY FIRESIDE",
-      data.find((item: any) => item.id === "fireside-chat")
-    );
-    setSanityProgramme(data);
-  }
+    async function loadPartners() {
+      const data = await client.fetch(partnersQuery);
+      console.log("SANITY PARTNERS", data);
+      setSanityPartners(data);
+    }
 
-  loadProgramme();
-}, []);
-useEffect(() => {
-  async function loadProgramme() {
-    const data = await client.fetch(programmeQuery);
-    console.log(
-      "SANITY PROGRAMME IDS",
-      data.map((item: any) => item.id)
-    );
-    setSanityProgramme(data);
-  }
+    loadPartners();
+  }, []);
 
-  loadProgramme();
-}, []);
+  useEffect(() => {
+    async function loadProgramme() {
+      const data = await client.fetch(programmeQuery);
+      console.log(
+        "SANITY PROGRAMME IDS",
+        data.map((item: any) => item.id)
+      );
+      setSanityProgramme(data);
+    }
+
+    loadProgramme();
+  }, []);
 
   const handleMasterclassClick = (index: number) => {
     setActiveMasterclass((prev) => (prev === index ? null : index));
@@ -335,16 +330,22 @@ useEffect(() => {
   };
 
   const rows = [masterclasses.slice(0, 2), masterclasses.slice(2, 4)];
-const foundingPartnersFromSanity = sanityPartners.filter(
-  (partner) => partner.tier === "founding"
-);
-const partnersFromSanity = sanityPartners.filter(
-  (partner) => partner.tier === "partner"
-);
-const programmeToRender: ProgrammeItem[] = programme.map((defaultItem) => {
-  const sanityItem = sanityProgramme.find((item) => item.id === defaultItem.id);
-  return sanityItem || defaultItem;
-});
+
+  const foundingPartnersFromSanity = sanityPartners.filter(
+    (partner) => partner.tier === "founding"
+  );
+
+  const partnersFromSanity = sanityPartners.filter(
+    (partner) => partner.tier === "partner"
+  );
+
+  const programmeToRender: ProgrammeItem[] = programme.map((defaultItem) => {
+    const sanityItem = sanityProgramme.find(
+      (item) => item.id === defaultItem.id
+    );
+    return sanityItem || defaultItem;
+  });
+
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#f3f1ed] text-[#1f1f1f]">
       <SiteHeader />
@@ -816,8 +817,8 @@ const programmeToRender: ProgrammeItem[] = programme.map((defaultItem) => {
                   <div key={partner.name} className="group flex justify-center">
                     <div className="relative flex h-[112px] w-[112px] items-center justify-center transition-transform duration-300 group-hover:-translate-y-[3px] sm:h-[126px] sm:w-[126px]">
                       <img
-  src={partner.logo?.asset?.url}
-  alt={partner.alt || partner.name}
+                        src={partner.logo?.asset?.url}
+                        alt={partner.alt || partner.name}
                         className="h-full w-full object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.16)]"
                       />
                     </div>
@@ -830,9 +831,9 @@ const programmeToRender: ProgrammeItem[] = programme.map((defaultItem) => {
                   <div key={partner.name} className="group flex justify-center">
                     <div className="relative flex h-[112px] w-[112px] items-center justify-center transition-transform duration-300 group-hover:-translate-y-[3px] sm:h-[126px] sm:w-[126px]">
                       <img
-  src={partner.logo?.asset?.url}
-  alt={partner.alt || partner.name}
-                       className="h-full w-full object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.16)]"
+                        src={partner.logo?.asset?.url}
+                        alt={partner.alt || partner.name}
+                        className="h-full w-full object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.16)]"
                       />
                     </div>
                   </div>
@@ -845,8 +846,8 @@ const programmeToRender: ProgrammeItem[] = programme.map((defaultItem) => {
                 <div key={partner.name} className="group flex justify-center">
                   <div className="relative flex h-[158px] w-[158px] items-center justify-center transition-transform duration-300 group-hover:-translate-y-[3px]">
                     <img
-  src={partner.logo?.asset?.url}
-  alt={partner.alt || partner.name}
+                      src={partner.logo?.asset?.url}
+                      alt={partner.alt || partner.name}
                       className="h-full w-full object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.16)]"
                     />
                   </div>
@@ -868,22 +869,24 @@ const programmeToRender: ProgrammeItem[] = programme.map((defaultItem) => {
               {partnersFromSanity.map((partner, index) => (
                 <div
                   key={partner.name}
-                 className={`flex h-[96px] w-full items-center justify-center transition-transform duration-300 hover:-translate-y-[2px] md:h-[110px] ${
-                   partnersFromSanity.length % 2 === 1 &&
-index === partnersFromSanity.length - 1
+                  className={`flex h-[96px] w-full items-center justify-center transition-transform duration-300 hover:-translate-y-[2px] md:h-[110px] ${
+                    partnersFromSanity.length % 2 === 1 &&
+                    index === partnersFromSanity.length - 1
                       ? "col-span-2"
                       : ""
                   } md:col-span-1`}
                 >
                   {partner.logo?.asset?.url ? (
-  <img
-    src={partner.logo.asset.url}
-    alt={partner.alt || partner.name}
-    className="max-h-[70%] max-w-[78%] object-contain md:max-h-[70%] md:max-w-[70%]"
-  />
-) : (
-  <span className="text-sm text-red-500">{partner.name} missing logo</span>
-)}
+                    <img
+                      src={partner.logo.asset.url}
+                      alt={partner.alt || partner.name}
+                      className="max-h-[70%] max-w-[78%] object-contain md:max-h-[70%] md:max-w-[70%]"
+                    />
+                  ) : (
+                    <span className="text-sm text-red-500">
+                      {partner.name} missing logo
+                    </span>
+                  )}
                 </div>
               ))}
             </div>
