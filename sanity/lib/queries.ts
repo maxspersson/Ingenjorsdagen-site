@@ -80,3 +80,6 @@ export const engineeringDayPageQuery = `
     }
   }
 `
+export const homePageQuery = `
+  *[_type == "homePage"][0]
+`

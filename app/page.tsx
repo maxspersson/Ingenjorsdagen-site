@@ -1,7 +1,10 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { Fira_Sans } from "next/font/google";
 import SiteHeader from "@/app/components/SiteHeader";
+import { client } from "@/sanity/lib/client";
+import { homePageQuery } from "@/sanity/lib/queries";
 
 const firaSans = Fira_Sans({
   subsets: ["latin"],
@@ -9,6 +12,18 @@ const firaSans = Fira_Sans({
 });
 
 export default function Home() {
+  const [pageData, setPageData] = useState<any>(null);
+
+  useEffect(() => {
+    async function loadPageData() {
+      const data = await client.fetch(homePageQuery);
+      console.log("HOME PAGE DATA", data);
+      setPageData(data);
+    }
+
+    loadPageData();
+  }, []);
+
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#f3f1ed] text-[#1f1f1f]">
       <SiteHeader />
@@ -51,36 +66,56 @@ export default function Home() {
               <p
                 className={`${firaSans.className} mb-6 text-[10px] uppercase tracking-[0.26em] text-[#d9a441] sm:mb-7 md:mb-8 md:text-[11px]`}
               >
-                A Platform for Engineering
+                {pageData?.hero?.kicker || "A Platform for Engineering"}
               </p>
 
               <h1 className="font-serif text-[2.7rem] leading-[0.94] tracking-[-0.04em] text-[#f7f1e8] sm:text-[3.4rem] md:text-[5rem] lg:text-[6.4rem]">
-                Engineering,
-                <br />
-                ideas and the future
-                <br />
-                built into one platform.
-              </h1>
+  {pageData?.hero?.title ? (
+    <>
+      Engineering,
+      <br />
+      ideas and the future
+      <br />
+      built into one
+      <br />
+      platform.
+    </>
+  ) : (
+    <>
+      Engineering,
+      <br />
+      ideas and the future
+      <br />
+      built into one
+      <br />
+      platform.
+    </>
+  )}
+</h1>
 
               <p className="mt-6 max-w-[39rem] text-[1rem] leading-[1.75] text-white/78 sm:mt-7 sm:text-[1.06rem] md:mt-8 md:text-[1.18rem] md:leading-[1.9]">
-                Engineering Day is more than a single event. It is a platform
-                for conversations, recognition, talent and the engineering
-                ideas shaping what comes next.
+                {pageData?.hero?.subtitle ||
+                  "Engineering Day is more than a single event. It is a platform for conversations, recognition, talent and the engineering ideas shaping what comes next."}
               </p>
 
               <div className="mt-8 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:flex-wrap sm:gap-4 md:mt-12">
                 <a
-                  href="/engineering-day-2026"
+                  href={pageData?.hero?.primaryCtaHref || "/engineering-day-2026"}
                   className={`${firaSans.className} inline-flex min-h-[54px] items-center justify-center bg-[#d9a441] px-6 text-[10px] font-medium uppercase tracking-[0.22em] text-white transition-colors hover:bg-[#c8932f] sm:px-8 sm:text-[11px]`}
                 >
-                  Explore Engineering Day 2026
+                  {pageData?.hero?.primaryCtaText ||
+                    "Explore Engineering Day 2026"}
                 </a>
 
                 <a
-                  href="/the-grand-prize-for-engineering"
+                  href={
+                    pageData?.hero?.secondaryCtaHref ||
+                    "/the-grand-prize-for-engineering"
+                  }
                   className={`${firaSans.className} inline-flex min-h-[54px] items-center justify-center border border-white/18 bg-white/5 px-6 text-[10px] font-medium uppercase tracking-[0.22em] text-[#f7f1e8] transition-colors hover:bg-white/10 sm:px-8 sm:text-[11px]`}
                 >
-                  The Grand Prize for Engineering
+                  {pageData?.hero?.secondaryCtaText ||
+                    "The Grand Prize for Engineering"}
                 </a>
               </div>
             </div>
@@ -203,82 +238,81 @@ export default function Home() {
         </div>
       </section>
 
-<section className="bg-[#f3f1ed] px-6 md:px-12 lg:px-20 py-24">
-  <div className="max-w-6xl mx-auto">
-    <p className="text-[#d9a441] uppercase tracking-[0.3em] text-[10px] md:text-sm text-center">
-      FOUNDING PARTNERS 2026
-    </p>
+      <section className="bg-[#f3f1ed] px-6 md:px-12 lg:px-20 py-24">
+        <div className="max-w-6xl mx-auto">
+          <p className="text-[#d9a441] uppercase tracking-[0.3em] text-[10px] md:text-sm text-center">
+            FOUNDING PARTNERS 2026
+          </p>
 
-    {/* Mobil: 3 + 2 */}
-    <div className="mt-10 md:hidden">
-      <div className="grid grid-cols-3 justify-items-center gap-x-4 gap-y-10">
-        <img
-          src="/Saab-Logo.png"
-          alt="Saab"
-          className="h-[92px] w-auto object-contain"
-        />
+          <div className="mt-10 md:hidden">
+            <div className="grid grid-cols-3 justify-items-center gap-x-4 gap-y-10">
+              <img
+                src="/Saab-Logo.png"
+                alt="Saab"
+                className="h-[92px] w-auto object-contain"
+              />
 
-        <img
-          src="/Varopreem-Logo.png"
-          alt="VAROPreem"
-          className="h-[92px] w-auto object-contain"
-        />
+              <img
+                src="/Varopreem-Logo.png"
+                alt="VAROPreem"
+                className="h-[92px] w-auto object-contain"
+              />
 
-        <img
-          src="/Skanska-Logo.png"
-          alt="Skanska"
-          className="h-[92px] w-auto object-contain"
-        />
-      </div>
+              <img
+                src="/Skanska-Logo.png"
+                alt="Skanska"
+                className="h-[92px] w-auto object-contain"
+              />
+            </div>
 
-      <div className="mt-10 flex items-center justify-center gap-12">
-        <img
-          src="/Sweco-Logo.png"
-          alt="Sweco"
-          className="h-[92px] w-auto object-contain"
-        />
+            <div className="mt-10 flex items-center justify-center gap-12">
+              <img
+                src="/Sweco-Logo.png"
+                alt="Sweco"
+                className="h-[92px] w-auto object-contain"
+              />
 
-        <img
-          src="/Trafikverket-Logo.png"
-          alt="Trafikverket"
-          className="h-[92px] w-auto object-contain"
-        />
-      </div>
-    </div>
+              <img
+                src="/Trafikverket-Logo.png"
+                alt="Trafikverket"
+                className="h-[92px] w-auto object-contain"
+              />
+            </div>
+          </div>
 
-    {/* Desktop: 5 på rad */}
-    <div className="mt-14 hidden md:flex items-center justify-center gap-18 lg:gap-24">
-      <img
-        src="/Saab-Logo.png"
-        alt="Saab"
-className="h-[192px] lg:h-[180px] w-auto object-contain"      />
+          <div className="mt-14 hidden md:flex items-center justify-center gap-18 lg:gap-24">
+            <img
+              src="/Saab-Logo.png"
+              alt="Saab"
+              className="h-[192px] lg:h-[180px] w-auto object-contain"
+            />
 
-      <img
-        src="/Varopreem-Logo.png"
-        alt="VAROPreem"
-        className="h-[192px] lg:h-[180px] w-auto object-contain"
-      />
+            <img
+              src="/Varopreem-Logo.png"
+              alt="VAROPreem"
+              className="h-[192px] lg:h-[180px] w-auto object-contain"
+            />
 
-      <img
-        src="/Skanska-Logo.png"
-        alt="Skanska"
-        className="h-[192px] lg:h-[180px] w-auto object-contain"
-      />
+            <img
+              src="/Skanska-Logo.png"
+              alt="Skanska"
+              className="h-[192px] lg:h-[180px] w-auto object-contain"
+            />
 
-      <img
-        src="/Sweco-Logo.png"
-        alt="Sweco"
-        className="h-[192px] lg:h-[180px] w-auto object-contain"
-      />
+            <img
+              src="/Sweco-Logo.png"
+              alt="Sweco"
+              className="h-[192px] lg:h-[180px] w-auto object-contain"
+            />
 
-      <img
-        src="/Trafikverket-Logo.png"
-        alt="Trafikverket"
-        className="h-[192px] lg:h-[180px] w-auto object-contain"
-      />
-    </div>
-  </div>
-</section>
+            <img
+              src="/Trafikverket-Logo.png"
+              alt="Trafikverket"
+              className="h-[192px] lg:h-[180px] w-auto object-contain"
+            />
+          </div>
+        </div>
+      </section>
 
       <footer className="bg-[#f3f1ed] pt0 pb-12 md:pt0 md:pb-14">
         <div className="mx-auto max-w-3xl px-5 text-center md:px-6">
