@@ -33,3 +33,25 @@ export const programmeQuery = groq`
     }
   }
 `
+export const masterclassesQuery = groq`
+  *[_type == "masterclass"] | order(order asc) {
+    _id,
+    order,
+    kicker,
+    title,
+    speaker,
+    role,
+    company,
+    image {
+      asset->{
+        url
+      }
+    },
+    avatar {
+      asset->{
+        url
+      }
+    },
+    details
+  }
+`

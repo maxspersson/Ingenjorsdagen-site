@@ -5,6 +5,32 @@ import { Fira_Sans } from "next/font/google";
 import SiteHeader from "@/app/components/SiteHeader";
 import { client } from "@/sanity/lib/client";
 import { partnersQuery, programmeQuery } from "@/sanity/lib/queries";
+import { masterclassesQuery } from "@/sanity/lib/queries";
+import { PortableText } from "@portabletext/react";
+
+const portableTextComponents = {
+  block: {
+    normal: ({ children }: any) => (
+      <p className="mb-5 last:mb-0">{children}</p>
+    ),
+    h3: ({ children }: any) => (
+      <h3 className="mb-3 font-semibold text-[#242424]">{children}</h3>
+    ),
+  },
+  list: {
+    bullet: ({ children }: any) => (
+      <ul className="mb-8 list-disc space-y-3 pl-5">{children}</ul>
+    ),
+  },
+  listItem: {
+    bullet: ({ children }: any) => <li>{children}</li>,
+  },
+  marks: {
+    strong: ({ children }: any) => (
+      <strong className="font-semibold text-[#242424]">{children}</strong>
+    ),
+  },
+};
 
 const firaSans = Fira_Sans({
   subsets: ["latin"],
@@ -282,6 +308,7 @@ export default function EngineeringDayPage() {
   const [activeProgramme, setActiveProgramme] = useState<string | null>(null);
   const [sanityPartners, setSanityPartners] = useState<any[]>([]);
   const [sanityProgramme, setSanityProgramme] = useState<ProgrammeItem[]>([]);
+  const [sanityMasterclasses, setSanityMasterclasses] = useState<any[]>([]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -320,6 +347,15 @@ export default function EngineeringDayPage() {
 
     loadProgramme();
   }, []);
+  useEffect(() => {
+  async function loadMasterclasses() {
+    const data = await client.fetch(masterclassesQuery);
+    console.log("SANITY MASTERCLASSES", data);
+    setSanityMasterclasses(data);
+  }
+
+  loadMasterclasses();
+}, []);
 
   const handleMasterclassClick = (index: number) => {
     setActiveMasterclass((prev) => (prev === index ? null : index));
@@ -329,7 +365,30 @@ export default function EngineeringDayPage() {
     setActiveProgramme((prev) => (prev === id ? null : id));
   };
 
-  const rows = [masterclasses.slice(0, 2), masterclasses.slice(2, 4)];
+  const masterclassesToRender = masterclasses.map((defaultItem, index) => {
+  const sanityItem = sanityMasterclasses.find(
+    (item: any) => item.order === index + 1
+  );
+
+  if (!sanityItem) return defaultItem;
+
+  return {
+    ...defaultItem,
+    kicker: sanityItem.kicker || defaultItem.kicker,
+    title: sanityItem.title || defaultItem.title,
+    speaker: sanityItem.speaker || defaultItem.speaker,
+    role: sanityItem.role || defaultItem.role,
+    company: sanityItem.company || defaultItem.company,
+    image: sanityItem.image?.asset?.url || defaultItem.image,
+    avatar: sanityItem.avatar?.asset?.url || defaultItem.avatar,
+    details: sanityItem.details || null,
+  };
+});
+
+const rows = [
+  masterclassesToRender.slice(0, 2),
+  masterclassesToRender.slice(2, 4),
+];
 
   const foundingPartnersFromSanity = sanityPartners.filter(
     (partner) => partner.tier === "founding"
@@ -479,9 +538,9 @@ export default function EngineeringDayPage() {
                   activeMasterclass <= rowEndIndex;
 
                 const selectedMasterclass =
-                  rowHasActive && activeMasterclass !== null
-                    ? masterclasses[activeMasterclass]
-                    : null;
+  rowHasActive && activeMasterclass !== null
+    ? masterclassesToRender[activeMasterclass]
+    : null;
 
                 return (
                   <div key={rowIndex} className="space-y-4 md:space-y-5">
@@ -591,8 +650,12 @@ export default function EngineeringDayPage() {
                                   </div>
 
                                   <div className="max-w-[52rem] text-[0.98rem] leading-[1.85] text-[#434343]">
-                                    {item.body}
-                                  </div>
+  {"details" in item && item.details ? (
+   <PortableText value={item.details} components={portableTextComponents} />
+  ) : (
+    item.body
+  )}
+</div>
                                 </div>
                               </div>
                             ) : null}
@@ -622,8 +685,17 @@ export default function EngineeringDayPage() {
                           </div>
 
                           <div className="max-w-[52rem] text-[1.08rem] leading-[1.95] text-[#434343]">
-                            {selectedMasterclass.body}
-                          </div>
+  {selectedMasterclass &&
+  "details" in selectedMasterclass &&
+  selectedMasterclass.details ? (
+    <PortableText
+  value={selectedMasterclass.details}
+  components={portableTextComponents}
+/>
+  ) : (
+    selectedMasterclass?.body
+  )}
+</div>
                         </div>
                       </div>
                     ) : null}
