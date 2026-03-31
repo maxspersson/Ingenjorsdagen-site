@@ -4,10 +4,11 @@ import { useEffect, useState } from "react";
 import SiteHeader from "@/app/components/SiteHeader";
 import { Fira_Sans } from "next/font/google";
 import { client } from "@/sanity/lib/client";
-import { attendingHeroesPageQuery } from "@/sanity/lib/queries";
-import { speakersQuery } from "@/sanity/lib/queries";
-import { sessionGroupsQuery } from "@/sanity/lib/queries";
-
+import {
+  attendingHeroesPageQuery,
+  speakersQuery,
+  sessionGroupsQuery,
+} from "@/sanity/lib/queries";
 
 const firaSans = Fira_Sans({
   subsets: ["latin"],
@@ -28,379 +29,16 @@ type Person = {
   order?: number;
 };
 
-const hasPlacement = (person: Person, placement: string) =>
-  person.placements?.includes(placement);
-
 type SessionGroup = {
   title: string;
   description?: string;
+  type?: string;
+  order?: number;
   people: Person[];
 };
 
-const featuredPeople: Person[] = [
-  {
-    name: "Anna Svensson",
-    title: "Chief Technology Officer",
-    company: "Nordic Systems",
-    image: "/speaker1.jpg",
-    format: "Keynote",
-    session: "Closing keynote",
-    focus:
-      "A final reflection on engineering, leadership and what the conversations of the day reveal about where the field is heading next.",
-    bio:
-      "Anna Svensson leads technology and engineering strategy at Nordic Systems. Her work focuses on scaling technical capability, building resilient teams and ensuring that engineering remains close to both execution and long-term direction.",
-  },
-  {
-    name: "Johan Berg",
-    title: "Moderator",
-    company: "Engineering Day",
-    image: "/johan-berg.jpg",
-    format: "Moderator",
-    session: "Main stage",
-    focus:
-      "Guiding the day across talks, panels and fireside conversations, while connecting different themes into one coherent programme.",
-    bio:
-      "Johan Berg is an experienced moderator and communicator with a strong understanding of engineering, innovation and how to create conversations that are both accessible and substantial.",
-  },
-  {
-    name: "Lisa Andersson",
-    title: "Head of Product and Engineering",
-    company: "Innovation AB",
-    image: "/speaker3.jpg",
-    format: "Panel",
-    session: "The future of engineering leadership",
-    focus:
-      "What engineering leadership looks like when product, technology and organisational change need to move together.",
-    bio:
-      "Lisa Andersson works at the intersection of product development, engineering and strategy. She is known for building teams and structures that turn technical ambition into real progress.",
-  },
-];
-
-const heroTalks: Person[] = [
-  {
-    name: "David Holm",
-    title: "Engineering Director",
-    company: "Future Systems",
-    image: "/speaker6.jpg",
-    format: "Hero Talk",
-    session: "Hero Talk",
-    focus:
-      "What engineering organisations need in order to navigate constant technological change without losing direction.",
-    bio:
-      "David Holm has led large-scale engineering organisations across product, platform and systems development, with a focus on clarity, structure and technical depth.",
-  },
-  {
-    name: "Sara Lind",
-    title: "Sustainability Lead",
-    company: "Green Industry",
-    image: "/speaker7.jpg",
-    format: "Hero Talk",
-    session: "Hero Talk",
-    focus:
-      "How technical decisions shape sustainability outcomes in practice, and why engineering expertise matters in the transition.",
-    bio:
-      "Sara Lind works with engineering-led sustainability strategy, helping organisations connect technology choices with long-term environmental and societal impact.",
-  },
-  {
-    name: "Maria Nilsson",
-    title: "Research Lead",
-    company: "AI Labs",
-    image: "/speaker5.jpg",
-    format: "Hero Talk",
-    session: "Hero Talk",
-    focus:
-      "Where applied AI creates real value, and where engineering judgement still matters most.",
-    bio:
-      "Maria Nilsson works with applied research and industrial AI, focusing on the distance between experimentation, implementation and long-term usefulness.",
-  },
-  {
-    name: "Erik Johansson",
-    title: "VP Engineering",
-    company: "Tech AB",
-    image: "/speaker4.jpg",
-    format: "Hero Talk",
-    session: "Hero Talk",
-    focus:
-      "Building engineering cultures that balance speed, quality and responsibility in periods of rapid change.",
-    bio:
-      "Erik Johansson leads engineering teams focused on digital transformation, technical quality and operational resilience.",
-  },
-  {
-    name: "Sofia Mark",
-    title: "People & Engineering Lead",
-    company: "Growth Tech",
-    image: "/speaker16.jpg",
-    format: "Hero Talk",
-    session: "Hero Talk",
-    focus:
-      "How talent, culture and technical environments influence what engineering organisations can actually achieve.",
-    bio:
-      "Sofia Mark works with engineering organisations where people, leadership and technical capability need to evolve together over time.",
-  },
-];
-
-const panelSessions: SessionGroup[] = [
-  {
-    title: "Panel: The future of engineering leadership",
-    description:
-      "A conversation on leadership, accountability and how engineering organisations change when technology becomes a strategic core capability.",
-    people: [
-      {
-        name: "Lisa Andersson",
-        title: "Head of Product and Engineering",
-        company: "Innovation AB",
-        image: "/speaker3.jpg",
-        format: "Panel",
-        session: "The future of engineering leadership",
-        focus:
-          "What engineering leadership looks like when product, technology and organisational change need to move together.",
-        bio:
-          "Lisa Andersson works at the intersection of product development, engineering and strategy. She is known for building teams and structures that turn technical ambition into real progress.",
-      },
-      {
-        name: "Karin Holm",
-        title: "Chief Engineer",
-        company: "North Systems",
-        image: "/speaker8.jpg",
-        format: "Panel",
-        session: "The future of engineering leadership",
-        focus:
-          "How engineering leaders can stay technically grounded while taking broader strategic responsibility.",
-        bio:
-          "Karin Holm has led engineering organisations through transformation, growth and increased complexity, always with a strong focus on technical credibility.",
-      },
-      {
-        name: "Oskar Lindberg",
-        title: "Chief Technology Officer",
-        company: "ScaleWorks",
-        image: "/speaker9.jpg",
-        format: "Panel",
-        session: "The future of engineering leadership",
-        focus:
-          "What changes when engineering becomes central not only to product development, but to the business as a whole.",
-        bio:
-          "Oskar Lindberg works with scaling engineering teams and aligning product, technology and organisational structure.",
-      },
-    ],
-  },
-  {
-    title: "Panel: Engineering for a more resilient society",
-    description:
-      "On infrastructure, sustainability and the role of engineering in shaping systems that can last and adapt over time.",
-    people: [
-      {
-        name: "Jonas Ek",
-        title: "Head of Innovation",
-        company: "Infra Group",
-        image: "/speaker11.jpg",
-        format: "Panel",
-        session: "Engineering for a more resilient society",
-        focus:
-          "How engineering decisions in infrastructure influence resilience far beyond the immediate project.",
-        bio:
-          "Jonas Ek works with innovation and systems development in infrastructure-heavy environments where reliability and long-term thinking are essential.",
-      },
-      {
-        name: "Nina Fors",
-        title: "Sustainability Director",
-        company: "Urban Future",
-        image: "/speaker12.jpg",
-        format: "Panel",
-        session: "Engineering for a more resilient society",
-        focus:
-          "Where sustainability and engineering intersect in real-world decision-making and implementation.",
-        bio:
-          "Nina Fors focuses on sustainable development, technical implementation and the long-term resilience of cities and systems.",
-      },
-      {
-        name: "Peter Lund",
-        title: "Program Manager",
-        company: "Energy Systems",
-        image: "/speaker13.jpg",
-        format: "Panel",
-        session: "Engineering for a more resilient society",
-        focus:
-          "How engineering, energy transition and systems stability connect in practice.",
-        bio:
-          "Peter Lund leads strategic engineering initiatives linked to energy transition, infrastructure and long-term systems performance.",
-      },
-    ],
-  },
-];
-
-const firesideSessions: SessionGroup[] = [
-  {
-    title: "Fireside: Building technology that lasts",
-    description:
-      "A smaller-format conversation on durability, technical depth and why some engineering decisions matter for much longer than expected.",
-    people: [
-      {
-        name: "Helena Söder",
-        title: "Chief Architect",
-        company: "Core Systems",
-        image: "/speaker14.jpg",
-        format: "Fireside",
-        session: "Building technology that lasts",
-        focus:
-          "Why long-term engineering value is often decided early, in architecture, trade-offs and technical priorities.",
-        bio:
-          "Helena Söder has deep experience in architecture, systems design and long-horizon product development across technically demanding environments.",
-      },
-      {
-        name: "Mikael Strand",
-        title: "Engineering Advisor",
-        company: "Tech Forum",
-        image: "/speaker15.jpg",
-        format: "Fireside",
-        session: "Building technology that lasts",
-        focus:
-          "How engineering teams can make better long-term decisions even when short-term pressure is high.",
-        bio:
-          "Mikael Strand advises engineering leaders on technical strategy, system longevity and organisational design.",
-      },
-    ],
-  },
-  {
-    title: "Fireside: Talent, growth and technical culture",
-    description:
-      "On what attracts engineers today and how strong technical cultures are built, maintained and made visible.",
-    people: [
-      {
-        name: "Sofia Mark",
-        title: "People & Engineering Lead",
-        company: "Growth Tech",
-        image: "/speaker16.jpg",
-        format: "Fireside",
-        session: "Talent, growth and technical culture",
-        focus:
-          "How engineering culture shapes hiring, retention and the long-term strength of technical organisations.",
-        bio:
-          "Sofia Mark works with engineering organisations where people, leadership and technical environments need to evolve together over time.",
-      },
-      {
-        name: "Emma Dahl",
-        title: "VP Technology",
-        company: "Advanced Tech",
-        image: "/speaker10.jpg",
-        format: "Fireside",
-        session: "Talent, growth and technical culture",
-        focus:
-          "What technical leaders can do to make engineering environments more attractive, durable and ambitious.",
-        bio:
-          "Emma Dahl has extensive experience in engineering strategy, systems thinking and organisational change in technology-heavy businesses.",
-      },
-    ],
-  },
-];
-
-const masterclassSessions: SessionGroup[] = [
-  {
-    title: "Masterclass: Applied AI in engineering workflows",
-    description:
-      "A practical session on how AI can support engineering work without replacing judgement, structure or technical responsibility.",
-    people: [
-      {
-        name: "Maria Nilsson",
-        title: "Research Lead",
-        company: "AI Labs",
-        image: "/speaker5.jpg",
-        format: "Masterclass",
-        session: "Applied AI in engineering workflows",
-        focus:
-          "How teams can work with AI in ways that are useful, grounded and technically meaningful.",
-        bio:
-          "Maria Nilsson works with applied research and industrial AI, focusing on the gap between experimentation, implementation and long-term usefulness.",
-      },
-    ],
-  },
-  {
-    title: "Masterclass: Engineering leadership in practice",
-    description:
-      "A smaller session on navigating structure, complexity and execution when engineering teams grow or change rapidly.",
-    people: [
-      {
-        name: "Erik Johansson",
-        title: "VP Engineering",
-        company: "Tech AB",
-        image: "/speaker4.jpg",
-        format: "Masterclass",
-        session: "Engineering leadership in practice",
-        focus:
-          "What engineering leaders need when clarity, direction and execution all need to happen at once.",
-        bio:
-          "Erik Johansson leads engineering teams focused on digital transformation, technical quality and operational resilience.",
-      },
-    ],
-  },
-  {
-    title: "Masterclass: Sustainable systems in practice",
-    description:
-      "A focused session on how sustainability ambitions are translated into engineering decisions, trade-offs and measurable outcomes.",
-    people: [
-      {
-        name: "Sara Lind",
-        title: "Sustainability Lead",
-        company: "Green Industry",
-        image: "/speaker7.jpg",
-        format: "Masterclass",
-        session: "Sustainable systems in practice",
-        focus:
-          "How engineering teams can work with sustainability in concrete ways, without turning it into a parallel track.",
-        bio:
-          "Sara Lind works with engineering-led sustainability strategy, helping organisations connect technology choices with long-term environmental and societal impact.",
-      },
-    ],
-  },
-  {
-    title: "Masterclass: Product, systems and execution",
-    description:
-      "On how engineering, product and technical execution can align more clearly in organisations where complexity keeps growing.",
-    people: [
-      {
-        name: "Lisa Andersson",
-        title: "Head of Product and Engineering",
-        company: "Innovation AB",
-        image: "/speaker3.jpg",
-        format: "Masterclass",
-        session: "Product, systems and execution",
-        focus:
-          "How to build stronger connections between engineering decisions, product direction and long-term delivery capability.",
-        bio:
-          "Lisa Andersson works at the intersection of product development, engineering and strategy. She is known for building teams and structures that turn technical ambition into real progress.",
-      },
-    ],
-  },
-];
-
-const moderator: Person[] = [
-  {
-    name: "Johan Berg",
-    title: "Moderator",
-    company: "Engineering Day",
-    image: "/speaker2.jpg",
-    format: "Moderator",
-    session: "Main stage",
-    focus:
-      "Guiding the day across talks, panels and fireside conversations, while connecting different themes into one coherent programme.",
-    bio:
-      "Johan Berg is an experienced moderator and communicator with a strong understanding of engineering, innovation and how to create conversations that are both accessible and substantial.",
-  },
-];
-
-const keynote: Person[] = [
-  {
-    name: "Anna Svensson",
-    title: "Chief Technology Officer",
-    company: "Nordic Systems",
-    image: "/speaker1.jpg",
-    format: "Keynote",
-    session: "Closing keynote",
-    focus:
-      "A final reflection on engineering, leadership and what the conversations of the day reveal about where the field is heading next.",
-    bio:
-      "Anna Svensson leads technology and engineering strategy at Nordic Systems. Her work focuses on scaling technical capability, building resilient teams and ensuring that engineering remains close to both execution and long-term direction.",
-  },
-];
+const hasPlacement = (person: Person, placement: string) =>
+  person.placements?.includes(placement);
 
 function SpeakerCard({
   person,
@@ -421,10 +59,10 @@ function SpeakerCard({
 
       <div className="pt-4">
         <p
-  className={`${firaSans.className} text-[10px] uppercase tracking-[0.18em] text-[#8b8276]`}
->
-  {person.cardLabel || person.format}
-</p>
+          className={`${firaSans.className} text-[10px] uppercase tracking-[0.18em] text-[#8b8276]`}
+        >
+          {person.cardLabel || person.format}
+        </p>
 
         <h3 className="mt-2 font-serif text-[1.22rem] leading-[1.1] text-[#1f1f1f] sm:text-[1.3rem]">
           {person.name}
@@ -531,8 +169,8 @@ function SessionSection({
 export default function AttendingHeroesPage() {
   const [selectedPerson, setSelectedPerson] = useState<Person | null>(null);
   const [pageData, setPageData] = useState<any>(null);
-  const [speakers, setSpeakers] = useState<any[]>([]);
-  const [sessionGroups, setSessionGroups] = useState<any[]>([]);
+  const [speakers, setSpeakers] = useState<Person[]>([]);
+  const [sessionGroups, setSessionGroups] = useState<SessionGroup[]>([]);
 
   useEffect(() => {
     async function loadPageData() {
@@ -545,91 +183,81 @@ export default function AttendingHeroesPage() {
   }, []);
 
   useEffect(() => {
-  async function loadSpeakers() {
-    const data = await client.fetch(speakersQuery);
-    console.log("SPEAKERS", data);
-    setSpeakers(data);
-  }
+    async function loadSpeakers() {
+      const data = await client.fetch(speakersQuery);
+      console.log("SPEAKERS", data);
+      setSpeakers(data);
+    }
 
-  loadSpeakers();
-}, []);
+    loadSpeakers();
+  }, []);
 
-useEffect(() => {
-  async function loadSessionGroups() {
-    const data = await client.fetch(sessionGroupsQuery);
-    console.log("SESSION GROUPS", data);
-    setSessionGroups(data);
-  }
+  useEffect(() => {
+    async function loadSessionGroups() {
+      const data = await client.fetch(sessionGroupsQuery);
+      console.log("SESSION GROUPS", data);
+      setSessionGroups(data);
+    }
 
-  loadSessionGroups();
-}, []);
+    loadSessionGroups();
+  }, []);
 
-const sanitySpeakers = (speakers || []).filter(Boolean);
-const sanitySessionGroups = (sessionGroups || []).filter(Boolean);
+  const sanitySpeakers = (speakers || []).filter(Boolean);
+  const sanitySessionGroups = (sessionGroups || []).filter(Boolean);
 
-const featuredSpeakers =
-  sanitySpeakers.filter((person: Person) => hasPlacement(person, "featured"))
-    .length > 0
-    ? sanitySpeakers.filter((person: Person) => hasPlacement(person, "featured"))
-    : featuredPeople;
+  const featuredSpeakers = sanitySpeakers.filter((person: Person) =>
+    hasPlacement(person, "featured")
+  );
 
-const heroTalkSpeakers =
-  sanitySpeakers.filter((person: Person) => hasPlacement(person, "heroTalks"))
-    .length > 0
-    ? sanitySpeakers.filter((person: Person) => hasPlacement(person, "heroTalks"))
-    : heroTalks;
+  const heroTalkSpeakers = sanitySpeakers.filter((person: Person) =>
+    hasPlacement(person, "heroTalks")
+  );
 
-const moderatorSpeakers =
-  sanitySpeakers.filter((person: Person) => hasPlacement(person, "moderator"))
-    .length > 0
-    ? sanitySpeakers.filter((person: Person) => hasPlacement(person, "moderator"))
-    : moderator;
+  const moderatorSpeakers = sanitySpeakers.filter((person: Person) =>
+    hasPlacement(person, "moderator")
+  );
 
-const keynoteSpeakers =
-  sanitySpeakers.filter((person: Person) => hasPlacement(person, "keynote"))
-    .length > 0
-    ? sanitySpeakers.filter((person: Person) => hasPlacement(person, "keynote"))
-    : keynote;
+  const keynoteSpeakers = sanitySpeakers.filter((person: Person) =>
+    hasPlacement(person, "keynote")
+  );
 
-const panelGroups =
-  sanitySessionGroups.filter((group: any) => group.type === "panel").length > 0
-    ? sanitySessionGroups.filter((group: any) => group.type === "panel")
-    : panelSessions;
+  const panelGroups = sanitySessionGroups.filter(
+    (group: SessionGroup) => group.type === "panel"
+  );
 
-const firesideGroups =
-  sanitySessionGroups.filter((group: any) => group.type === "fireside").length > 0
-    ? sanitySessionGroups.filter((group: any) => group.type === "fireside")
-    : firesideSessions;
+  const firesideGroups = sanitySessionGroups.filter(
+    (group: SessionGroup) => group.type === "fireside"
+  );
 
-const masterclassGroups =
-  sanitySessionGroups.filter((group: any) => group.type === "masterclass").length > 0
-    ? sanitySessionGroups.filter((group: any) => group.type === "masterclass")
-    : masterclassSessions;
+  const masterclassGroups = sanitySessionGroups.filter(
+    (group: SessionGroup) => group.type === "masterclass"
+  );
+
   return (
-   <main className="min-h-screen overflow-x-hidden bg-[#f3f1ed]">
+    <main className="min-h-screen overflow-x-hidden bg-[#f3f1ed]">
       <SiteHeader />
 
       {/* HERO */}
       <section className="px-5 pt-20 pb-14 md:px-12 md:pt-24 md:pb-20 lg:px-20">
         <div className="mx-auto max-w-5xl text-center">
           <p
-  className={`${firaSans.className} mb-5 text-[10px] uppercase tracking-[0.24em] text-[#d9a441] sm:text-[11px] sm:tracking-[0.3em] md:mb-6`}
->
-  {pageData?.hero?.kicker || "Attending heroes"}
-</p>
+            className={`${firaSans.className} mb-5 text-[10px] uppercase tracking-[0.24em] text-[#d9a441] sm:text-[11px] sm:tracking-[0.3em] md:mb-6`}
+          >
+            {pageData?.hero?.kicker || "Attending heroes"}
+          </p>
 
           <h1 className="font-serif text-[2.55rem] leading-[1.04] text-[#1f1f1f] sm:text-[3rem] md:text-[4.4rem] lg:text-[5.1rem]">
-  <>
-    Voices shaping
-    <br />
-    Engineering Day 2026
-  </>
-</h1>
+            <>
+              Voices shaping
+              <br />
+              Engineering Day 2026
+            </>
+          </h1>
 
           <p className="mx-auto mt-5 max-w-[22rem] text-[1rem] leading-[1.6] text-[#5f5a52] sm:mt-6 sm:max-w-[30rem] sm:text-[1.08rem] md:max-w-2xl md:text-[1.2rem] md:leading-[1.65]">
-  {pageData?.hero?.subtitle ||
-    "Engineers, leaders and innovators contributing to talks, panels, fireside conversations, masterclasses and the wider programme throughout the day."}
-</p>
+            {pageData?.hero?.subtitle ||
+              "Engineers, leaders and innovators contributing to talks, panels, fireside conversations, masterclasses and the wider programme throughout the day."}
+          </p>
         </div>
       </section>
 
@@ -637,16 +265,18 @@ const masterclassGroups =
       <section className="px-5 pb-20 md:px-12 md:pb-24 lg:px-20">
         <div className="mx-auto max-w-6xl">
           <SectionHeader
-  label={pageData?.featuredSection?.label || "Featured"}
-  title={pageData?.featuredSection?.title || "A few of the voices to know"}
-  intro={
-    pageData?.featuredSection?.intro ||
-    "A first look at some of the people helping shape the conversations on stage and throughout the programme."
-  }
-/>
+            label={pageData?.featuredSection?.label || "Featured"}
+            title={
+              pageData?.featuredSection?.title || "A few of the voices to know"
+            }
+            intro={
+              pageData?.featuredSection?.intro ||
+              "A first look at some of the people helping shape the conversations on stage and throughout the programme."
+            }
+          />
 
           <div className="grid gap-8 sm:gap-10 md:grid-cols-2 xl:grid-cols-3">
-            {(featuredSpeakers.length ? featuredSpeakers : featuredPeople).map((person) => (
+            {featuredSpeakers.map((person) => (
               <SpeakerCard
                 key={`${person.name}-${person.session}`}
                 person={person}
@@ -661,22 +291,24 @@ const masterclassGroups =
       <section className="px-5 pb-20 md:px-12 md:pb-24 lg:px-20">
         <div className="mx-auto max-w-6xl">
           <SectionHeader
-  label={pageData?.moderatorSection?.label || "Moderator"}
-  title={pageData?.moderatorSection?.title || "Holding the day together"}
-  intro={
-    pageData?.moderatorSection?.intro ||
-    "Guiding the programme, shaping the transitions and making each conversation land."
-  }
-/>
+            label={pageData?.moderatorSection?.label || "Moderator"}
+            title={
+              pageData?.moderatorSection?.title || "Holding the day together"
+            }
+            intro={
+              pageData?.moderatorSection?.intro ||
+              "Guiding the programme, shaping the transitions and making each conversation land."
+            }
+          />
 
           <div className="grid max-w-sm gap-8 sm:gap-10">
-            {(moderatorSpeakers.length ? moderatorSpeakers : moderator).map((person) => (
-  <SpeakerCard
-    key={`${person.name}-${person.session}`}
-    person={person}
-    onOpen={setSelectedPerson}
-  />
-))}
+            {moderatorSpeakers.map((person) => (
+              <SpeakerCard
+                key={`${person.name}-${person.session}`}
+                person={person}
+                onOpen={setSelectedPerson}
+              />
+            ))}
           </div>
         </div>
       </section>
@@ -685,70 +317,71 @@ const masterclassGroups =
       <section className="px-5 pb-20 md:px-12 md:pb-24 lg:px-20">
         <div className="mx-auto max-w-6xl">
           <SectionHeader
-  label={pageData?.heroTalksSection?.label || "Hero talks"}
-  title={pageData?.heroTalksSection?.title || "Five focused perspectives"}
-  intro={
-    pageData?.heroTalksSection?.intro ||
-    "A series of talks from partners and speakers sharing ideas, experience and practical insight from different parts of engineering."
-  }
-/>
+            label={pageData?.heroTalksSection?.label || "Hero talks"}
+            title={
+              pageData?.heroTalksSection?.title || "Five focused perspectives"
+            }
+            intro={
+              pageData?.heroTalksSection?.intro ||
+              "A series of talks from partners and speakers sharing ideas, experience and practical insight from different parts of engineering."
+            }
+          />
 
           <div className="grid gap-8 sm:gap-10 md:grid-cols-2 xl:grid-cols-3">
-  {(heroTalkSpeakers.length ? heroTalkSpeakers : heroTalks).map((person) => (
-    <SpeakerCard
-      key={`${person.name}-${person.session}`}
-      person={person}
-      onOpen={setSelectedPerson}
-    />
-  ))}
-</div>
+            {heroTalkSpeakers.map((person) => (
+              <SpeakerCard
+                key={`${person.name}-${person.session}`}
+                person={person}
+                onOpen={setSelectedPerson}
+              />
+            ))}
+          </div>
         </div>
       </section>
 
       {/* PANELS */}
       <SessionSection
-  label={pageData?.panelsSection?.label || "Panels"}
-  title={
-    pageData?.panelsSection?.title ||
-    "Conversations with multiple perspectives"
-  }
-  intro={
-    pageData?.panelsSection?.intro ||
-    "Each panel brings together people with different viewpoints, experiences and responsibilities."
-  }
-  sessions={panelGroups.length ? panelGroups : panelSessions}
-  onOpen={setSelectedPerson}
-/>
+        label={pageData?.panelsSection?.label || "Panels"}
+        title={
+          pageData?.panelsSection?.title ||
+          "Conversations with multiple perspectives"
+        }
+        intro={
+          pageData?.panelsSection?.intro ||
+          "Each panel brings together people with different viewpoints, experiences and responsibilities."
+        }
+        sessions={panelGroups}
+        onOpen={setSelectedPerson}
+      />
 
       {/* FIRESIDES */}
       <SessionSection
-  label={pageData?.firesidesSection?.label || "Fireside conversations"}
-  title={
-    pageData?.firesidesSection?.title ||
-    "Smaller-format conversations"
-  }
-  intro={
-    pageData?.firesidesSection?.intro ||
-    "More intimate discussions centred around experience, reflection and technical depth."
-  }
-  sessions={firesideGroups.length ? firesideGroups : firesideSessions}
-  onOpen={setSelectedPerson}
-/>
+        label={pageData?.firesidesSection?.label || "Fireside conversations"}
+        title={
+          pageData?.firesidesSection?.title || "Smaller-format conversations"
+        }
+        intro={
+          pageData?.firesidesSection?.intro ||
+          "More intimate discussions centred around experience, reflection and technical depth."
+        }
+        sessions={firesideGroups}
+        onOpen={setSelectedPerson}
+      />
 
       {/* MASTERCLASSES */}
       <SessionSection
-  label={pageData?.masterclassesSection?.label || "Masterclasses"}
-  title={
-    pageData?.masterclassesSection?.title ||
-    "Smaller sessions for deeper insight"
-  }
-  intro={
-    pageData?.masterclassesSection?.intro ||
-    "A focused format for those who want to go further into specific themes, methods and questions."
-  }
-  sessions={masterclassGroups.length ? masterclassGroups : masterclassSessions}
-  onOpen={setSelectedPerson}
-/>
+        label={pageData?.masterclassesSection?.label || "Masterclasses"}
+        title={
+          pageData?.masterclassesSection?.title ||
+          "Smaller sessions for deeper insight"
+        }
+        intro={
+          pageData?.masterclassesSection?.intro ||
+          "A focused format for those who want to go further into specific themes, methods and questions."
+        }
+        sessions={masterclassGroups}
+        onOpen={setSelectedPerson}
+      />
 
       {/* KEYNOTE */}
       <section className="px-5 pb-24 md:px-12 md:pb-32 lg:px-20">
@@ -760,13 +393,13 @@ const masterclassGroups =
           />
 
           <div className="grid max-w-sm gap-8 sm:gap-10">
-            {(keynoteSpeakers.length ? keynoteSpeakers : keynote).map((person) => (
-  <SpeakerCard
-    key={`${person.name}-${person.session}`}
-    person={person}
-    onOpen={setSelectedPerson}
-  />
-))}
+            {keynoteSpeakers.map((person) => (
+              <SpeakerCard
+                key={`${person.name}-${person.session}`}
+                person={person}
+                onOpen={setSelectedPerson}
+              />
+            ))}
           </div>
         </div>
       </section>
@@ -793,11 +426,11 @@ const masterclassGroups =
               </div>
 
               <div className="px-5 py-6 sm:px-8 sm:py-8 md:px-12 md:py-14">
-               <p
-  className={`${firaSans.className} text-[10px] uppercase tracking-[0.16em] text-[#8b8276] md:tracking-[0.18em]`}
->
-  {selectedPerson.cardLabel || selectedPerson.format}
-</p>
+                <p
+                  className={`${firaSans.className} text-[10px] uppercase tracking-[0.16em] text-[#8b8276] md:tracking-[0.18em]`}
+                >
+                  {selectedPerson.cardLabel || selectedPerson.format}
+                </p>
 
                 <h2 className="mt-3 font-serif text-[1.95rem] leading-[1.05] text-[#1f1f1f] sm:text-[2.2rem] md:text-[2.8rem]">
                   {selectedPerson.name}
@@ -855,7 +488,10 @@ const masterclassGroups =
       <footer className="bg-[#f3f1ed] pt0 pb-12 md:pt0 md:pb-14">
         <div className="mx-auto max-w-3xl px-5 text-center md:px-6">
           <p className="text-[0.98rem] leading-[1.82] text-[#3e3c38] sm:text-[1.02rem] md:text-[1.15rem] md:leading-[1.9]">
-            Engineering Day – Sweden’s first official day for engineers. We celebrate our engineers and their powers of innovation, creativity and hard work. The event is also a forum for knowledge-sharing and networking.
+            Engineering Day – Sweden’s first official day for engineers. We
+            celebrate our engineers and their powers of innovation, creativity
+            and hard work. The event is also a forum for knowledge-sharing and
+            networking.
           </p>
 
           <p className="mt-4 text-[13px] italic tracking-[0.02em] text-black/40 md:mt-5 md:text-sm">

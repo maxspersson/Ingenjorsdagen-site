@@ -91,21 +91,42 @@ export const homePageQuery = `
       secondaryCtaText,
       secondaryCtaHref
     },
-    foundation{
+    "foundation": foundationSection{
       kicker,
       title,
-      body,
-      pillars[]{
-        number,
-        title,
-        body
-      }
+      "body": introText,
+      "pillars": [
+        pillarOne{
+          number,
+          title,
+          body
+        },
+        pillarTwo{
+          number,
+          title,
+          body
+        },
+        pillarThree{
+          number,
+          title,
+          body
+        }
+      ]
     },
-    whyItMatters{
+    "whyItMatters": whyItMattersSection{
       kicker,
-      points[]{
-        body
-      }
+      title,
+      "points": [
+        {
+          "body": leftText
+        },
+        {
+          "body": rightText
+        }
+      ]
+    },
+    foundingPartnersSection{
+      kicker
     }
   }
 `;
