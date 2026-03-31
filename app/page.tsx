@@ -10,6 +10,42 @@ const firaSans = Fira_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
 });
+type FoundationPillar = {
+  number?: string;
+  title: string;
+  body: string;
+};
+
+type WhyItMattersPoint = {
+  body: string;
+};
+
+const foundationPillarsFallback: FoundationPillar[] = [
+  {
+    number: "01",
+    title: "Knowledge",
+    body: "Engineering Day is a place to learn from real engineering work. Through talks, masterclasses and discussions, engineers share how they approach complex systems, technical constraints and new technologies in practice.",
+  },
+  {
+    number: "02",
+    title: "Collaboration",
+    body: "Great engineering rarely happens in isolation. Engineering Day creates opportunities for dialogue across teams, companies and industries, making it easier to exchange perspectives, compare solutions and spark new collaborations.",
+  },
+  {
+    number: "03",
+    title: "Community",
+    body: "Engineering Day brings together people who design, build and improve complex systems every day. It is a place to meet peers, strengthen your network and be part of a wider engineering community.",
+  },
+];
+
+const whyItMattersPointsFallback: WhyItMattersPoint[] = [
+  {
+    body: "Engineering Day exists to bring together the people building the systems our society depends on. It creates a shared space for engineers across industries to exchange knowledge, challenge ideas and accelerate progress.",
+  },
+  {
+    body: "By connecting companies, individuals and disciplines, the platform strengthens the role of engineering in shaping a sustainable, resilient and forward-looking society.",
+  },
+];
 
 export default function Home() {
   const [pageData, setPageData] = useState<any>(null);
@@ -23,6 +59,15 @@ export default function Home() {
 
     loadPageData();
   }, []);
+  const foundationPillars =
+  pageData?.foundation?.pillars?.length
+    ? pageData.foundation.pillars
+    : foundationPillarsFallback;
+
+const whyItMattersPoints =
+  pageData?.whyItMatters?.points?.length
+    ? pageData.whyItMatters.points
+    : whyItMattersPointsFallback;
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#f3f1ed] text-[#1f1f1f]">
@@ -129,78 +174,46 @@ export default function Home() {
             <p
               className={`${firaSans.className} mb-4 text-[10px] uppercase tracking-[0.24em] text-[#a27a26] md:mb-5 md:text-[11px]`}
             >
-              Our foundation
+              {pageData?.foundation?.kicker || "Our foundation"}
             </p>
 
             <h2 className="max-w-4xl font-serif text-[2.1rem] leading-[1.02] font-light text-[#1f1f1f] sm:text-[2.5rem] md:text-[3.3rem] lg:text-[4.1rem]">
-              Engineering Day is built on three pillars.
+              {pageData?.foundation?.title || "Engineering Day is built on three pillars."}
             </h2>
 
             <p className="mt-5 max-w-2xl text-[1rem] leading-[1.85] text-[#4c4a46] md:mt-6 md:text-[1.08rem]">
-              Knowledge, collaboration and community shape the platform and
-              create a space where engineers can learn, connect and move ideas
-              forward together.
+              {pageData?.foundation?.body ||
+  "Knowledge, collaboration and community shape the platform and create a space where engineers can learn, connect and move ideas forward together."}
             </p>
           </div>
 
           <div className="grid grid-cols-1 border-t border-black/10 md:grid-cols-3">
-            <div className="border-b border-black/10 py-8 md:border-b-0 md:border-r md:py-10 md:pr-8 lg:pr-10">
-              <p
-                className={`${firaSans.className} mb-5 text-[10px] uppercase tracking-[0.24em] text-[#a27a26]`}
-              >
-                01
-              </p>
+  {foundationPillars.map((pillar: FoundationPillar, index: number) => (
+    <div
+      key={`${pillar.title}-${index}`}
+      className={[
+        "border-b border-black/10 py-8 md:border-b-0 md:py-10",
+        index === 0 ? "md:border-r md:pr-8 lg:pr-10" : "",
+        index === 1 ? "md:border-r md:px-8 lg:px-10" : "",
+        index === 2 ? "md:pl-8 lg:pl-10" : "",
+      ].join(" ")}
+    >
+      <p
+        className={`${firaSans.className} mb-5 text-[10px] uppercase tracking-[0.24em] text-[#a27a26]`}
+      >
+        {pillar.number || String(index + 1).padStart(2, "0")}
+      </p>
 
-              <h3 className="mb-5 font-serif text-[1.65rem] leading-[1.05] font-light text-[#1f1f1f] sm:text-[1.8rem] md:text-[2rem]">
-                Knowledge
-              </h3>
+      <h3 className="mb-5 font-serif text-[1.65rem] leading-[1.05] font-light text-[#1f1f1f] sm:text-[1.8rem] md:text-[2rem]">
+        {pillar.title}
+      </h3>
 
-              <p className="max-w-[28rem] text-[0.98rem] leading-[1.85] text-[#4c4a46] md:text-[1.02rem]">
-                Engineering Day is a place to learn from real engineering work.
-                Through talks, masterclasses and discussions, engineers share
-                how they approach complex systems, technical constraints and new
-                technologies in practice.
-              </p>
-            </div>
-
-            <div className="border-b border-black/10 py-8 md:border-b-0 md:border-r md:px-8 md:py-10 lg:px-10">
-              <p
-                className={`${firaSans.className} mb-5 text-[10px] uppercase tracking-[0.24em] text-[#a27a26]`}
-              >
-                02
-              </p>
-
-              <h3 className="mb-5 font-serif text-[1.65rem] leading-[1.05] font-light text-[#1f1f1f] sm:text-[1.8rem] md:text-[2rem]">
-                Collaboration
-              </h3>
-
-              <p className="max-w-[28rem] text-[0.98rem] leading-[1.85] text-[#4c4a46] md:text-[1.02rem]">
-                Great engineering rarely happens in isolation. Engineering Day
-                creates opportunities for dialogue across teams, companies and
-                industries, making it easier to exchange perspectives, compare
-                solutions and spark new collaborations.
-              </p>
-            </div>
-
-            <div className="py-8 md:py-10 md:pl-8 lg:pl-10">
-              <p
-                className={`${firaSans.className} mb-5 text-[10px] uppercase tracking-[0.24em] text-[#a27a26]`}
-              >
-                03
-              </p>
-
-              <h3 className="mb-5 font-serif text-[1.65rem] leading-[1.05] font-light text-[#1f1f1f] sm:text-[1.8rem] md:text-[2rem]">
-                Community
-              </h3>
-
-              <p className="max-w-[28rem] text-[0.98rem] leading-[1.85] text-[#4c4a46] md:text-[1.02rem]">
-                Engineering Day brings together people who design, build and
-                improve complex systems every day. It is a place to meet peers,
-                strengthen your network and be part of a wider engineering
-                community.
-              </p>
-            </div>
-          </div>
+      <p className="max-w-[28rem] text-[0.98rem] leading-[1.85] text-[#4c4a46] md:text-[1.02rem]">
+        {pillar.body}
+      </p>
+    </div>
+  ))}
+</div>
         </div>
       </section>
 
@@ -210,7 +223,7 @@ export default function Home() {
             <p
               className={`${firaSans.className} mb-5 text-[10px] uppercase tracking-[0.24em] text-[#a27a26] md:mb-6 md:text-[11px]`}
             >
-              Why it matters
+              {pageData?.whyItMatters?.kicker || "Why it matters"}
             </p>
 
             <h2 className="max-w-4xl font-serif text-[2.1rem] leading-[1.02] font-light text-[#1f1f1f] sm:text-[2.6rem] md:text-[3.4rem] lg:text-[4.2rem]">
@@ -223,17 +236,14 @@ export default function Home() {
 
           <div className="grid max-w-5xl grid-cols-1 gap-8 md:grid-cols-2 md:gap-14">
             <p className="text-[1rem] leading-[1.85] text-[#4c4a46] md:text-[1.08rem]">
-              Engineering Day exists to bring together the people building the
-              systems our society depends on. It creates a shared space for
-              engineers across industries to exchange knowledge, challenge ideas
-              and accelerate progress.
-            </p>
+  {whyItMattersPoints[0]?.body ||
+    "Engineering Day exists to bring together the people building the systems our society depends on. It creates a shared space for engineers across industries to exchange knowledge, challenge ideas and accelerate progress."}
+</p>
 
             <p className="text-[1rem] leading-[1.85] text-[#4c4a46] md:text-[1.08rem]">
-              By connecting companies, individuals and disciplines, the
-              platform strengthens the role of engineering in shaping a
-              sustainable, resilient and forward-looking society.
-            </p>
+  {whyItMattersPoints[1]?.body ||
+    "By connecting companies, individuals and disciplines, the platform strengthens the role of engineering in shaping a sustainable, resilient and forward-looking society."}
+</p>
           </div>
         </div>
       </section>

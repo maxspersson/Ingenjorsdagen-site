@@ -1,8 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SiteHeader from "@/app/components/SiteHeader";
 import { Fira_Sans } from "next/font/google";
+import { client } from "@/sanity/lib/client";
+import { attendingHeroesPageQuery } from "@/sanity/lib/queries";
+import { speakersQuery } from "@/sanity/lib/queries";
+import { sessionGroupsQuery } from "@/sanity/lib/queries";
+
 
 const firaSans = Fira_Sans({
   subsets: ["latin"],
@@ -14,11 +19,17 @@ type Person = {
   title: string;
   company: string;
   image: string;
-  format: string;
+  format?: string;
+  cardLabel?: string;
   session: string;
   focus: string;
   bio: string;
+  placements?: string[];
+  order?: number;
 };
+
+const hasPlacement = (person: Person, placement: string) =>
+  person.placements?.includes(placement);
 
 type SessionGroup = {
   title: string;
@@ -410,10 +421,10 @@ function SpeakerCard({
 
       <div className="pt-4">
         <p
-          className={`${firaSans.className} text-[10px] uppercase tracking-[0.18em] text-[#8b8276]`}
-        >
-          {person.format}
-        </p>
+  className={`${firaSans.className} text-[10px] uppercase tracking-[0.18em] text-[#8b8276]`}
+>
+  {person.cardLabel || person.format}
+</p>
 
         <h3 className="mt-2 font-serif text-[1.22rem] leading-[1.1] text-[#1f1f1f] sm:text-[1.3rem]">
           {person.name}
@@ -519,7 +530,81 @@ function SessionSection({
 
 export default function AttendingHeroesPage() {
   const [selectedPerson, setSelectedPerson] = useState<Person | null>(null);
+  const [pageData, setPageData] = useState<any>(null);
+  const [speakers, setSpeakers] = useState<any[]>([]);
+  const [sessionGroups, setSessionGroups] = useState<any[]>([]);
 
+  useEffect(() => {
+    async function loadPageData() {
+      const data = await client.fetch(attendingHeroesPageQuery);
+      console.log("ATTENDING HEROES DATA", data);
+      setPageData(data);
+    }
+
+    loadPageData();
+  }, []);
+
+  useEffect(() => {
+  async function loadSpeakers() {
+    const data = await client.fetch(speakersQuery);
+    console.log("SPEAKERS", data);
+    setSpeakers(data);
+  }
+
+  loadSpeakers();
+}, []);
+
+useEffect(() => {
+  async function loadSessionGroups() {
+    const data = await client.fetch(sessionGroupsQuery);
+    console.log("SESSION GROUPS", data);
+    setSessionGroups(data);
+  }
+
+  loadSessionGroups();
+}, []);
+
+const sanitySpeakers = (speakers || []).filter(Boolean);
+const sanitySessionGroups = (sessionGroups || []).filter(Boolean);
+
+const featuredSpeakers =
+  sanitySpeakers.filter((person: Person) => hasPlacement(person, "featured"))
+    .length > 0
+    ? sanitySpeakers.filter((person: Person) => hasPlacement(person, "featured"))
+    : featuredPeople;
+
+const heroTalkSpeakers =
+  sanitySpeakers.filter((person: Person) => hasPlacement(person, "heroTalks"))
+    .length > 0
+    ? sanitySpeakers.filter((person: Person) => hasPlacement(person, "heroTalks"))
+    : heroTalks;
+
+const moderatorSpeakers =
+  sanitySpeakers.filter((person: Person) => hasPlacement(person, "moderator"))
+    .length > 0
+    ? sanitySpeakers.filter((person: Person) => hasPlacement(person, "moderator"))
+    : moderator;
+
+const keynoteSpeakers =
+  sanitySpeakers.filter((person: Person) => hasPlacement(person, "keynote"))
+    .length > 0
+    ? sanitySpeakers.filter((person: Person) => hasPlacement(person, "keynote"))
+    : keynote;
+
+const panelGroups =
+  sanitySessionGroups.filter((group: any) => group.type === "panel").length > 0
+    ? sanitySessionGroups.filter((group: any) => group.type === "panel")
+    : panelSessions;
+
+const firesideGroups =
+  sanitySessionGroups.filter((group: any) => group.type === "fireside").length > 0
+    ? sanitySessionGroups.filter((group: any) => group.type === "fireside")
+    : firesideSessions;
+
+const masterclassGroups =
+  sanitySessionGroups.filter((group: any) => group.type === "masterclass").length > 0
+    ? sanitySessionGroups.filter((group: any) => group.type === "masterclass")
+    : masterclassSessions;
   return (
    <main className="min-h-screen overflow-x-hidden bg-[#f3f1ed]">
       <SiteHeader />
@@ -528,22 +613,23 @@ export default function AttendingHeroesPage() {
       <section className="px-5 pt-20 pb-14 md:px-12 md:pt-24 md:pb-20 lg:px-20">
         <div className="mx-auto max-w-5xl text-center">
           <p
-            className={`${firaSans.className} mb-5 text-[10px] uppercase tracking-[0.24em] text-[#d9a441] sm:text-[11px] sm:tracking-[0.3em] md:mb-6`}
-          >
-            Attending heroes
-          </p>
+  className={`${firaSans.className} mb-5 text-[10px] uppercase tracking-[0.24em] text-[#d9a441] sm:text-[11px] sm:tracking-[0.3em] md:mb-6`}
+>
+  {pageData?.hero?.kicker || "Attending heroes"}
+</p>
 
           <h1 className="font-serif text-[2.55rem] leading-[1.04] text-[#1f1f1f] sm:text-[3rem] md:text-[4.4rem] lg:text-[5.1rem]">
-            Voices shaping
-            <br />
-            Engineering Day 2026
-          </h1>
+  <>
+    Voices shaping
+    <br />
+    Engineering Day 2026
+  </>
+</h1>
 
           <p className="mx-auto mt-5 max-w-[22rem] text-[1rem] leading-[1.6] text-[#5f5a52] sm:mt-6 sm:max-w-[30rem] sm:text-[1.08rem] md:max-w-2xl md:text-[1.2rem] md:leading-[1.65]">
-            Engineers, leaders and innovators contributing to talks, panels,
-            fireside conversations, masterclasses and the wider programme
-            throughout the day.
-          </p>
+  {pageData?.hero?.subtitle ||
+    "Engineers, leaders and innovators contributing to talks, panels, fireside conversations, masterclasses and the wider programme throughout the day."}
+</p>
         </div>
       </section>
 
@@ -551,13 +637,16 @@ export default function AttendingHeroesPage() {
       <section className="px-5 pb-20 md:px-12 md:pb-24 lg:px-20">
         <div className="mx-auto max-w-6xl">
           <SectionHeader
-            label="Featured"
-            title="A few of the voices to know"
-            intro="A first look at some of the people helping shape the conversations on stage and throughout the programme."
-          />
+  label={pageData?.featuredSection?.label || "Featured"}
+  title={pageData?.featuredSection?.title || "A few of the voices to know"}
+  intro={
+    pageData?.featuredSection?.intro ||
+    "A first look at some of the people helping shape the conversations on stage and throughout the programme."
+  }
+/>
 
           <div className="grid gap-8 sm:gap-10 md:grid-cols-2 xl:grid-cols-3">
-            {featuredPeople.map((person) => (
+            {(featuredSpeakers.length ? featuredSpeakers : featuredPeople).map((person) => (
               <SpeakerCard
                 key={`${person.name}-${person.session}`}
                 person={person}
@@ -572,19 +661,22 @@ export default function AttendingHeroesPage() {
       <section className="px-5 pb-20 md:px-12 md:pb-24 lg:px-20">
         <div className="mx-auto max-w-6xl">
           <SectionHeader
-            label="Moderator"
-            title="Holding the day together"
-            intro="Guiding the programme, shaping the transitions and making each conversation land."
-          />
+  label={pageData?.moderatorSection?.label || "Moderator"}
+  title={pageData?.moderatorSection?.title || "Holding the day together"}
+  intro={
+    pageData?.moderatorSection?.intro ||
+    "Guiding the programme, shaping the transitions and making each conversation land."
+  }
+/>
 
           <div className="grid max-w-sm gap-8 sm:gap-10">
-            {moderator.map((person) => (
-              <SpeakerCard
-                key={`${person.name}-${person.session}`}
-                person={person}
-                onOpen={setSelectedPerson}
-              />
-            ))}
+            {(moderatorSpeakers.length ? moderatorSpeakers : moderator).map((person) => (
+  <SpeakerCard
+    key={`${person.name}-${person.session}`}
+    person={person}
+    onOpen={setSelectedPerson}
+  />
+))}
           </div>
         </div>
       </section>
@@ -593,49 +685,70 @@ export default function AttendingHeroesPage() {
       <section className="px-5 pb-20 md:px-12 md:pb-24 lg:px-20">
         <div className="mx-auto max-w-6xl">
           <SectionHeader
-            label="Hero talks"
-            title="Five focused perspectives"
-            intro="A series of talks from partners and speakers sharing ideas, experience and practical insight from different parts of engineering."
-          />
+  label={pageData?.heroTalksSection?.label || "Hero talks"}
+  title={pageData?.heroTalksSection?.title || "Five focused perspectives"}
+  intro={
+    pageData?.heroTalksSection?.intro ||
+    "A series of talks from partners and speakers sharing ideas, experience and practical insight from different parts of engineering."
+  }
+/>
 
           <div className="grid gap-8 sm:gap-10 md:grid-cols-2 xl:grid-cols-3">
-            {heroTalks.map((person) => (
-              <SpeakerCard
-                key={`${person.name}-${person.session}`}
-                person={person}
-                onOpen={setSelectedPerson}
-              />
-            ))}
-          </div>
+  {(heroTalkSpeakers.length ? heroTalkSpeakers : heroTalks).map((person) => (
+    <SpeakerCard
+      key={`${person.name}-${person.session}`}
+      person={person}
+      onOpen={setSelectedPerson}
+    />
+  ))}
+</div>
         </div>
       </section>
 
       {/* PANELS */}
       <SessionSection
-        label="Panels"
-        title="Conversations with multiple perspectives"
-        intro="Each panel brings together people with different viewpoints, experiences and responsibilities."
-        sessions={panelSessions}
-        onOpen={setSelectedPerson}
-      />
+  label={pageData?.panelsSection?.label || "Panels"}
+  title={
+    pageData?.panelsSection?.title ||
+    "Conversations with multiple perspectives"
+  }
+  intro={
+    pageData?.panelsSection?.intro ||
+    "Each panel brings together people with different viewpoints, experiences and responsibilities."
+  }
+  sessions={panelGroups.length ? panelGroups : panelSessions}
+  onOpen={setSelectedPerson}
+/>
 
       {/* FIRESIDES */}
       <SessionSection
-        label="Fireside conversations"
-        title="Smaller-format conversations"
-        intro="More intimate discussions centred around experience, reflection and technical depth."
-        sessions={firesideSessions}
-        onOpen={setSelectedPerson}
-      />
+  label={pageData?.firesidesSection?.label || "Fireside conversations"}
+  title={
+    pageData?.firesidesSection?.title ||
+    "Smaller-format conversations"
+  }
+  intro={
+    pageData?.firesidesSection?.intro ||
+    "More intimate discussions centred around experience, reflection and technical depth."
+  }
+  sessions={firesideGroups.length ? firesideGroups : firesideSessions}
+  onOpen={setSelectedPerson}
+/>
 
       {/* MASTERCLASSES */}
       <SessionSection
-        label="Masterclasses"
-        title="Smaller sessions for deeper insight"
-        intro="A focused format for those who want to go further into specific themes, methods and questions."
-        sessions={masterclassSessions}
-        onOpen={setSelectedPerson}
-      />
+  label={pageData?.masterclassesSection?.label || "Masterclasses"}
+  title={
+    pageData?.masterclassesSection?.title ||
+    "Smaller sessions for deeper insight"
+  }
+  intro={
+    pageData?.masterclassesSection?.intro ||
+    "A focused format for those who want to go further into specific themes, methods and questions."
+  }
+  sessions={masterclassGroups.length ? masterclassGroups : masterclassSessions}
+  onOpen={setSelectedPerson}
+/>
 
       {/* KEYNOTE */}
       <section className="px-5 pb-24 md:px-12 md:pb-32 lg:px-20">
@@ -647,13 +760,13 @@ export default function AttendingHeroesPage() {
           />
 
           <div className="grid max-w-sm gap-8 sm:gap-10">
-            {keynote.map((person) => (
-              <SpeakerCard
-                key={`${person.name}-${person.session}`}
-                person={person}
-                onOpen={setSelectedPerson}
-              />
-            ))}
+            {(keynoteSpeakers.length ? keynoteSpeakers : keynote).map((person) => (
+  <SpeakerCard
+    key={`${person.name}-${person.session}`}
+    person={person}
+    onOpen={setSelectedPerson}
+  />
+))}
           </div>
         </div>
       </section>
@@ -680,11 +793,11 @@ export default function AttendingHeroesPage() {
               </div>
 
               <div className="px-5 py-6 sm:px-8 sm:py-8 md:px-12 md:py-14">
-                <p
-                  className={`${firaSans.className} text-[10px] uppercase tracking-[0.16em] text-[#8b8276] md:tracking-[0.18em]`}
-                >
-                  {selectedPerson.format}
-                </p>
+               <p
+  className={`${firaSans.className} text-[10px] uppercase tracking-[0.16em] text-[#8b8276] md:tracking-[0.18em]`}
+>
+  {selectedPerson.cardLabel || selectedPerson.format}
+</p>
 
                 <h2 className="mt-3 font-serif text-[1.95rem] leading-[1.05] text-[#1f1f1f] sm:text-[2.2rem] md:text-[2.8rem]">
                   {selectedPerson.name}

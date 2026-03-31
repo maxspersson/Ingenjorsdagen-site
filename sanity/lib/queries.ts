@@ -81,5 +81,75 @@ export const engineeringDayPageQuery = `
   }
 `
 export const homePageQuery = `
-  *[_type == "homePage"][0]
-`
+  *[_type == "homePage"][0]{
+    hero{
+      kicker,
+      title,
+      subtitle,
+      primaryCtaText,
+      primaryCtaHref,
+      secondaryCtaText,
+      secondaryCtaHref
+    },
+    foundation{
+      kicker,
+      title,
+      body,
+      pillars[]{
+        number,
+        title,
+        body
+      }
+    },
+    whyItMatters{
+      kicker,
+      points[]{
+        body
+      }
+    }
+  }
+`;
+
+export const attendingHeroesPageQuery = `
+  *[_type == "attendingHeroesPage"][0]{
+    hero,
+    featuredSection,
+    moderatorSection,
+    heroTalksSection,
+    panelsSection,
+    firesidesSection,
+    masterclassesSection,
+    keynoteSection
+  }
+`;
+export const speakersQuery = `*[_type == "speaker"] | order(order asc){
+  name,
+  title,
+  company,
+  cardLabel,
+  placements,
+  session,
+  focus,
+  bio,
+  order,
+  "image": image.asset->url
+}`;
+
+export const sessionGroupsQuery = `*[_type == "sessionGroup"] | order(order asc){
+  title,
+  description,
+  type,
+  order,
+  people[]->{
+    name,
+    title,
+    company,
+    cardLabel,
+    placements,
+    session,
+    focus,
+    bio,
+    order,
+    "image": image.asset->url
+  }
+}`;
