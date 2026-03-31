@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Fira_Sans } from "next/font/google";
 import SiteHeader from "@/app/components/SiteHeader";
 import { client } from "@/sanity/lib/client";
@@ -148,18 +148,44 @@ const fallbackJuryMembers: JuryMember[] = [
 
 export default function Page() {
   const [pageData, setPageData] = useState<GrandPrizePageData | null>(null);
-
+  const juryScrollRef = useRef<HTMLDivElement | null>(null);
+  const [isJuryHovered, setIsJuryHovered] = useState(false);
   useEffect(() => {
     client.fetch(grandPrizePageQuery).then((data) => {
       setPageData(data);
     });
   }, []);
+    useEffect(() => {
+    const container = juryScrollRef.current;
+    if (!container) return;
+
+    let animationFrameId: number;
+
+    const scrollStep = () => {
+      if (!isJuryHovered) {
+        container.scrollLeft += 0.35;
+
+        if (container.scrollLeft >= container.scrollWidth / 2) {
+          container.scrollLeft = 0;
+        }
+      }
+
+      animationFrameId = window.requestAnimationFrame(scrollStep);
+    };
+
+    animationFrameId = window.requestAnimationFrame(scrollStep);
+
+    return () => {
+      window.cancelAnimationFrame(animationFrameId);
+    };
+  }, [isJuryHovered]);
 
   const juryMembers =
     pageData?.juryMembers && pageData.juryMembers.length > 0
       ? pageData.juryMembers
       : fallbackJuryMembers;
-        const scrollingJuryMembers = [...juryMembers, ...juryMembers];
+
+  const scrollingJuryMembers = [...juryMembers, ...juryMembers];
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#111111]">
@@ -212,52 +238,44 @@ export default function Page() {
         </div>
       </section>
 
-                  <section className="bg-[#f3f1ed] px-5 pt-4 pb-20 sm:pt-6 sm:pb-22 md:px-12 md:pt-8 md:pb-24 lg:px-20 lg:pt-10 lg:pb-28">
-        <div className="mx-auto max-w-[1600px]">
-          <div className="mb-10 md:mb-14 text-center">
+      <section className="bg-[#f3f1ed] px-5 pt-20 pb-20 sm:pt-22 sm:pb-22 md:px-12 md:pt-24 md:pb-24 lg:px-20 lg:pt-28 lg:pb-28">
+        <div className="max-w-6xl mx-auto">
+          <div className="mb-8 md:mb-12">
             <p
-              className={`${firaSans.className} mb-3 text-[11px] uppercase tracking-[0.24em] text-[#a27a26] md:text-[13px]`}
+              className={`${firaSans.className} mb-3 md:mb-4 text-[11px] md:text-[13px] uppercase tracking-[0.24em] text-[#a27a26]`}
             >
-              {pageData?.jurySection?.title || "Meet the jury"}
+              {pageData?.whySection?.label || "WHY?"}
             </p>
 
-            <div className="mx-auto h-px w-14 bg-[#d9a441]" />
+            <div className="w-14 h-px bg-[#d9a441]" />
           </div>
 
-          <div className="relative overflow-hidden">
-            <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-16 bg-gradient-to-r from-[#f3f1ed] to-transparent md:w-24" />
-            <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-16 bg-gradient-to-l from-[#f3f1ed] to-transparent md:w-24" />
+          <div className="max-w-4xl mx-auto text-center mb-10 md:mb-14">
+            <h2 className="text-[2.2rem] sm:text-[2.6rem] md:text-[4.05rem] lg:text-[4.6rem] leading-[1.04] font-serif font-light text-[#1f1f1f] mb-5 md:mb-6">
+              {pageData?.whySection?.title || "Engineering that matters"}
+            </h2>
 
-            <div className="jury-track">
-              <div className="jury-row">
-                {scrollingJuryMembers.map((member, index) => (
-                  <div
-                    key={`${member.name || "jury"}-${index}`}
-                    className="group w-[240px] shrink-0 md:w-[260px]"
-                  >
-                    <div className="overflow-hidden rounded-[1.6rem] bg-[#e9e4dc]">
-                      <div className="aspect-[4/5] overflow-hidden">
-                        <img
-                          src={member.image?.asset?.url || "/speaker-1.jpg"}
-                          alt={member.name || "Jury member"}
-                          className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.03]"
-                        />
-                      </div>
-                    </div>
+            <p className="italic text-[1.06rem] sm:text-[1.14rem] md:text-[1.4rem] leading-[1.45] text-[#5f5a52]">
+              {pageData?.whySection?.intro ||
+                "A prize for engineering that creates lasting impact."}
+            </p>
+          </div>
 
-                    <div className="pt-4 text-center">
-                      <h3 className="font-serif text-[1.25rem] leading-[1.15] text-[#1f1f1f]">
-                        {member.name || "Jury member"}
-                      </h3>
+          <div className="max-w-3xl mx-auto">
+            <p className="text-[1rem] sm:text-[1.05rem] md:text-[1.3rem] leading-[1.82] text-[#2c2c2c] mb-6 md:mb-8">
+              {pageData?.whySection?.body1 ||
+                "Engineering has always been at the core of progress. From infrastructure and energy systems to digital platforms and intelligent machines, it is engineers who translate ideas into reality."}
+            </p>
 
-                      <p className="mt-2 text-[0.95rem] leading-[1.65] text-[#6a6256]">
-                        {member.role || ""}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <p className="text-[1rem] sm:text-[1.05rem] md:text-[1.3rem] leading-[1.82] text-[#2c2c2c] mb-8 md:mb-10">
+              {pageData?.whySection?.body2 ||
+                "The Grand Prize for Engineering exists to recognize individuals and teams whose work not only advances technology, but creates lasting impact in society."}
+            </p>
+
+            <p className="text-[0.98rem] sm:text-[1.02rem] md:text-[1.22rem] leading-[1.85] md:leading-[1.9] text-[#555]">
+              {pageData?.whySection?.body3 ||
+                "It highlights the people, ideas and achievements that move industries forward and shape the future through knowledge, courage and execution."}
+            </p>
           </div>
         </div>
       </section>
@@ -276,8 +294,7 @@ export default function Page() {
 
           <div className="max-w-4xl mx-auto text-center mb-10 md:mb-14">
             <h2 className="text-[2.2rem] sm:text-[2.6rem] md:text-[4.05rem] lg:text-[4.6rem] leading-[1.04] font-serif font-light text-[#1f1f1f] mb-5 md:mb-6">
-              {pageData?.whoSection?.title ||
-                "The people behind the progress"}
+              {pageData?.whoSection?.title || "The people behind the progress"}
             </h2>
 
             <p className="italic text-[1.06rem] sm:text-[1.14rem] md:text-[1.4rem] leading-[1.45] text-[#5f5a52]">
@@ -441,9 +458,9 @@ export default function Page() {
         </div>
       </section>
 
-      <section className="bg-[#f3f1ed] px-5 pt-4 pb-20 sm:pt-6 sm:pb-22 md:px-12 md:pt-8 md:pb-24 lg:px-20 lg:pt-10 lg:pb-28">
-        <div className="mx-auto max-w-7xl">
-          <div className="mb-10 md:mb-14 text-center">
+            <section className="bg-[#f3f1ed] px-5 pt-4 pb-20 sm:pt-6 sm:pb-22 md:px-12 md:pt-8 md:pb-24 lg:px-20 lg:pt-10 lg:pb-28">
+        <div className="mx-auto max-w-[1600px]">
+          <div className="mb-10 text-center md:mb-14">
             <p
               className={`${firaSans.className} mb-3 text-[11px] uppercase tracking-[0.24em] text-[#a27a26] md:text-[13px]`}
             >
@@ -453,34 +470,44 @@ export default function Page() {
             <div className="mx-auto h-px w-14 bg-[#d9a441]" />
           </div>
 
-          <div className="overflow-x-auto pb-4 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
-            <div className="flex w-max gap-5 md:gap-6">
-              {juryMembers.map((member, index) => (
-                <div
-                  key={`${member.name || "jury"}-${index}`}
-                  className="group w-[240px] shrink-0"
-                >
-                  <div className="overflow-hidden rounded-[1.6rem] bg-[#e9e4dc]">
-                    <div className="aspect-[4/5] overflow-hidden">
-                      <img
-                        src={member.image?.asset?.url || "/speaker-1.jpg"}
-                        alt={member.name || "Jury member"}
-                        className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.03]"
-                      />
+          <div className="relative">
+            <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-[#f3f1ed] to-transparent md:w-24" />
+            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-[#f3f1ed] to-transparent md:w-24" />
+
+            <div
+              ref={juryScrollRef}
+              onMouseEnter={() => setIsJuryHovered(true)}
+              onMouseLeave={() => setIsJuryHovered(false)}
+              className="overflow-x-auto overflow-y-hidden [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+            >
+              <div className="flex w-max gap-6">
+                {scrollingJuryMembers.map((member, index) => (
+                  <div
+                    key={`${member.name || "jury"}-${index}`}
+                    className="group w-[240px] shrink-0 md:w-[260px]"
+                  >
+                    <div className="overflow-hidden rounded-[1.6rem] bg-[#e9e4dc]">
+                      <div className="aspect-[4/5] overflow-hidden">
+                        <img
+                          src={member.image?.asset?.url || "/speaker-1.jpg"}
+                          alt={member.name || "Jury member"}
+                          className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.03]"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="pt-4 text-center">
+                      <h3 className="font-serif text-[1.25rem] leading-[1.15] text-[#1f1f1f]">
+                        {member.name || "Jury member"}
+                      </h3>
+
+                      <p className="mt-2 text-[0.95rem] leading-[1.65] text-[#6a6256]">
+                        {member.role || ""}
+                      </p>
                     </div>
                   </div>
-
-                  <div className="pt-4">
-                    <h3 className="font-serif text-[1.25rem] leading-[1.15] text-[#1f1f1f]">
-                      {member.name || "Jury member"}
-                    </h3>
-
-                    <p className="mt-2 text-[0.95rem] leading-[1.65] text-[#6a6256]">
-                      {member.role || ""}
-                    </p>
-                  </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -514,33 +541,8 @@ export default function Page() {
           </a>
         </div>
       </section>
-            <style jsx>{`
-        .jury-track {
-          overflow: hidden;
-          width: 100%;
-        }
 
-        .jury-row {
-          display: flex;
-          width: max-content;
-          gap: 24px;
-          animation: juryScroll 80s linear infinite;
-          will-change: transform;
-        }
-
-        .jury-row:hover {
-          animation-play-state: paused;
-        }
-
-        @keyframes juryScroll {
-          0% {
-            transform: translate3d(0, 0, 0);
-          }
-          100% {
-            transform: translate3d(-50%, 0, 0);
-          }
-        }
-      `}</style>
+    
 
       <footer className="bg-[#f3f1ed] pt-12 pb-12 md:pt-12 md:pb-14">
         <div className="max-w-3xl mx-auto text-center px-5 md:px-6">
