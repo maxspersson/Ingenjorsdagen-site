@@ -174,3 +174,15 @@ export const sessionGroupsQuery = `*[_type == "sessionGroup"] | order(order asc)
     "image": image.asset->url
   }
 }`;
+export const grandPrizePageQuery = `
+  *[_type == "grandPrizePage"][0]{
+    hero,
+    whySection,
+    whoSection,
+    categoriesSection,
+    categories,
+    jurySection,
+    juryMembers,
+    bottomSection
+  }
+`;

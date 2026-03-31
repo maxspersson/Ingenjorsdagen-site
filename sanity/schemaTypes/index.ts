@@ -7,7 +7,19 @@ import masterclass from './masterclass'
 import speaker from './speaker'
 import sessionGroup from './sessionGroup'
 import attendingHeroesPage from './attendingHeroesPage'
+import grandPrizePage from './grandPrizePage'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
- types: [partner, programmeItem, programmeSubItem, masterclass, engineeringDayPage, homePage, speaker, sessionGroup, attendingHeroesPage],
+  types: [
+    partner,
+    programmeItem,
+    programmeSubItem,
+    masterclass,
+    engineeringDayPage,
+    homePage,
+    speaker,
+    sessionGroup,
+    attendingHeroesPage,
+    grandPrizePage,
+  ],
 }
