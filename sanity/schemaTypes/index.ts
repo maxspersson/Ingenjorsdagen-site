@@ -8,6 +8,7 @@ import speaker from './speaker'
 import sessionGroup from './sessionGroup'
 import attendingHeroesPage from './attendingHeroesPage'
 import grandPrizePage from './grandPrizePage'
+import juryMember from './juryMember'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [

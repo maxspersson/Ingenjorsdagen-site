@@ -20,7 +20,8 @@ type GrandPrizeCategory = {
 
 type JuryMember = {
   name?: string;
-  role?: string;
+  title?: string;
+  company?: string;
   image?: {
     asset?: {
       url?: string;
@@ -29,120 +30,175 @@ type JuryMember = {
 };
 
 type GrandPrizePageData = {
-  hero?: {
-    eyebrow?: string;
-    title?: string;
-    text?: string;
-  };
-  whySection?: {
-    label?: string;
-    title?: string;
-    intro?: string;
-    body1?: string;
-    body2?: string;
-    body3?: string;
-  };
-  whoSection?: {
-    label?: string;
-    title?: string;
-    intro?: string;
-    body1?: string;
-    body2?: string;
-    body3?: string;
-  };
-  categoriesSection?: {
-    label?: string;
-    title?: string;
-    intro?: string;
-  };
-  categories?: GrandPrizeCategory[];
-  jurySection?: {
-    title?: string;
+  page?: {
+    hero?: {
+      eyebrow?: string;
+      title?: string;
+      text?: string;
+    };
+    whySection?: {
+      label?: string;
+      title?: string;
+      intro?: string;
+      body1?: string;
+      body2?: string;
+      body3?: string;
+    };
+    whoSection?: {
+      label?: string;
+      title?: string;
+      intro?: string;
+      body1?: string;
+      body2?: string;
+      body3?: string;
+    };
+    categoriesSection?: {
+      label?: string;
+      title?: string;
+      intro?: string;
+    };
+    categories?: GrandPrizeCategory[];
+    jurySection?: {
+      title?: string;
+    };
+    bottomSection?: {
+      title?: string;
+      text?: string;
+      linkLabel?: string;
+      linkHref?: string;
+    };
   };
   juryMembers?: JuryMember[];
-  bottomSection?: {
-    title?: string;
-    text?: string;
-    linkLabel?: string;
-    linkHref?: string;
-  };
 };
 
 const fallbackJuryMembers: JuryMember[] = [
   {
     name: "Anna Holm",
-    role: "Chief Technology Officer, NordTech",
+    title: "Chief Technology Officer",
+    company: "NordTech",
     image: { asset: { url: "/speaker-1.jpg" } },
   },
   {
     name: "Erik Lund",
-    role: "VP Engineering, Future Systems",
+    title: "VP Engineering",
+    company: "Future Systems",
     image: { asset: { url: "/speaker-2.jpg" } },
   },
   {
     name: "Sara Berg",
-    role: "Head of Innovation, Green Industry",
+    title: "Head of Innovation",
+    company: "Green Industry",
     image: { asset: { url: "/speaker-3.jpg" } },
   },
   {
     name: "Johan Ek",
-    role: "Director of R&D, Infra Nordic",
+    title: "Director of R&D",
+    company: "Infra Nordic",
     image: { asset: { url: "/speaker-4.jpg" } },
   },
   {
     name: "Lisa Nyström",
-    role: "Senior Advisor, Industrial Transformation",
+    title: "Senior Advisor",
+    company: "Industrial Transformation",
     image: { asset: { url: "/speaker-5.jpg" } },
   },
   {
     name: "Mikael Sjöberg",
-    role: "Engineering Director, Nordic Grid",
+    title: "Engineering Director",
+    company: "Nordic Grid",
     image: { asset: { url: "/speaker-1.jpg" } },
   },
   {
     name: "Karin West",
-    role: "Head of Product Development, Urban Systems",
+    title: "Head of Product Development",
+    company: "Urban Systems",
     image: { asset: { url: "/speaker-2.jpg" } },
   },
   {
     name: "David Lind",
-    role: "Innovation Lead, Advanced Materials",
+    title: "Innovation Lead",
+    company: "Advanced Materials",
     image: { asset: { url: "/speaker-3.jpg" } },
   },
   {
     name: "Elin Fors",
-    role: "Senior Engineering Manager, TechWorks",
+    title: "Senior Engineering Manager",
+    company: "TechWorks",
     image: { asset: { url: "/speaker-4.jpg" } },
   },
   {
     name: "Oskar Broman",
-    role: "R&D Strategist, Future Mobility",
+    title: "R&D Strategist",
+    company: "Future Mobility",
     image: { asset: { url: "/speaker-5.jpg" } },
   },
   {
     name: "Maria Nyberg",
-    role: "Director of Sustainability Engineering, GreenCore",
+    title: "Director of Sustainability Engineering",
+    company: "GreenCore",
     image: { asset: { url: "/speaker-1.jpg" } },
   },
   {
     name: "Henrik Åström",
-    role: "Chief Engineer, Industrial Scale",
+    title: "Chief Engineer",
+    company: "Industrial Scale",
     image: { asset: { url: "/speaker-2.jpg" } },
   },
   {
     name: "Sofia Lindqvist",
-    role: "Transformation Lead, Energy Systems",
+    title: "Transformation Lead",
+    company: "Energy Systems",
     image: { asset: { url: "/speaker-3.jpg" } },
   },
   {
     name: "Patrik Holmér",
-    role: "VP Technology, Smart Infra",
+    title: "VP Technology",
+    company: "Smart Infra",
     image: { asset: { url: "/speaker-4.jpg" } },
   },
   {
     name: "Nina Ekström",
-    role: "Head of Research Collaboration, Engine Lab",
+    title: "Head of Research Collaboration",
+    company: "Engine Lab",
     image: { asset: { url: "/speaker-5.jpg" } },
+  },
+];
+
+const fallbackCategories: GrandPrizeCategory[] = [
+  {
+    title: "Innovation",
+    description:
+      "For breakthrough ideas, technologies and solutions with the power to create real-world change.",
+    href: "/the-grand-prize-for-engineering/innovation",
+    linkLabel: "Read more",
+  },
+  {
+    title: "Leadership",
+    description:
+      "For leaders who create progress by combining technical understanding with vision, courage and direction.",
+    href: "/the-grand-prize-for-engineering/leadership",
+    linkLabel: "Read more",
+  },
+  {
+    title: "Sustainability",
+    description:
+      "For engineering that helps accelerate the transition toward a more sustainable and resilient society.",
+    href: "/the-grand-prize-for-engineering/sustainability",
+    linkLabel: "Read more",
+  },
+  {
+    title: "Rising Star",
+    description:
+      "For emerging engineers whose ideas, leadership or technical achievements point clearly toward the future.",
+    href: "/the-grand-prize-for-engineering/rising-star",
+    linkLabel: "Read more",
+  },
+  {
+    title: "Role Model of the Year",
+    description:
+      "For those who inspire others through leadership, expertise and a clear commitment to positive change.",
+    href: "/the-grand-prize-for-engineering/role-model-of-the-year",
+    linkLabel: "Read more",
   },
 ];
 
@@ -150,12 +206,14 @@ export default function Page() {
   const [pageData, setPageData] = useState<GrandPrizePageData | null>(null);
   const juryScrollRef = useRef<HTMLDivElement | null>(null);
   const [isJuryHovered, setIsJuryHovered] = useState(false);
+
   useEffect(() => {
     client.fetch(grandPrizePageQuery).then((data) => {
       setPageData(data);
     });
   }, []);
-    useEffect(() => {
+
+  useEffect(() => {
     const container = juryScrollRef.current;
     if (!container) return;
 
@@ -180,10 +238,13 @@ export default function Page() {
     };
   }, [isJuryHovered]);
 
-  const juryMembers =
-    pageData?.juryMembers && pageData.juryMembers.length > 0
-      ? pageData.juryMembers
-      : fallbackJuryMembers;
+  const juryMembers = pageData?.juryMembers?.length
+    ? pageData.juryMembers
+    : fallbackJuryMembers;
+
+  const categories = pageData?.page?.categories?.length
+    ? pageData.page.categories
+    : fallbackCategories;
 
   const scrollingJuryMembers = [...juryMembers, ...juryMembers];
 
@@ -216,11 +277,11 @@ export default function Page() {
               <p
                 className={`${firaSans.className} mb-6 text-[10px] uppercase tracking-[0.26em] text-[#d9a441] sm:mb-7 md:mb-8 md:text-[11px]`}
               >
-                {pageData?.hero?.eyebrow || "The Grand Prize for Engineering"}
+                {pageData?.page?.hero?.eyebrow || "The Grand Prize for Engineering"}
               </p>
 
               <h1 className="font-serif text-[2.7rem] leading-[0.94] font-light tracking-[-0.04em] text-[#f7f1e8] sm:text-[3.4rem] md:text-[5.1rem] lg:text-[6.2rem]">
-                {pageData?.hero?.title || (
+                {pageData?.page?.hero?.title || (
                   <>
                     Celebrating the people
                     <br />
@@ -230,7 +291,7 @@ export default function Page() {
               </h1>
 
               <p className="mt-6 max-w-xl text-[1rem] leading-[1.75] text-[#d6d0c7] sm:mt-7 sm:text-[1.05rem] md:mt-8 md:text-[15px] md:leading-relaxed">
-                {pageData?.hero?.text ||
+                {pageData?.page?.hero?.text ||
                   "Since 2021, we have celebrated the engineers, ideas and achievements that turn innovation into real-world impact."}
               </p>
             </div>
@@ -244,7 +305,7 @@ export default function Page() {
             <p
               className={`${firaSans.className} mb-3 md:mb-4 text-[11px] md:text-[13px] uppercase tracking-[0.24em] text-[#a27a26]`}
             >
-              {pageData?.whySection?.label || "WHY?"}
+              {pageData?.page?.whySection?.label || "WHY?"}
             </p>
 
             <div className="w-14 h-px bg-[#d9a441]" />
@@ -252,28 +313,28 @@ export default function Page() {
 
           <div className="max-w-4xl mx-auto text-center mb-10 md:mb-14">
             <h2 className="text-[2.2rem] sm:text-[2.6rem] md:text-[4.05rem] lg:text-[4.6rem] leading-[1.04] font-serif font-light text-[#1f1f1f] mb-5 md:mb-6">
-              {pageData?.whySection?.title || "Engineering that matters"}
+              {pageData?.page?.whySection?.title || "Engineering that matters"}
             </h2>
 
             <p className="italic text-[1.06rem] sm:text-[1.14rem] md:text-[1.4rem] leading-[1.45] text-[#5f5a52]">
-              {pageData?.whySection?.intro ||
+              {pageData?.page?.whySection?.intro ||
                 "A prize for engineering that creates lasting impact."}
             </p>
           </div>
 
           <div className="max-w-3xl mx-auto">
             <p className="text-[1rem] sm:text-[1.05rem] md:text-[1.3rem] leading-[1.82] text-[#2c2c2c] mb-6 md:mb-8">
-              {pageData?.whySection?.body1 ||
+              {pageData?.page?.whySection?.body1 ||
                 "Engineering has always been at the core of progress. From infrastructure and energy systems to digital platforms and intelligent machines, it is engineers who translate ideas into reality."}
             </p>
 
             <p className="text-[1rem] sm:text-[1.05rem] md:text-[1.3rem] leading-[1.82] text-[#2c2c2c] mb-8 md:mb-10">
-              {pageData?.whySection?.body2 ||
+              {pageData?.page?.whySection?.body2 ||
                 "The Grand Prize for Engineering exists to recognize individuals and teams whose work not only advances technology, but creates lasting impact in society."}
             </p>
 
             <p className="text-[0.98rem] sm:text-[1.02rem] md:text-[1.22rem] leading-[1.85] md:leading-[1.9] text-[#555]">
-              {pageData?.whySection?.body3 ||
+              {pageData?.page?.whySection?.body3 ||
                 "It highlights the people, ideas and achievements that move industries forward and shape the future through knowledge, courage and execution."}
             </p>
           </div>
@@ -286,7 +347,7 @@ export default function Page() {
             <p
               className={`${firaSans.className} mb-3 md:mb-4 text-[11px] md:text-[13px] uppercase tracking-[0.24em] text-[#a27a26]`}
             >
-              {pageData?.whoSection?.label || "WHO?"}
+              {pageData?.page?.whoSection?.label || "WHO?"}
             </p>
 
             <div className="w-14 h-px bg-[#d9a441]" />
@@ -294,28 +355,28 @@ export default function Page() {
 
           <div className="max-w-4xl mx-auto text-center mb-10 md:mb-14">
             <h2 className="text-[2.2rem] sm:text-[2.6rem] md:text-[4.05rem] lg:text-[4.6rem] leading-[1.04] font-serif font-light text-[#1f1f1f] mb-5 md:mb-6">
-              {pageData?.whoSection?.title || "The people behind the progress"}
+              {pageData?.page?.whoSection?.title || "The people behind the progress"}
             </h2>
 
             <p className="italic text-[1.06rem] sm:text-[1.14rem] md:text-[1.4rem] leading-[1.45] text-[#5f5a52]">
-              {pageData?.whoSection?.intro ||
+              {pageData?.page?.whoSection?.intro ||
                 "Individuals and teams redefining what engineering can achieve."}
             </p>
           </div>
 
           <div className="max-w-3xl mx-auto">
             <p className="text-[1rem] sm:text-[1.05rem] md:text-[1.3rem] leading-[1.82] text-[#2c2c2c] mb-6 md:mb-8">
-              {pageData?.whoSection?.body1 ||
+              {pageData?.page?.whoSection?.body1 ||
                 "The Grand Prize for Engineering recognizes individuals and teams who have distinguished themselves through exceptional work, innovation and leadership. Their contributions push boundaries, solve real-world challenges and create meaningful impact across industries."}
             </p>
 
             <p className="text-[1rem] sm:text-[1.05rem] md:text-[1.3rem] leading-[1.82] text-[#2c2c2c] mb-8 md:mb-10">
-              {pageData?.whoSection?.body2 ||
+              {pageData?.page?.whoSection?.body2 ||
                 "The prize is awarded across five categories: Innovation, Leadership, Sustainability, Rising Star and Role Model of the Year. Together, they reflect the breadth of engineering and the many ways progress is shaped."}
             </p>
 
             <p className="text-[0.98rem] sm:text-[1.02rem] md:text-[1.22rem] leading-[1.85] md:leading-[1.9] text-[#555]">
-              {pageData?.whoSection?.body3 ||
+              {pageData?.page?.whoSection?.body3 ||
                 "From breakthrough technologies to transformative leadership, each category highlights those who contribute to building a more advanced, sustainable and resilient society."}
             </p>
           </div>
@@ -331,7 +392,7 @@ export default function Page() {
             <p
               className={`${firaSans.className} mb-3 md:mb-4 text-[11px] md:text-[13px] uppercase tracking-[0.24em] text-[#a27a26]`}
             >
-              {pageData?.categoriesSection?.label || "WHAT?"}
+              {pageData?.page?.categoriesSection?.label || "WHAT?"}
             </p>
 
             <div className="w-14 h-px bg-[#d9a441]" />
@@ -339,7 +400,7 @@ export default function Page() {
 
           <div className="max-w-4xl mx-auto text-center mb-12 md:mb-16">
             <h2 className="text-[2.2rem] sm:text-[2.6rem] md:text-[4.05rem] lg:text-[4.6rem] leading-[1.04] font-serif font-light text-[#1f1f1f] mb-5 md:mb-6">
-              {pageData?.categoriesSection?.title || (
+              {pageData?.page?.categoriesSection?.title || (
                 <>
                   Five ways engineering
                   <br />
@@ -349,122 +410,44 @@ export default function Page() {
             </h2>
 
             <p className="italic text-[1.06rem] sm:text-[1.14rem] md:text-[1.4rem] leading-[1.45] text-[#5f5a52]">
-              {pageData?.categoriesSection?.intro ||
+              {pageData?.page?.categoriesSection?.intro ||
                 "Explore the five award categories within The Grand Prize for Engineering."}
             </p>
           </div>
 
           <div className="max-w-4xl mx-auto border-t border-black/10">
-            <a
-              href="/the-grand-prize-for-engineering/innovation"
-              className="group grid grid-cols-1 md:grid-cols-[1fr_auto] items-start md:items-end gap-3 md:gap-4 border-b border-black/10 py-6 md:py-8 transition-colors hover:text-[#a27a26]"
-            >
-              <div>
-                <h3 className="font-serif text-[1.55rem] sm:text-[1.7rem] md:text-[2.4rem] leading-[1.05] text-[#1f1f1f]">
-                  Innovation
-                </h3>
-                <p className="mt-2 text-[0.98rem] md:text-[1.08rem] leading-[1.7] text-[#5a5a5a] group-hover:text-[#6a6256]">
-                  For breakthrough ideas, technologies and solutions with the
-                  power to create real-world change.
-                </p>
-              </div>
-              <span
-                className={`${firaSans.className} text-[10px] md:text-[11px] uppercase tracking-[0.18em] text-[#8b8276] group-hover:text-[#a27a26]`}
+            {categories.map((category, index) => (
+              <a
+                key={`${category.title || "category"}-${index}`}
+                href={category.href || "#"}
+                className="group grid grid-cols-1 md:grid-cols-[1fr_auto] items-start md:items-end gap-3 md:gap-4 border-b border-black/10 py-6 md:py-8 transition-colors hover:text-[#a27a26]"
               >
-                Read more
-              </span>
-            </a>
-
-            <a
-              href="/the-grand-prize-for-engineering/leadership"
-              className="group grid grid-cols-1 md:grid-cols-[1fr_auto] items-start md:items-end gap-3 md:gap-4 border-b border-black/10 py-6 md:py-8 transition-colors hover:text-[#a27a26]"
-            >
-              <div>
-                <h3 className="font-serif text-[1.55rem] sm:text-[1.7rem] md:text-[2.4rem] leading-[1.05] text-[#1f1f1f]">
-                  Leadership
-                </h3>
-                <p className="mt-2 text-[0.98rem] md:text-[1.08rem] leading-[1.7] text-[#5a5a5a] group-hover:text-[#6a6256]">
-                  For leaders who create progress by combining technical
-                  understanding with vision, courage and direction.
-                </p>
-              </div>
-              <span
-                className={`${firaSans.className} text-[10px] md:text-[11px] uppercase tracking-[0.18em] text-[#8b8276] group-hover:text-[#a27a26]`}
-              >
-                Read more
-              </span>
-            </a>
-
-            <a
-              href="/the-grand-prize-for-engineering/sustainability"
-              className="group grid grid-cols-1 md:grid-cols-[1fr_auto] items-start md:items-end gap-3 md:gap-4 border-b border-black/10 py-6 md:py-8 transition-colors hover:text-[#a27a26]"
-            >
-              <div>
-                <h3 className="font-serif text-[1.55rem] sm:text-[1.7rem] md:text-[2.4rem] leading-[1.05] text-[#1f1f1f]">
-                  Sustainability
-                </h3>
-                <p className="mt-2 text-[0.98rem] md:text-[1.08rem] leading-[1.7] text-[#5a5a5a] group-hover:text-[#6a6256]">
-                  For engineering that helps accelerate the transition toward a
-                  more sustainable and resilient society.
-                </p>
-              </div>
-              <span
-                className={`${firaSans.className} text-[10px] md:text-[11px] uppercase tracking-[0.18em] text-[#8b8276] group-hover:text-[#a27a26]`}
-              >
-                Read more
-              </span>
-            </a>
-
-            <a
-              href="/the-grand-prize-for-engineering/rising-star"
-              className="group grid grid-cols-1 md:grid-cols-[1fr_auto] items-start md:items-end gap-3 md:gap-4 border-b border-black/10 py-6 md:py-8 transition-colors hover:text-[#a27a26]"
-            >
-              <div>
-                <h3 className="font-serif text-[1.55rem] sm:text-[1.7rem] md:text-[2.4rem] leading-[1.05] text-[#1f1f1f]">
-                  Rising Star
-                </h3>
-                <p className="mt-2 text-[0.98rem] md:text-[1.08rem] leading-[1.7] text-[#5a5a5a] group-hover:text-[#6a6256]">
-                  For emerging engineers whose ideas, leadership or technical
-                  achievements point clearly toward the future.
-                </p>
-              </div>
-              <span
-                className={`${firaSans.className} text-[10px] md:text-[11px] uppercase tracking-[0.18em] text-[#8b8276] group-hover:text-[#a27a26]`}
-              >
-                Read more
-              </span>
-            </a>
-
-            <a
-              href="/the-grand-prize-for-engineering/role-model-of-the-year"
-              className="group grid grid-cols-1 md:grid-cols-[1fr_auto] items-start md:items-end gap-3 md:gap-4 border-b border-black/10 py-6 md:py-8 transition-colors hover:text-[#a27a26]"
-            >
-              <div>
-                <h3 className="font-serif text-[1.55rem] sm:text-[1.7rem] md:text-[2.4rem] leading-[1.05] text-[#1f1f1f]">
-                  Role Model of the Year
-                </h3>
-                <p className="mt-2 text-[0.98rem] md:text-[1.08rem] leading-[1.7] text-[#5a5a5a] group-hover:text-[#6a6256]">
-                  For those who inspire others through leadership, expertise and
-                  a clear commitment to positive change.
-                </p>
-              </div>
-              <span
-                className={`${firaSans.className} text-[10px] md:text-[11px] uppercase tracking-[0.18em] text-[#8b8276] group-hover:text-[#a27a26]`}
-              >
-                Read more
-              </span>
-            </a>
+                <div>
+                  <h3 className="font-serif text-[1.55rem] sm:text-[1.7rem] md:text-[2.4rem] leading-[1.05] text-[#1f1f1f]">
+                    {category.title || "Category"}
+                  </h3>
+                  <p className="mt-2 text-[0.98rem] md:text-[1.08rem] leading-[1.7] text-[#5a5a5a] group-hover:text-[#6a6256]">
+                    {category.description || ""}
+                  </p>
+                </div>
+                <span
+                  className={`${firaSans.className} text-[10px] md:text-[11px] uppercase tracking-[0.18em] text-[#8b8276] group-hover:text-[#a27a26]`}
+                >
+                  {category.linkLabel || "Read more"}
+                </span>
+              </a>
+            ))}
           </div>
         </div>
       </section>
 
-            <section className="bg-[#f3f1ed] px-5 pt-4 pb-20 sm:pt-6 sm:pb-22 md:px-12 md:pt-8 md:pb-24 lg:px-20 lg:pt-10 lg:pb-28">
+      <section className="bg-[#f3f1ed] px-5 pt-4 pb-20 sm:pt-6 sm:pb-22 md:px-12 md:pt-8 md:pb-24 lg:px-20 lg:pt-10 lg:pb-28">
         <div className="mx-auto max-w-[1600px]">
           <div className="mb-10 text-center md:mb-14">
             <p
               className={`${firaSans.className} mb-3 text-[11px] uppercase tracking-[0.24em] text-[#a27a26] md:text-[13px]`}
             >
-              {pageData?.jurySection?.title || "Meet the jury"}
+              {pageData?.page?.jurySection?.title || "Meet the jury"}
             </p>
 
             <div className="mx-auto h-px w-14 bg-[#d9a441]" />
@@ -502,7 +485,7 @@ export default function Page() {
                       </h3>
 
                       <p className="mt-2 text-[0.95rem] leading-[1.65] text-[#6a6256]">
-                        {member.role || ""}
+                        {[member.title, member.company].filter(Boolean).join(", ")}
                       </p>
                     </div>
                   </div>
@@ -524,25 +507,23 @@ export default function Page() {
 
         <div className="relative z-10 mx-auto max-w-4xl text-center">
           <h2 className="mb-5 md:mb-6 font-serif text-[2rem] sm:text-[2.4rem] md:text-[3.4rem] lg:text-[4rem] leading-[1.08]">
-            {pageData?.bottomSection?.title || "Engineering deserves recognition"}
+            {pageData?.page?.bottomSection?.title || "Engineering deserves recognition"}
           </h2>
 
           <p className="mb-8 md:mb-10 text-[1rem] sm:text-[1.08rem] md:text-[1.3rem] leading-[1.7] text-[#d0d0d0]">
-            {pageData?.bottomSection?.text ||
+            {pageData?.page?.bottomSection?.text ||
               "The Grand Prize for Engineering highlights the people and ideas that move society forward — not for attention, but for impact."}
           </p>
 
           <a
-            href={pageData?.bottomSection?.linkHref || "/engineering-day-2026"}
+            href={pageData?.page?.bottomSection?.linkHref || "/engineering-day-2026"}
             className="inline-block mt-4 md:mt-6 text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-[#a27a26] hover:text-[#d9a441] transition-colors"
           >
-            {pageData?.bottomSection?.linkLabel ||
+            {pageData?.page?.bottomSection?.linkLabel ||
               "The winners will be celebrated at SPACE, Stockholm · October 21"}
           </a>
         </div>
       </section>
-
-    
 
       <footer className="bg-[#f3f1ed] pt-12 pb-12 md:pt-12 md:pb-14">
         <div className="max-w-3xl mx-auto text-center px-5 md:px-6">

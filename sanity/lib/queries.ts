@@ -175,14 +175,25 @@ export const sessionGroupsQuery = `*[_type == "sessionGroup"] | order(order asc)
   }
 }`;
 export const grandPrizePageQuery = `
-  *[_type == "grandPrizePage"][0]{
-    hero,
-    whySection,
-    whoSection,
-    categoriesSection,
-    categories,
-    jurySection,
-    juryMembers,
-    bottomSection
+  {
+    "page": *[_type == "grandPrizePage"][0]{
+      hero,
+      whySection,
+      whoSection,
+      categoriesSection,
+      categories,
+      jurySection,
+      bottomSection
+    },
+    "juryMembers": *[_type == "juryMember"] | order(sortOrder asc){
+      name,
+      title,
+      company,
+      "image": {
+        "asset": {
+          "url": image.asset->url
+        }
+      }
+    }
   }
 `;
