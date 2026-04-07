@@ -197,3 +197,22 @@ export const grandPrizePageQuery = `
     }
   }
 `;
+
+export const preEventsPageQuery = `
+  *[_type == "preEventsPage"][0]{
+    hero,
+    whySection,
+    whatToExpectSection,
+    expectationCards,
+    upcomingStopsSection,
+    cityCards,
+    closingSection
+  }
+`;
+export const preEventsCityQuery = `
+*[_type == "preEventsCity" && slug.current == $slug][0]{
+  hero,
+  facts,
+  content
+}
+`;

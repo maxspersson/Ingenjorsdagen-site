@@ -9,6 +9,8 @@ import sessionGroup from './sessionGroup'
 import attendingHeroesPage from './attendingHeroesPage'
 import grandPrizePage from './grandPrizePage'
 import juryMember from './juryMember'
+import preEventsPage from './preEventsPage'
+import preEventsCity from './preEventsCity'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -22,5 +24,8 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     sessionGroup,
     attendingHeroesPage,
     grandPrizePage,
+    juryMember,
+    preEventsPage,
+    preEventsCity
   ],
 }
