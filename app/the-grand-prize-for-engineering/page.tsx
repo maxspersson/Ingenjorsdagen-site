@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Fira_Sans } from "next/font/google";
 import SiteHeader from "@/app/components/SiteHeader";
 import { client } from "@/sanity/lib/client";
+import { urlFor } from "@/sanity/lib/image";
 import { grandPrizePageQuery } from "@/sanity/lib/queries";
 
 const firaSans = Fira_Sans({
@@ -35,6 +36,12 @@ type GrandPrizePageData = {
       eyebrow?: string;
       title?: string;
       text?: string;
+      mediaType?: "image" | "video";
+      image?: {
+        alt?: string;
+        asset?: any;
+      };
+      videoUrl?: string;
     };
     whySection?: {
       label?: string;
@@ -248,21 +255,50 @@ export default function Page() {
 
   const scrollingJuryMembers = [...juryMembers, ...juryMembers];
 
+  const hasHeroMedia =
+    (pageData?.page?.hero?.mediaType === "image" &&
+      pageData?.page?.hero?.image?.asset) ||
+    (pageData?.page?.hero?.mediaType === "video" &&
+      pageData?.page?.hero?.videoUrl);
+
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#111111]">
       <SiteHeader />
 
       <section className="relative overflow-hidden bg-[#0f0e0d] text-[#f4efe7]">
         <div className="absolute inset-0">
-          <video
-            className="h-full w-full object-cover"
-            autoPlay
-            muted
-            loop
-            playsInline
-          >
-            <source src="/grand-prize-for-engineering.mp4" type="video/mp4" />
-          </video>
+          {pageData?.page?.hero?.mediaType === "video" &&
+          pageData?.page?.hero?.videoUrl ? (
+            <video
+              className="h-full w-full object-cover"
+              autoPlay
+              muted
+              loop
+              playsInline
+            >
+              <source src={pageData.page.hero.videoUrl} type="video/mp4" />
+            </video>
+          ) : hasHeroMedia && pageData?.page?.hero?.image?.asset ? (
+            <img
+              src={urlFor(pageData.page.hero.image).width(2200).quality(90).url()}
+              alt={
+                pageData?.page?.hero?.image?.alt ||
+                pageData?.page?.hero?.title ||
+                "Grand Prize hero image"
+              }
+              className="h-full w-full object-cover"
+            />
+          ) : (
+            <video
+              className="h-full w-full object-cover"
+              autoPlay
+              muted
+              loop
+              playsInline
+            >
+              <source src="/grand-prize-for-engineering.mp4" type="video/mp4" />
+            </video>
+          )}
         </div>
 
         <div className="absolute inset-0 bg-black/42" />

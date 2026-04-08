@@ -11,6 +11,8 @@ import grandPrizePage from './grandPrizePage'
 import juryMember from './juryMember'
 import preEventsPage from './preEventsPage'
 import preEventsCity from './preEventsCity'
+import contactPage from './contactPage'
+import grandPrizeCategoryPage from './grandPrizeCategoryPage'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -26,6 +28,8 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     grandPrizePage,
     juryMember,
     preEventsPage,
-    preEventsCity
+    preEventsCity,
+    contactPage,
+    grandPrizeCategoryPage,
   ],
 }

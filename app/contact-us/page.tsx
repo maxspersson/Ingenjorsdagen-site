@@ -2,98 +2,192 @@
 
 import SiteHeader from "@/app/components/SiteHeader";
 import { Fira_Sans } from "next/font/google";
+import { useEffect, useState } from "react";
+import { client } from "@/sanity/lib/client";
+import { urlFor } from "@/sanity/lib/image";
+import { contactPageQuery } from "@/sanity/lib/queries";
 
 const firaSans = Fira_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
 });
 
+type ContactItem = {
+  label?: string;
+  email?: string;
+  text?: string;
+};
+
+type ContactPageData = {
+  hero?: {
+    label?: string;
+    title?: string;
+    subtitle?: string;
+    intro?: string;
+    mediaType?: "image" | "video";
+    image?: {
+      alt?: string;
+      asset?: any;
+    };
+    videoUrl?: string;
+  };
+  contactItems?: ContactItem[];
+};
+
+const fallbackContactItems: ContactItem[] = [
+  {
+    label: "General inquiries",
+    email: "info@ingenjorsdagen.se",
+    text: "For general questions about Engineering Day, participation, programme information or the event platform.",
+  },
+  {
+    label: "Partnerships & collaborations",
+    email: "linus.persson@nyteknikgroup.se",
+    text: "For partnership opportunities, collaborations and conversations related to Engineering Day and The Grand Prize for Engineering.",
+  },
+];
+
 export default function ContactUsPage() {
+  const [pageData, setPageData] = useState<ContactPageData | null>(null);
+
+  useEffect(() => {
+    client.fetch(contactPageQuery).then((data) => {
+      setPageData(data);
+    });
+  }, []);
+
+  const contactItems = pageData?.contactItems?.length
+    ? pageData.contactItems
+    : fallbackContactItems;
+
+  const hasHeroMedia =
+    (pageData?.hero?.mediaType === "image" && pageData?.hero?.image?.asset) ||
+    (pageData?.hero?.mediaType === "video" && pageData?.hero?.videoUrl);
+
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#f3f1ed] text-[#1f1f1f]">
       <SiteHeader />
 
-      <section className="bg-[#f3f1ed] px-5 pt-20 pb-14 md:px-12 md:pt-28 md:pb-20 lg:px-20">
-        <div className="mx-auto max-w-6xl">
-          <div className="mb-9 md:mb-12">
-            <p
-              className={`${firaSans.className} mb-4 text-[12px] uppercase tracking-[0.22em] text-[#a27a26] md:text-[13px] md:tracking-[0.24em]`}
-            >
-              CONTACT
-            </p>
-
-            <div className="h-px w-14 bg-[#d9a441]" />
+      {/* HERO */}
+      {hasHeroMedia ? (
+        <section className="relative min-h-[78vh] overflow-hidden bg-[#111111] mb-16 md:mb-20 lg:mb-24">
+          <div className="absolute inset-0">
+            {pageData?.hero?.mediaType === "video" && pageData?.hero?.videoUrl ? (
+              <video
+                className="h-full w-full object-cover"
+                autoPlay
+                muted
+                loop
+                playsInline
+              >
+                <source src={pageData.hero.videoUrl} type="video/mp4" />
+              </video>
+            ) : pageData?.hero?.image?.asset ? (
+              <img
+                src={urlFor(pageData.hero.image).width(2200).quality(90).url()}
+                alt={
+                  pageData?.hero?.image?.alt ||
+                  pageData?.hero?.title ||
+                  "Contact hero image"
+                }
+                className="h-full w-full object-cover"
+              />
+            ) : null}
           </div>
 
-          <div className="mx-auto mb-10 max-w-4xl text-center md:mb-14">
-            <h1 className="mb-5 font-serif text-[2.35rem] font-light leading-[1.02] text-[#1f1f1f] sm:text-[2.8rem] md:mb-6 md:text-[4.4rem] lg:text-[5rem]">
-              Get in touch
-            </h1>
+          <div className="absolute inset-0 bg-black/45" />
 
-            <p className="mx-auto max-w-[23rem] text-[1.06rem] italic leading-[1.5] text-[#5f5a52] sm:max-w-[31rem] sm:text-[1.14rem] md:max-w-none md:text-[1.4rem] md:leading-[1.45]">
-              Questions about Engineering Day, partnerships or participation.
-            </p>
-          </div>
+          <div className="relative z-10 flex min-h-[78vh] items-center justify-center px-5 pt-24 pb-16 md:px-12 md:pt-28 md:pb-20 lg:px-20">
+            <div className="mx-auto max-w-5xl text-center text-white">
+              <p
+                className={`${firaSans.className} mb-4 text-[12px] uppercase tracking-[0.22em] text-[#d9a441] md:text-[13px] md:tracking-[0.24em]`}
+              >
+                {pageData?.hero?.label || "CONTACT"}
+              </p>
 
-          <div className="mx-auto max-w-3xl">
-            <p className="text-center text-[1.02rem] leading-[1.78] text-[#2c2c2c] sm:text-[1.08rem] md:text-[1.3rem] md:leading-[1.82]">
-              Whether you would like to learn more about Engineering Day,
-              explore a partnership or get in touch with the team, we are happy
-              to hear from you.
-            </p>
+              <div className="mx-auto h-px w-14 bg-[#d9a441]" />
+
+              <h1 className="mt-8 mb-5 font-serif text-[2.35rem] font-light leading-[1.02] text-white sm:text-[2.8rem] md:mb-6 md:mt-10 md:text-[4.4rem] lg:text-[5rem]">
+                {pageData?.hero?.title || "Get in touch"}
+              </h1>
+
+              <p className="mx-auto max-w-[23rem] text-[1.06rem] italic leading-[1.5] text-white/90 sm:max-w-[31rem] sm:text-[1.14rem] md:max-w-none md:text-[1.4rem] md:leading-[1.45]">
+                {pageData?.hero?.subtitle ||
+                  "Questions about Engineering Day, partnerships or participation."}
+              </p>
+
+              <div className="mx-auto mt-8 max-w-3xl md:mt-10">
+                <p className="text-center text-[1.02rem] leading-[1.78] text-white/90 sm:text-[1.08rem] md:text-[1.3rem] md:leading-[1.82]">
+                  {pageData?.hero?.intro ||
+                    "Whether you would like to learn more about Engineering Day, explore a partnership or get in touch with the team, we are happy to hear from you."}
+                </p>
+              </div>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      ) : (
+        <section className="bg-[#f3f1ed] px-5 pt-20 pb-14 md:px-12 md:pt-28 md:pb-20 lg:px-20">
+          <div className="mx-auto max-w-6xl">
+            <div className="mb-9 md:mb-12">
+              <p
+                className={`${firaSans.className} mb-4 text-[12px] uppercase tracking-[0.22em] text-[#a27a26] md:text-[13px] md:tracking-[0.24em]`}
+              >
+                {pageData?.hero?.label || "CONTACT"}
+              </p>
+
+              <div className="h-px w-14 bg-[#d9a441]" />
+            </div>
+
+            <div className="mx-auto mb-10 max-w-4xl text-center md:mb-14">
+              <h1 className="mb-5 font-serif text-[2.35rem] font-light leading-[1.02] text-[#1f1f1f] sm:text-[2.8rem] md:mb-6 md:text-[4.4rem] lg:text-[5rem]">
+                {pageData?.hero?.title || "Get in touch"}
+              </h1>
+
+              <p className="mx-auto max-w-[23rem] text-[1.06rem] italic leading-[1.5] text-[#5f5a52] sm:max-w-[31rem] sm:text-[1.14rem] md:max-w-none md:text-[1.4rem] md:leading-[1.45]">
+                {pageData?.hero?.subtitle ||
+                  "Questions about Engineering Day, partnerships or participation."}
+              </p>
+            </div>
+
+            <div className="mx-auto max-w-3xl">
+              <p className="text-center text-[1.02rem] leading-[1.78] text-[#2c2c2c] sm:text-[1.08rem] md:text-[1.3rem] md:leading-[1.82]">
+                {pageData?.hero?.intro ||
+                  "Whether you would like to learn more about Engineering Day, explore a partnership or get in touch with the team, we are happy to hear from you."}
+              </p>
+            </div>
+          </div>
+        </section>
+      )}
 
       <section className="bg-[#f3f1ed] px-5 pt-4 pb-20 md:px-12 md:pt-8 md:pb-28 lg:px-20">
         <div className="mx-auto max-w-5xl border-t border-black/10">
-          <div className="grid grid-cols-1 gap-4 border-b border-black/10 py-6 md:grid-cols-[240px_1fr] md:gap-6 md:py-10">
-            <div>
-              <p
-                className={`${firaSans.className} text-[11px] uppercase tracking-[0.16em] text-[#8b8276] md:text-[12px] md:tracking-[0.18em]`}
-              >
-                General inquiries
-              </p>
+          {contactItems.map((item, index) => (
+            <div
+              key={`${item.label || "contact"}-${index}`}
+              className="grid grid-cols-1 gap-4 border-b border-black/10 py-6 md:grid-cols-[240px_1fr] md:gap-6 md:py-10"
+            >
+              <div>
+                <p
+                  className={`${firaSans.className} text-[11px] uppercase tracking-[0.16em] text-[#8b8276] md:text-[12px] md:tracking-[0.18em]`}
+                >
+                  {item.label || "Contact"}
+                </p>
+              </div>
+
+              <div>
+                <a
+                  href={item.email ? `mailto:${item.email}` : "#"}
+                  className="break-words font-serif text-[1.35rem] leading-[1.12] text-[#1f1f1f] transition-colors hover:text-[#a27a26] sm:text-[1.5rem] md:text-[2rem] md:leading-[1.15]"
+                >
+                  {item.email || ""}
+                </a>
+
+                <p className="mt-3 text-[0.98rem] leading-[1.75] text-[#55514a] sm:text-[1rem] md:text-[1.08rem] md:leading-[1.8]">
+                  {item.text || ""}
+                </p>
+              </div>
             </div>
-
-            <div>
-              <a
-                href="mailto:info@ingenjorsdagen.se"
-                className="break-words font-serif text-[1.35rem] leading-[1.12] text-[#1f1f1f] transition-colors hover:text-[#a27a26] sm:text-[1.5rem] md:text-[2rem] md:leading-[1.15]"
-              >
-                info@ingenjorsdagen.se
-              </a>
-
-              <p className="mt-3 text-[0.98rem] leading-[1.75] text-[#55514a] sm:text-[1rem] md:text-[1.08rem] md:leading-[1.8]">
-                For general questions about Engineering Day, participation,
-                programme information or the event platform.
-              </p>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 gap-4 border-b border-black/10 py-6 md:grid-cols-[240px_1fr] md:gap-6 md:py-10">
-            <div>
-              <p
-                className={`${firaSans.className} text-[11px] uppercase tracking-[0.16em] text-[#8b8276] md:text-[12px] md:tracking-[0.18em]`}
-              >
-                Partnerships & collaborations
-              </p>
-            </div>
-
-            <div>
-              <a
-                href="mailto:linus.persson@nyteknikgroup.se"
-                className="break-words font-serif text-[1.35rem] leading-[1.12] text-[#1f1f1f] transition-colors hover:text-[#a27a26] sm:text-[1.5rem] md:text-[2rem] md:leading-[1.15]"
-              >
-                linus.persson@nyteknikgroup.se
-              </a>
-
-              <p className="mt-3 text-[0.98rem] leading-[1.75] text-[#55514a] sm:text-[1rem] md:text-[1.08rem] md:leading-[1.8]">
-                For partnership opportunities, collaborations and conversations
-                related to Engineering Day and The Grand Prize for Engineering.
-              </p>
-            </div>
-          </div>
+          ))}
         </div>
       </section>
 

@@ -1,8 +1,8 @@
 import { defineType, defineField } from 'sanity'
 
 export default defineType({
-  name: 'engineeringDayPage',
-  title: 'Engineering Day Page',
+  name: 'contactPage',
+  title: 'Contact Page',
   type: 'document',
 
   fields: [
@@ -18,8 +18,8 @@ export default defineType({
       type: 'object',
       fields: [
         defineField({
-          name: 'dateText',
-          title: 'Date text',
+          name: 'label',
+          title: 'Label',
           type: 'string',
         }),
         defineField({
@@ -30,17 +30,14 @@ export default defineType({
         defineField({
           name: 'subtitle',
           title: 'Subtitle',
-          type: 'string',
+          type: 'text',
+          rows: 3,
         }),
         defineField({
-          name: 'ctaText',
-          title: 'CTA text',
-          type: 'string',
-        }),
-        defineField({
-          name: 'ctaHref',
-          title: 'CTA link',
-          type: 'string',
+          name: 'intro',
+          title: 'Intro',
+          type: 'text',
+          rows: 4,
         }),
         defineField({
           name: 'mediaType',
@@ -82,69 +79,31 @@ export default defineType({
     }),
 
     defineField({
-      name: 'themeSection',
-      title: 'Theme section',
-      type: 'object',
-      fields: [
-        defineField({
-          name: 'kicker',
-          title: 'Kicker',
-          type: 'string',
-        }),
-        defineField({
-          name: 'title',
-          title: 'Title',
-          type: 'string',
-        }),
-        defineField({
-          name: 'subtitle',
-          title: 'Subtitle',
-          type: 'string',
-        }),
-        defineField({
-          name: 'body',
-          title: 'Body',
-          type: 'array',
-          of: [{ type: 'block' }],
-        }),
-      ],
-    }),
-
-    defineField({
-      name: 'masterclassesIntro',
-      title: 'Masterclasses intro',
-      type: 'object',
-      fields: [
-        defineField({
-          name: 'title',
-          title: 'Title',
-          type: 'string',
-        }),
-        defineField({
-          name: 'body',
-          title: 'Body',
-          type: 'array',
-          of: [{ type: 'block' }],
-        }),
-      ],
-    }),
-
-    defineField({
-      name: 'programmeIntro',
-      title: 'Programme intro',
-      type: 'object',
-      fields: [
-        defineField({
-          name: 'title',
-          title: 'Title',
-          type: 'string',
-        }),
-        defineField({
-          name: 'body',
-          title: 'Body',
-          type: 'array',
-          of: [{ type: 'block' }],
-        }),
+      name: 'contactItems',
+      title: 'Contact items',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'label',
+              title: 'Label',
+              type: 'string',
+            }),
+            defineField({
+              name: 'email',
+              title: 'Email',
+              type: 'string',
+            }),
+            defineField({
+              name: 'text',
+              title: 'Text',
+              type: 'text',
+              rows: 3,
+            }),
+          ],
+        },
       ],
     }),
   ],
@@ -155,7 +114,7 @@ export default defineType({
     },
     prepare(selection) {
       return {
-        title: selection.title || 'Engineering Day Page',
+        title: selection.title || 'Contact Page',
       }
     },
   },

@@ -33,6 +33,7 @@ export const programmeQuery = groq`
     }
   }
 `
+
 export const masterclassesQuery = groq`
   *[_type == "masterclass"] | order(order asc) {
     _id,
@@ -55,14 +56,21 @@ export const masterclassesQuery = groq`
     details
   }
 `
-export const engineeringDayPageQuery = `
+
+export const engineeringDayPageQuery = groq`
   *[_type == "engineeringDayPage"][0]{
     hero{
       dateText,
       title,
       subtitle,
       ctaText,
-      ctaHref
+      ctaHref,
+      mediaType,
+      image{
+        alt,
+        asset
+      },
+      videoUrl
     },
     themeSection{
       kicker,
@@ -80,6 +88,7 @@ export const engineeringDayPageQuery = `
     }
   }
 `
+
 export const homePageQuery = `
   *[_type == "homePage"][0]{
     hero{
@@ -89,7 +98,13 @@ export const homePageQuery = `
       primaryCtaText,
       primaryCtaHref,
       secondaryCtaText,
-      secondaryCtaHref
+      secondaryCtaHref,
+      mediaType,
+      image{
+        alt,
+        asset
+      },
+      videoUrl
     },
     "foundation": foundationSection{
       kicker,
@@ -131,37 +146,61 @@ export const homePageQuery = `
   }
 `;
 
-export const attendingHeroesPageQuery = `
+export const attendingHeroesPageQuery = groq`
   *[_type == "attendingHeroesPage"][0]{
-    hero,
-    featuredSection,
-    moderatorSection,
-    heroTalksSection,
-    panelsSection,
-    firesidesSection,
-    masterclassesSection,
-    keynoteSection
+    _id,
+    internalTitle,
+    hero{
+      kicker,
+      title,
+      subtitle,
+      mediaType,
+      image{
+        alt,
+        asset
+      },
+      videoUrl
+    },
+    featuredSection{
+      label,
+      title,
+      intro
+    },
+    moderatorSection{
+      label,
+      title,
+      intro
+    },
+    heroTalksSection{
+      label,
+      title,
+      intro
+    },
+    panelsSection{
+      label,
+      title,
+      intro
+    },
+    firesidesSection{
+      label,
+      title,
+      intro
+    },
+    masterclassesSection{
+      label,
+      title,
+      intro
+    },
+    keynoteSection{
+      label,
+      title,
+      intro
+    }
   }
-`;
-export const speakersQuery = `*[_type == "speaker"] | order(order asc){
-  name,
-  title,
-  company,
-  cardLabel,
-  placements,
-  session,
-  focus,
-  bio,
-  order,
-  "image": image.asset->url
-}`;
+`
 
-export const sessionGroupsQuery = `*[_type == "sessionGroup"] | order(order asc){
-  title,
-  description,
-  type,
-  order,
-  people[]->{
+export const speakersQuery = groq`
+  *[_type == "speaker"] | order(order asc){
     name,
     title,
     company,
@@ -173,46 +212,175 @@ export const sessionGroupsQuery = `*[_type == "sessionGroup"] | order(order asc)
     order,
     "image": image.asset->url
   }
-}`;
-export const grandPrizePageQuery = `
-  {
-    "page": *[_type == "grandPrizePage"][0]{
-      hero,
-      whySection,
-      whoSection,
-      categoriesSection,
-      categories,
-      jurySection,
-      bottomSection
-    },
-    "juryMembers": *[_type == "juryMember"] | order(sortOrder asc){
+`
+
+export const sessionGroupsQuery = groq`
+  *[_type == "sessionGroup"] | order(order asc){
+    title,
+    description,
+    type,
+    order,
+    people[]->{
       name,
       title,
       company,
-      "image": {
-        "asset": {
-          "url": image.asset->url
-        }
+      cardLabel,
+      placements,
+      session,
+      focus,
+      bio,
+      order,
+      "image": image.asset->url
+    }
+  }
+`
+
+export const grandPrizePageQuery = `
+{
+  "page": *[_type == "grandPrizePage"][0]{
+    hero{
+      eyebrow,
+      title,
+      text,
+      mediaType,
+      image{
+        alt,
+        asset
+      },
+      videoUrl
+    },
+    whySection,
+    whoSection,
+    categoriesSection,
+    categories,
+    jurySection,
+    bottomSection
+  },
+  "juryMembers": *[_type == "juryMember"] | order(sortOrder asc){
+    name,
+    title,
+    company,
+    "image": {
+      "asset": {
+        "url": image.asset->url
       }
     }
   }
+}
 `;
 
-export const preEventsPageQuery = `
+export const preEventsPageQuery = groq`
   *[_type == "preEventsPage"][0]{
-    hero,
+    hero{
+      eyebrow,
+      title,
+      subtitle,
+      mediaType,
+      videoUrl,
+      image{
+        asset->{
+          _id,
+          url
+        },
+        alt
+      }
+    },
     whySection,
     whatToExpectSection,
     expectationCards,
     upcomingStopsSection,
     cityCards,
-    closingSection
+    closingSection{
+      title,
+      body1,
+      body2,
+      body3,
+      mediaType,
+      videoUrl,
+      image{
+        asset->{
+          _id,
+          url
+        }
+      }
+    }
   }
-`;
-export const preEventsCityQuery = `
-*[_type == "preEventsCity" && slug.current == $slug][0]{
-  hero,
-  facts,
-  content
-}
-`;
+`
+
+export const preEventsCityQuery = groq`
+  *[_type == "preEventsCity" && slug.current == $slug][0]{
+    hero{
+      eyebrow,
+      title,
+      subtitle,
+      mediaType,
+      videoUrl,
+      image{
+        asset->{
+          _id,
+          url
+        },
+        alt
+      }
+    },
+    facts,
+    content
+  }
+`
+
+export const contactPageQuery = groq`
+  *[_type == "contactPage"][0]{
+    internalTitle,
+    hero{
+      label,
+      title,
+      subtitle,
+      intro,
+      mediaType,
+      image{
+        alt,
+        asset
+      },
+      videoUrl
+    },
+    contactItems[]{
+      label,
+      email,
+      text
+    }
+  }
+`
+export const grandPrizeCategoryPageQuery = groq`
+  *[_type == "grandPrizeCategoryPage" && slug.current == $slug][0]{
+    hero{
+      mediaType,
+      videoUrl,
+      image{
+        asset->{
+          _id,
+          url
+        },
+        alt
+      }
+    },
+    whySection,
+    whoSection,
+    criteriaSection,
+    criteriaItems,
+    hallOfFameSection,
+    featuredWinner{
+      eyebrow,
+      winner,
+      presentedBy,
+      summary,
+      secondaryText
+    },
+    hallOfFameItems[]{
+      year,
+      winner,
+      presentedBy,
+      summary,
+      secondaryText
+    }
+  }
+`

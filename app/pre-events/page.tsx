@@ -29,6 +29,14 @@ type PreEventsPageData = {
     eyebrow?: string;
     title?: string;
     subtitle?: string;
+    mediaType?: "image" | "video";
+    videoUrl?: string;
+    image?: {
+      asset?: {
+        url?: string;
+      };
+      alt?: string;
+    };
   };
   whySection?: {
     label?: string;
@@ -53,6 +61,13 @@ type PreEventsPageData = {
     body1?: string;
     body2?: string;
     body3?: string;
+    mediaType?: "image" | "video";
+    videoUrl?: string;
+    image?: {
+      asset?: {
+        url?: string;
+      };
+    };
   };
 };
 
@@ -122,10 +137,28 @@ export default function PreEventsPage() {
 
       {/* HERO */}
       <section className="relative min-h-[52vh] overflow-hidden bg-[#0f0f10] text-white sm:min-h-[60vh] md:min-h-[88vh]">
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('/pre-events.png')" }}
-        />
+        {pageData?.hero?.mediaType === "video" && pageData?.hero?.videoUrl ? (
+          <video
+            className="absolute inset-0 h-full w-full object-cover"
+            autoPlay
+            muted
+            loop
+            playsInline
+          >
+            <source src={pageData.hero.videoUrl} type="video/mp4" />
+          </video>
+        ) : pageData?.hero?.image?.asset?.url ? (
+          <img
+            src={pageData.hero.image.asset.url}
+            alt={pageData.hero.image.alt || "Hero image"}
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+        ) : (
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: "url('/pre-events.png')" }}
+          />
+        )}
 
         <div className="absolute inset-0 bg-black/38" />
         <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.34),rgba(0,0,0,0.16),rgba(0,0,0,0.42))]" />
@@ -296,10 +329,33 @@ export default function PreEventsPage() {
 
       {/* CLOSING */}
       <section className="relative overflow-hidden px-5 py-20 text-white md:px-12 md:py-32 lg:px-20">
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('/pre-events.png')" }}
-        />
+        {pageData?.closingSection?.mediaType === "video" &&
+        pageData?.closingSection?.videoUrl ? (
+          <video
+            className="absolute inset-0 h-full w-full object-cover"
+            autoPlay
+            muted
+            loop
+            playsInline
+          >
+            <source
+              src={pageData.closingSection.videoUrl}
+              type="video/mp4"
+            />
+          </video>
+        ) : pageData?.closingSection?.image?.asset?.url ? (
+          <img
+            src={pageData.closingSection.image.asset.url}
+            alt="Background image"
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+        ) : (
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: "url('/pre-events.png')" }}
+          />
+        )}
+
         <div className="absolute inset-0 bg-black/62" />
         <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.48),rgba(0,0,0,0.72))]" />
 

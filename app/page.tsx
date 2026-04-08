@@ -4,12 +4,14 @@ import { useEffect, useState } from "react";
 import { Fira_Sans } from "next/font/google";
 import SiteHeader from "@/app/components/SiteHeader";
 import { client } from "@/sanity/lib/client";
+import { urlFor } from "@/sanity/lib/image";
 import { homePageQuery } from "@/sanity/lib/queries";
 
 const firaSans = Fira_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
 });
+
 type FoundationPillar = {
   number?: string;
   title: string;
@@ -59,15 +61,18 @@ export default function Home() {
 
     loadPageData();
   }, []);
-  const foundationPillars =
-  pageData?.foundation?.pillars?.length
+
+  const foundationPillars = pageData?.foundation?.pillars?.length
     ? pageData.foundation.pillars
     : foundationPillarsFallback;
 
-const whyItMattersPoints =
-  pageData?.whyItMatters?.points?.length
+  const whyItMattersPoints = pageData?.whyItMatters?.points?.length
     ? pageData.whyItMatters.points
     : whyItMattersPointsFallback;
+
+  const hasHeroMedia =
+    (pageData?.hero?.mediaType === "image" && pageData?.hero?.image?.asset) ||
+    (pageData?.hero?.mediaType === "video" && pageData?.hero?.videoUrl);
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#f3f1ed] text-[#1f1f1f]">
@@ -75,15 +80,37 @@ const whyItMattersPoints =
 
       <section className="relative overflow-hidden bg-[#161514] text-[#f4efe7]">
         <div className="absolute inset-0">
-          <video
-            className="h-full w-full object-cover"
-            autoPlay
-            muted
-            loop
-            playsInline
-          >
-            <source src="/engineering-day.mp4" type="video/mp4" />
-          </video>
+          {pageData?.hero?.mediaType === "video" && pageData?.hero?.videoUrl ? (
+            <video
+              className="h-full w-full object-cover"
+              autoPlay
+              muted
+              loop
+              playsInline
+            >
+              <source src={pageData.hero.videoUrl} type="video/mp4" />
+            </video>
+          ) : hasHeroMedia && pageData?.hero?.image?.asset ? (
+            <img
+              src={urlFor(pageData.hero.image).width(2200).quality(90).url()}
+              alt={
+                pageData?.hero?.image?.alt ||
+                pageData?.hero?.title ||
+                "Home hero image"
+              }
+              className="h-full w-full object-cover"
+            />
+          ) : (
+            <video
+              className="h-full w-full object-cover"
+              autoPlay
+              muted
+              loop
+              playsInline
+            >
+              <source src="/engineering-day.mp4" type="video/mp4" />
+            </video>
+          )}
         </div>
 
         <div className="absolute inset-0 bg-black/72 md:bg-black/68" />
@@ -115,28 +142,20 @@ const whyItMattersPoints =
               </p>
 
               <h1 className="font-serif text-[2.7rem] leading-[0.94] tracking-[-0.04em] text-[#f7f1e8] sm:text-[3.4rem] md:text-[5rem] lg:text-[6.4rem]">
-  {pageData?.hero?.title ? (
-    <>
-      Engineering,
-      <br />
-      ideas and the future
-      <br />
-      built into one
-      <br />
-      platform.
-    </>
-  ) : (
-    <>
-      Engineering,
-      <br />
-      ideas and the future
-      <br />
-      built into one
-      <br />
-      platform.
-    </>
-  )}
-</h1>
+                {pageData?.hero?.title ? (
+                  pageData.hero.title
+                ) : (
+                  <>
+                    Engineering,
+                    <br />
+                    ideas and the future
+                    <br />
+                    built into one
+                    <br />
+                    platform.
+                  </>
+                )}
+              </h1>
 
               <p className="mt-6 max-w-[39rem] text-[1rem] leading-[1.75] text-white/78 sm:mt-7 sm:text-[1.06rem] md:mt-8 md:text-[1.18rem] md:leading-[1.9]">
                 {pageData?.hero?.subtitle ||
@@ -178,42 +197,43 @@ const whyItMattersPoints =
             </p>
 
             <h2 className="max-w-4xl font-serif text-[2.1rem] leading-[1.02] font-light text-[#1f1f1f] sm:text-[2.5rem] md:text-[3.3rem] lg:text-[4.1rem]">
-              {pageData?.foundation?.title || "Engineering Day is built on three pillars."}
+              {pageData?.foundation?.title ||
+                "Engineering Day is built on three pillars."}
             </h2>
 
             <p className="mt-5 max-w-2xl text-[1rem] leading-[1.85] text-[#4c4a46] md:mt-6 md:text-[1.08rem]">
               {pageData?.foundation?.body ||
-  "Knowledge, collaboration and community shape the platform and create a space where engineers can learn, connect and move ideas forward together."}
+                "Knowledge, collaboration and community shape the platform and create a space where engineers can learn, connect and move ideas forward together."}
             </p>
           </div>
 
           <div className="grid grid-cols-1 border-t border-black/10 md:grid-cols-3">
-  {foundationPillars.map((pillar: FoundationPillar, index: number) => (
-    <div
-      key={`${pillar.title}-${index}`}
-      className={[
-        "border-b border-black/10 py-8 md:border-b-0 md:py-10",
-        index === 0 ? "md:border-r md:pr-8 lg:pr-10" : "",
-        index === 1 ? "md:border-r md:px-8 lg:px-10" : "",
-        index === 2 ? "md:pl-8 lg:pl-10" : "",
-      ].join(" ")}
-    >
-      <p
-        className={`${firaSans.className} mb-5 text-[10px] uppercase tracking-[0.24em] text-[#a27a26]`}
-      >
-        {pillar.number || String(index + 1).padStart(2, "0")}
-      </p>
+            {foundationPillars.map((pillar: FoundationPillar, index: number) => (
+              <div
+                key={`${pillar.title}-${index}`}
+                className={[
+                  "border-b border-black/10 py-8 md:border-b-0 md:py-10",
+                  index === 0 ? "md:border-r md:pr-8 lg:pr-10" : "",
+                  index === 1 ? "md:border-r md:px-8 lg:px-10" : "",
+                  index === 2 ? "md:pl-8 lg:pl-10" : "",
+                ].join(" ")}
+              >
+                <p
+                  className={`${firaSans.className} mb-5 text-[10px] uppercase tracking-[0.24em] text-[#a27a26]`}
+                >
+                  {pillar.number || String(index + 1).padStart(2, "0")}
+                </p>
 
-      <h3 className="mb-5 font-serif text-[1.65rem] leading-[1.05] font-light text-[#1f1f1f] sm:text-[1.8rem] md:text-[2rem]">
-        {pillar.title}
-      </h3>
+                <h3 className="mb-5 font-serif text-[1.65rem] leading-[1.05] font-light text-[#1f1f1f] sm:text-[1.8rem] md:text-[2rem]">
+                  {pillar.title}
+                </h3>
 
-      <p className="max-w-[28rem] text-[0.98rem] leading-[1.85] text-[#4c4a46] md:text-[1.02rem]">
-        {pillar.body}
-      </p>
-    </div>
-  ))}
-</div>
+                <p className="max-w-[28rem] text-[0.98rem] leading-[1.85] text-[#4c4a46] md:text-[1.02rem]">
+                  {pillar.body}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -227,23 +247,29 @@ const whyItMattersPoints =
             </p>
 
             <h2 className="max-w-4xl font-serif text-[2.1rem] leading-[1.02] font-light text-[#1f1f1f] sm:text-[2.6rem] md:text-[3.4rem] lg:text-[4.2rem]">
-              Engineering is shaping the future.
-              <br className="hidden sm:block" />
-              <span className="sm:hidden"> </span>
-              But rarely in one place.
+              {pageData?.whyItMatters?.title ? (
+                pageData.whyItMatters.title
+              ) : (
+                <>
+                  Engineering is shaping the future.
+                  <br className="hidden sm:block" />
+                  <span className="sm:hidden"> </span>
+                  But rarely in one place.
+                </>
+              )}
             </h2>
           </div>
 
           <div className="grid max-w-5xl grid-cols-1 gap-8 md:grid-cols-2 md:gap-14">
             <p className="text-[1rem] leading-[1.85] text-[#4c4a46] md:text-[1.08rem]">
-  {whyItMattersPoints[0]?.body ||
-    "Engineering Day exists to bring together the people building the systems our society depends on. It creates a shared space for engineers across industries to exchange knowledge, challenge ideas and accelerate progress."}
-</p>
+              {whyItMattersPoints[0]?.body ||
+                "Engineering Day exists to bring together the people building the systems our society depends on. It creates a shared space for engineers across industries to exchange knowledge, challenge ideas and accelerate progress."}
+            </p>
 
             <p className="text-[1rem] leading-[1.85] text-[#4c4a46] md:text-[1.08rem]">
-  {whyItMattersPoints[1]?.body ||
-    "By connecting companies, individuals and disciplines, the platform strengthens the role of engineering in shaping a sustainable, resilient and forward-looking society."}
-</p>
+              {whyItMattersPoints[1]?.body ||
+                "By connecting companies, individuals and disciplines, the platform strengthens the role of engineering in shaping a sustainable, resilient and forward-looking society."}
+            </p>
           </div>
         </div>
       </section>

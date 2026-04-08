@@ -1,8 +1,8 @@
 import { defineType, defineField } from 'sanity'
 
 export default defineType({
-  name: 'grandPrizePage',
-  title: 'Grand Prize Page',
+  name: 'grandPrizeCategoryPage',
+  title: 'Grand Prize Category Page',
   type: 'document',
 
   fields: [
@@ -13,26 +13,20 @@ export default defineType({
     }),
 
     defineField({
+      name: 'slug',
+      title: 'Slug',
+      type: 'slug',
+      options: {
+        source: 'internalTitle',
+        maxLength: 96,
+      },
+    }),
+
+    defineField({
       name: 'hero',
       title: 'Hero',
       type: 'object',
       fields: [
-        defineField({
-          name: 'eyebrow',
-          title: 'Eyebrow',
-          type: 'string',
-        }),
-        defineField({
-          name: 'title',
-          title: 'Title',
-          type: 'string',
-        }),
-        defineField({
-          name: 'text',
-          title: 'Text',
-          type: 'text',
-          rows: 3,
-        }),
         defineField({
           name: 'mediaType',
           title: 'Media type',
@@ -59,7 +53,6 @@ export default defineType({
               name: 'alt',
               title: 'Alt text',
               type: 'string',
-              validation: (Rule) => Rule.required(),
             }),
           ],
         }),
@@ -102,12 +95,6 @@ export default defineType({
         defineField({
           name: 'body2',
           title: 'Body 2',
-          type: 'text',
-          rows: 4,
-        }),
-        defineField({
-          name: 'body3',
-          title: 'Body 3',
           type: 'text',
           rows: 4,
         }),
@@ -157,8 +144,8 @@ export default defineType({
     }),
 
     defineField({
-      name: 'categoriesSection',
-      title: 'Categories section',
+      name: 'criteriaSection',
+      title: 'Criteria section',
       type: 'object',
       fields: [
         defineField({
@@ -181,8 +168,8 @@ export default defineType({
     }),
 
     defineField({
-      name: 'categories',
-      title: 'Categories',
+      name: 'criteriaItems',
+      title: 'Criteria items',
       type: 'array',
       of: [
         {
@@ -194,20 +181,10 @@ export default defineType({
               type: 'string',
             }),
             defineField({
-              name: 'description',
-              title: 'Description',
+              name: 'text',
+              title: 'Text',
               type: 'text',
               rows: 3,
-            }),
-            defineField({
-              name: 'href',
-              title: 'Link URL',
-              type: 'string',
-            }),
-            defineField({
-              name: 'linkLabel',
-              title: 'Link label',
-              type: 'string',
             }),
           ],
         },
@@ -215,75 +192,101 @@ export default defineType({
     }),
 
     defineField({
-      name: 'jurySection',
-      title: 'Jury section',
+      name: 'hallOfFameSection',
+      title: 'Hall of fame section',
       type: 'object',
       fields: [
+        defineField({
+          name: 'label',
+          title: 'Label',
+          type: 'string',
+        }),
         defineField({
           name: 'title',
           title: 'Title',
           type: 'string',
         }),
+        defineField({
+          name: 'intro',
+          title: 'Intro',
+          type: 'text',
+          rows: 3,
+        }),
       ],
     }),
 
     defineField({
-      name: 'juryMembers',
-      title: 'Jury members',
+      name: 'featuredWinner',
+      title: 'Featured winner',
+      type: 'object',
+      fields: [
+        defineField({
+          name: 'eyebrow',
+          title: 'Eyebrow',
+          type: 'string',
+        }),
+        defineField({
+          name: 'winner',
+          title: 'Winner',
+          type: 'string',
+        }),
+        defineField({
+          name: 'presentedBy',
+          title: 'Presented by',
+          type: 'string',
+        }),
+        defineField({
+          name: 'summary',
+          title: 'Summary',
+          type: 'text',
+          rows: 5,
+        }),
+        defineField({
+          name: 'secondaryText',
+          title: 'Secondary text',
+          type: 'text',
+          rows: 4,
+        }),
+      ],
+    }),
+
+    defineField({
+      name: 'hallOfFameItems',
+      title: 'Hall of fame items',
       type: 'array',
       of: [
         {
           type: 'object',
           fields: [
             defineField({
-              name: 'name',
-              title: 'Name',
+              name: 'year',
+              title: 'Year',
               type: 'string',
             }),
             defineField({
-              name: 'role',
-              title: 'Role / title',
+              name: 'winner',
+              title: 'Winner',
               type: 'string',
             }),
             defineField({
-              name: 'image',
-              title: 'Image',
-              type: 'image',
-              options: {
-                hotspot: true,
-              },
+              name: 'presentedBy',
+              title: 'Presented by',
+              type: 'string',
+            }),
+            defineField({
+              name: 'summary',
+              title: 'Summary',
+              type: 'text',
+              rows: 5,
+            }),
+            defineField({
+              name: 'secondaryText',
+              title: 'Secondary text',
+              type: 'text',
+              rows: 4,
             }),
           ],
         },
-      ],
-    }),
-
-    defineField({
-      name: 'bottomSection',
-      title: 'Bottom section',
-      type: 'object',
-      fields: [
-        defineField({
-          name: 'title',
-          title: 'Title',
-          type: 'string',
-        }),
-        defineField({
-          name: 'text',
-          title: 'Text',
-          type: 'text',
-          rows: 3,
-        }),
-        defineField({
-          name: 'linkLabel',
-          title: 'Link label',
-          type: 'string',
-        }),
-        defineField({
-          name: 'linkHref',
-          title: 'Link URL',
-          type: 'string',
-        }),
       ],
     }),
   ],
@@ -291,10 +294,12 @@ export default defineType({
   preview: {
     select: {
       title: 'internalTitle',
+      slug: 'slug.current',
     },
     prepare(selection) {
       return {
-        title: selection.title || 'Grand Prize Page',
+        title: selection.title || 'Grand Prize Category Page',
+        subtitle: selection.slug ? `/${selection.slug}` : 'No slug set',
       }
     },
   },

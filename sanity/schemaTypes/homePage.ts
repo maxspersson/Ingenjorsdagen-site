@@ -12,7 +12,6 @@ export default defineType({
       type: 'string',
     }),
 
-    // HERO
     defineField({
       name: 'hero',
       title: 'Hero',
@@ -54,10 +53,45 @@ export default defineType({
           title: 'Secondary CTA link',
           type: 'string',
         }),
+        defineField({
+          name: 'mediaType',
+          title: 'Media type',
+          type: 'string',
+          options: {
+            list: [
+              { title: 'Image', value: 'image' },
+              { title: 'Video', value: 'video' },
+            ],
+            layout: 'radio',
+          },
+          initialValue: 'image',
+        }),
+        defineField({
+          name: 'image',
+          title: 'Hero image',
+          type: 'image',
+          options: {
+            hotspot: true,
+          },
+          hidden: ({ parent }) => parent?.mediaType !== 'image',
+          fields: [
+            defineField({
+              name: 'alt',
+              title: 'Alt text',
+              type: 'string',
+              validation: (Rule) => Rule.required(),
+            }),
+          ],
+        }),
+        defineField({
+          name: 'videoUrl',
+          title: 'Hero video URL',
+          type: 'url',
+          hidden: ({ parent }) => parent?.mediaType !== 'video',
+        }),
       ],
     }),
 
-    // FOUNDATION SECTION
     defineField({
       name: 'foundationSection',
       title: 'Foundation section',
@@ -154,7 +188,6 @@ export default defineType({
       ],
     }),
 
-    // WHY IT MATTERS SECTION
     defineField({
       name: 'whyItMattersSection',
       title: 'Why it matters section',
@@ -185,7 +218,6 @@ export default defineType({
       ],
     }),
 
-    // FOUNDING PARTNERS SECTION
     defineField({
       name: 'foundingPartnersSection',
       title: 'Founding partners section',

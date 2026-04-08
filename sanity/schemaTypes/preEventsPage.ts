@@ -12,6 +12,7 @@ export default defineType({
       type: 'string',
     }),
 
+    // ✅ HERO (nu samma struktur som Home)
     defineField({
       name: 'hero',
       title: 'Hero',
@@ -33,9 +34,48 @@ export default defineType({
           type: 'text',
           rows: 3,
         }),
+
+        defineField({
+          name: 'mediaType',
+          title: 'Media type',
+          type: 'string',
+          options: {
+            list: [
+              { title: 'Image', value: 'image' },
+              { title: 'Video', value: 'video' },
+            ],
+            layout: 'radio',
+          },
+          initialValue: 'image',
+        }),
+
+        defineField({
+          name: 'image',
+          title: 'Hero image',
+          type: 'image',
+          options: {
+            hotspot: true,
+          },
+          hidden: ({ parent }) => parent?.mediaType !== 'image',
+          fields: [
+            defineField({
+              name: 'alt',
+              title: 'Alt text',
+              type: 'string',
+            }),
+          ],
+        }),
+
+        defineField({
+          name: 'videoUrl',
+          title: 'Hero video URL',
+          type: 'url',
+          hidden: ({ parent }) => parent?.mediaType !== 'video',
+        }),
       ],
     }),
 
+    // WHY
     defineField({
       name: 'whySection',
       title: 'Why section',
@@ -78,6 +118,7 @@ export default defineType({
       ],
     }),
 
+    // WHAT TO EXPECT
     defineField({
       name: 'whatToExpectSection',
       title: 'What to expect section',
@@ -97,6 +138,7 @@ export default defineType({
       ],
     }),
 
+    // EXPECTATION CARDS
     defineField({
       name: 'expectationCards',
       title: 'Expectation cards',
@@ -121,6 +163,7 @@ export default defineType({
       ],
     }),
 
+    // UPCOMING STOPS
     defineField({
       name: 'upcomingStopsSection',
       title: 'Upcoming stops section',
@@ -140,6 +183,7 @@ export default defineType({
       ],
     }),
 
+    // CITY CARDS
     defineField({
       name: 'cityCards',
       title: 'City cards',
@@ -179,6 +223,7 @@ export default defineType({
       ],
     }),
 
+    // CLOSING
     defineField({
       name: 'closingSection',
       title: 'Closing section',
@@ -207,9 +252,38 @@ export default defineType({
           type: 'text',
           rows: 4,
         }),
+            defineField({
+      name: 'mediaType',
+      title: 'Background media type',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Image', value: 'image' },
+          { title: 'Video', value: 'video' },
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'image',
+    }),
+
+    defineField({
+      name: 'image',
+      title: 'Background image',
+      type: 'image',
+      options: { hotspot: true },
+      hidden: ({ parent }) => parent?.mediaType !== 'image',
+    }),
+
+    defineField({
+      name: 'videoUrl',
+      title: 'Background video URL',
+      type: 'url',
+      hidden: ({ parent }) => parent?.mediaType !== 'video',
+    }),
       ],
     }),
   ],
+
 
   preview: {
     select: {

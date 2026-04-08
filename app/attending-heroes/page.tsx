@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import SiteHeader from "@/app/components/SiteHeader";
 import { Fira_Sans } from "next/font/google";
 import { client } from "@/sanity/lib/client";
+import { urlFor } from "@/sanity/lib/image";
 import {
   attendingHeroesPageQuery,
   speakersQuery,
@@ -233,33 +234,98 @@ export default function AttendingHeroesPage() {
     (group: SessionGroup) => group.type === "masterclass"
   );
 
+  const hasHeroMedia =
+    (pageData?.hero?.mediaType === "image" && pageData?.hero?.image?.asset) ||
+    (pageData?.hero?.mediaType === "video" && pageData?.hero?.videoUrl);
+
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#f3f1ed]">
       <SiteHeader />
 
       {/* HERO */}
-      <section className="px-5 pt-20 pb-14 md:px-12 md:pt-24 md:pb-20 lg:px-20">
-        <div className="mx-auto max-w-5xl text-center">
-          <p
-            className={`${firaSans.className} mb-5 text-[10px] uppercase tracking-[0.24em] text-[#d9a441] sm:text-[11px] sm:tracking-[0.3em] md:mb-6`}
-          >
-            {pageData?.hero?.kicker || "Attending heroes"}
-          </p>
+      {hasHeroMedia ? (
+        <section className="relative min-h-[78vh] overflow-hidden bg-[#111111] mb-16 md:mb-20 lg:mb-24">
+          <div className="absolute inset-0">
+            {pageData?.hero?.mediaType === "video" && pageData?.hero?.videoUrl ? (
+              <video
+                className="h-full w-full object-cover"
+                autoPlay
+                muted
+                loop
+                playsInline
+              >
+                <source src={pageData.hero.videoUrl} type="video/mp4" />
+              </video>
+            ) : pageData?.hero?.image?.asset ? (
+              <img
+                src={urlFor(pageData.hero.image).width(2200).quality(90).url()}
+                alt={
+                  pageData?.hero?.image?.alt ||
+                  pageData?.hero?.title ||
+                  "Attending Heroes hero image"
+                }
+                className="h-full w-full object-cover"
+              />
+            ) : null}
+          </div>
 
-          <h1 className="font-serif text-[2.55rem] leading-[1.04] text-[#1f1f1f] sm:text-[3rem] md:text-[4.4rem] lg:text-[5.1rem]">
-            <>
-              Voices shaping
-              <br />
-              Engineering Day 2026
-            </>
-          </h1>
+          <div className="absolute inset-0 bg-black/45" />
 
-          <p className="mx-auto mt-5 max-w-[22rem] text-[1rem] leading-[1.6] text-[#5f5a52] sm:mt-6 sm:max-w-[30rem] sm:text-[1.08rem] md:max-w-2xl md:text-[1.2rem] md:leading-[1.65]">
-            {pageData?.hero?.subtitle ||
-              "Engineers, leaders and innovators contributing to talks, panels, fireside conversations, masterclasses and the wider programme throughout the day."}
-          </p>
-        </div>
-      </section>
+          <div className="relative z-10 flex min-h-[78vh] items-center justify-center px-5 pt-24 pb-16 md:px-12 md:pt-28 md:pb-20 lg:px-20">
+            <div className="mx-auto max-w-5xl text-center text-white">
+              <p
+                className={`${firaSans.className} mb-5 text-[10px] uppercase tracking-[0.24em] text-[#d9a441] sm:text-[11px] sm:tracking-[0.3em] md:mb-6`}
+              >
+                {pageData?.hero?.kicker || "Attending heroes"}
+              </p>
+
+              <h1 className="font-serif text-[2.55rem] leading-[1.04] text-white sm:text-[3rem] md:text-[4.4rem] lg:text-[5.1rem]">
+                {pageData?.hero?.title ? (
+                  pageData.hero.title
+                ) : (
+                  <>
+                    Voices shaping
+                    <br />
+                    Engineering Day 2026
+                  </>
+                )}
+              </h1>
+
+              <p className="mx-auto mt-5 max-w-[22rem] text-[1rem] leading-[1.6] text-white/90 sm:mt-6 sm:max-w-[30rem] sm:text-[1.08rem] md:max-w-2xl md:text-[1.2rem] md:leading-[1.65]">
+                {pageData?.hero?.subtitle ||
+                  "Engineers, leaders and innovators contributing to talks, panels, fireside conversations, masterclasses and the wider programme throughout the day."}
+              </p>
+            </div>
+          </div>
+        </section>
+      ) : (
+        <section className="px-5 pt-20 pb-14 md:px-12 md:pt-24 md:pb-20 lg:px-20">
+          <div className="mx-auto max-w-5xl text-center">
+            <p
+              className={`${firaSans.className} mb-5 text-[10px] uppercase tracking-[0.24em] text-[#d9a441] sm:text-[11px] sm:tracking-[0.3em] md:mb-6`}
+            >
+              {pageData?.hero?.kicker || "Attending heroes"}
+            </p>
+
+            <h1 className="font-serif text-[2.55rem] leading-[1.04] text-[#1f1f1f] sm:text-[3rem] md:text-[4.4rem] lg:text-[5.1rem]">
+              {pageData?.hero?.title ? (
+                pageData.hero.title
+              ) : (
+                <>
+                  Voices shaping
+                  <br />
+                  Engineering Day 2026
+                </>
+              )}
+            </h1>
+
+            <p className="mx-auto mt-5 max-w-[22rem] text-[1rem] leading-[1.6] text-[#5f5a52] sm:mt-6 sm:max-w-[30rem] sm:text-[1.08rem] md:max-w-2xl md:text-[1.2rem] md:leading-[1.65]">
+              {pageData?.hero?.subtitle ||
+                "Engineers, leaders and innovators contributing to talks, panels, fireside conversations, masterclasses and the wider programme throughout the day."}
+            </p>
+          </div>
+        </section>
+      )}
 
       {/* FEATURED */}
       <section className="px-5 pb-20 md:px-12 md:pb-24 lg:px-20">

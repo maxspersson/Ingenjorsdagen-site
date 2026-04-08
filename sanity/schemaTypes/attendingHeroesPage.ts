@@ -33,6 +33,42 @@ export default defineType({
           type: 'text',
           rows: 3,
         }),
+        defineField({
+          name: 'mediaType',
+          title: 'Media type',
+          type: 'string',
+          options: {
+            list: [
+              { title: 'Image', value: 'image' },
+              { title: 'Video', value: 'video' },
+            ],
+            layout: 'radio',
+          },
+          initialValue: 'image',
+        }),
+        defineField({
+          name: 'image',
+          title: 'Hero image',
+          type: 'image',
+          options: {
+            hotspot: true,
+          },
+          hidden: ({ parent }) => parent?.mediaType !== 'image',
+          fields: [
+            defineField({
+              name: 'alt',
+              title: 'Alt text',
+              type: 'string',
+              validation: (Rule) => Rule.required(),
+            }),
+          ],
+        }),
+        defineField({
+          name: 'videoUrl',
+          title: 'Hero video URL',
+          type: 'url',
+          hidden: ({ parent }) => parent?.mediaType !== 'video',
+        }),
       ],
     }),
 

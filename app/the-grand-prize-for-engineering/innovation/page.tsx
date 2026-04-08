@@ -1,14 +1,138 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import SiteHeader from "@/app/components/SiteHeader";
 import { Fira_Sans } from "next/font/google";
+import { client } from "@/sanity/lib/client";
+import { grandPrizeCategoryPageQuery } from "@/sanity/lib/queries";
 
 const firaSans = Fira_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
 });
 
-const hallOfFame = [
+type HeroImage = {
+  asset?: {
+    url?: string;
+  };
+};
+
+type HeroSection = {
+  mediaType?: "image" | "video";
+  image?: HeroImage;
+  videoUrl?: string;
+};
+
+type TextSection = {
+  eyebrow?: string;
+  title?: string;
+  subtitle?: string;
+  body?: string;
+};
+
+type CriteriaItem = {
+  label?: string;
+  text?: string;
+};
+
+type FeaturedWinner = {
+  label?: string;
+  year?: string;
+  winner?: string;
+  presentedBy?: string;
+  summary?: string;
+  jury?: string;
+};
+
+type HallOfFameItem = {
+  year?: string;
+  winner?: string;
+  presentedBy?: string;
+  summary?: string;
+  jury?: string;
+};
+
+type GrandPrizeCategoryPageData = {
+  hero?: HeroSection;
+  whySection?: TextSection;
+  whoSection?: TextSection;
+  criteriaSection?: TextSection;
+  criteriaItems?: CriteriaItem[];
+  hallOfFameSection?: TextSection;
+  featuredWinner?: FeaturedWinner;
+  hallOfFameItems?: HallOfFameItem[];
+};
+
+const fallbackWhySection = {
+  eyebrow: "WHY?",
+  title: "Why innovation matters",
+  subtitle:
+    "Innovation is a driving force for societal development and a key to a more sustainable future.",
+  body: `By highlighting new ideas and solutions, this award aims to encourage engineers to think in new ways and develop technologies that meet the demands of the future — whether they relate to climate challenges, digitalization or solutions that improve society.
+
+With this award, we want to recognize innovations that are not only technically groundbreaking, but also feasible and scalable — solutions that can make a real difference both today and in the future.`,
+};
+
+const fallbackWhoSection = {
+  eyebrow: "WHO?",
+  title: "Who can win?",
+  subtitle:
+    "A person or team whose idea represents a high degree of innovation.",
+  body: `The Innovation prize in engineering is awarded to a person or a team that has developed an idea with a high level of innovation. The innovation may represent an entirely new way of thinking, a new method or a concrete solution to an existing problem.
+
+We value innovation that is implementable and has the potential to scale, that has a positive impact on society and the economy, and that takes climate challenges into account while contributing to a more sustainable world.
+
+It does not have to be a complex solution — the best innovations are often the simplest and most effective.`,
+};
+
+const fallbackCriteriaSection = {
+  eyebrow: "CRITERIA",
+  title: "What defines the award",
+  subtitle: "The fundamental criteria for nomination.",
+};
+
+const fallbackCriteriaItems = [
+  {
+    label: "Connection to Sweden",
+    text: "The person or the solution must have a strong connection to Sweden through place of residence, development or another clear link.",
+  },
+  {
+    label: "Societal benefit",
+    text: "The work must have a positive impact on society or the environment.",
+  },
+  {
+    label: "Ethics and sustainability",
+    text: "The solution must meet high ethical standards and promote sustainable development.",
+  },
+  {
+    label: "Current work",
+    text: "Nominees must have been active in the area during the past year.",
+  },
+  {
+    label: "Note",
+    text: "Employees of VAROPreem cannot be nominated.",
+  },
+];
+
+const fallbackHallOfFameSection = {
+  eyebrow: "HALL OF FAME",
+  title: "Previous winners",
+  subtitle:
+    "A selection of innovators and teams previously recognized by the award.",
+};
+
+const fallbackFeaturedWinner = {
+  label: "Featured winner",
+  year: "2025",
+  winner: "Sunsurf Solar",
+  presentedBy: "Presented by Preem",
+  summary:
+    "When land is already occupied, why not move solar parks out onto the water? SunSurf Solar has developed a modular floating solar technology adapted to Nordic conditions, with solutions for snow, ice, wind and varying water levels. The water surface cools the panels and increases efficiency, while also reducing evaporation and algal bloom.",
+  jury:
+    "The jury highlights that SunSurf has not only developed the technology — they have also proven it in operation. That makes them pioneers within a solution with global potential.",
+};
+
+const fallbackHallOfFame = [
   {
     year: "2024",
     winner: "Dr. Mustafa S Hamada",
@@ -46,20 +170,82 @@ const hallOfFame = [
   },
 ];
 
+function splitParagraphs(text?: string) {
+  if (!text) return [];
+  return text
+    .split(/\n\s*\n/)
+    .map((paragraph) => paragraph.trim())
+    .filter(Boolean);
+}
+
 export default function InnovationPage() {
+  const [pageData, setPageData] = useState<GrandPrizeCategoryPageData | null>(
+    null
+  );
+
+  useEffect(() => {
+    async function loadPageData() {
+      try {
+        const data = await client.fetch(grandPrizeCategoryPageQuery, {
+          slug: "innovation",
+        });
+        setPageData(data);
+      } catch (error) {
+        console.error("Failed to load innovation page data:", error);
+      }
+    }
+
+    loadPageData();
+  }, []);
+
+  const hero = pageData?.hero;
+  const whySection = pageData?.whySection || fallbackWhySection;
+  const whoSection = pageData?.whoSection || fallbackWhoSection;
+  const criteriaSection = pageData?.criteriaSection || fallbackCriteriaSection;
+  const criteriaItems =
+    pageData?.criteriaItems && pageData.criteriaItems.length > 0
+      ? pageData.criteriaItems
+      : fallbackCriteriaItems;
+  const hallOfFameSection =
+    pageData?.hallOfFameSection || fallbackHallOfFameSection;
+  const featuredWinner =
+    pageData?.featuredWinner?.winner || pageData?.featuredWinner?.summary
+      ? pageData.featuredWinner
+      : fallbackFeaturedWinner;
+  const hallOfFameItems =
+    pageData?.hallOfFameItems && pageData.hallOfFameItems.length > 0
+      ? pageData.hallOfFameItems
+      : fallbackHallOfFame;
+
+  const heroImageUrl = hero?.image?.asset?.url || "/innovation-2026.png";
+  const whyParagraphs = splitParagraphs(whySection.body);
+  const whoParagraphs = splitParagraphs(whoSection.body);
+
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#f3f1ed] text-[#1f1f1f]">
       <SiteHeader />
 
-<section className="relative min-h-[44vh] overflow-hidden bg-[#f3f1ed] sm:min-h-[52vh] md:min-h-[70vh] lg:min-h-[82vh]">
-  <div
-    className="absolute inset-0 bg-no-repeat bg-center bg-contain lg:bg-cover lg:bg-center"
-    style={{
-      backgroundImage: "url('/innovation-2026.png')",
-      backgroundPosition: "left center",
-    }}
-  />
-</section>
+      <section className="relative min-h-[44vh] overflow-hidden bg-[#f3f1ed] sm:min-h-[52vh] md:min-h-[70vh] lg:min-h-[82vh]">
+        {hero?.mediaType === "video" && hero?.videoUrl ? (
+          <video
+            className="absolute inset-0 h-full w-full object-cover"
+            autoPlay
+            muted
+            loop
+            playsInline
+          >
+            <source src={hero.videoUrl} type="video/mp4" />
+          </video>
+        ) : (
+          <div
+            className="absolute inset-0 bg-no-repeat bg-center bg-contain lg:bg-cover lg:bg-center"
+            style={{
+              backgroundImage: `url('${heroImageUrl}')`,
+              backgroundPosition: "left center",
+            }}
+          />
+        )}
+      </section>
 
       <section className="bg-[#f3f1ed] px-5 md:px-12 lg:px-20 pt-14 md:pt-28 pb-20 md:pb-28">
         <div className="max-w-6xl mx-auto">
@@ -67,7 +253,7 @@ export default function InnovationPage() {
             <p
               className={`${firaSans.className} text-[11px] md:text-[13px] uppercase tracking-[0.24em] text-[#a27a26] mb-3 md:mb-4`}
             >
-              WHY?
+              {whySection.eyebrow || "WHY?"}
             </p>
 
             <div className="w-14 h-px bg-[#d9a441]" />
@@ -75,30 +261,44 @@ export default function InnovationPage() {
 
           <div className="max-w-4xl mx-auto text-center mb-10 md:mb-14">
             <h2 className="text-[2.2rem] sm:text-[2.6rem] md:text-[4.05rem] lg:text-[4.6rem] leading-[1.04] font-serif font-light text-[#1f1f1f] mb-5 md:mb-6">
-              Why innovation matters
+              {whySection.title || fallbackWhySection.title}
             </h2>
 
             <p className="italic text-[1.04rem] sm:text-[1.12rem] md:text-[1.4rem] leading-[1.45] text-[#5f5a52]">
-              Innovation is a driving force for societal development and a key
-              to a more sustainable future.
+              {whySection.subtitle || fallbackWhySection.subtitle}
             </p>
           </div>
 
           <div className="max-w-3xl mx-auto">
-            <p className="text-[1rem] sm:text-[1.05rem] md:text-[1.3rem] leading-[1.82] text-[#2c2c2c] mb-6 md:mb-8">
-              By highlighting new ideas and solutions, this award aims to
-              encourage engineers to think in new ways and develop technologies
-              that meet the demands of the future — whether they relate to
-              climate challenges, digitalization or solutions that improve
-              society.
-            </p>
+            {whyParagraphs.length > 0 ? (
+              whyParagraphs.map((paragraph, index) => (
+                <p
+                  key={index}
+                  className={`text-[1rem] sm:text-[1.05rem] md:text-[1.3rem] leading-[1.82] text-[#2c2c2c] ${
+                    index !== whyParagraphs.length - 1 ? "mb-6 md:mb-8" : "mb-0"
+                  }`}
+                >
+                  {paragraph}
+                </p>
+              ))
+            ) : (
+              <>
+                <p className="text-[1rem] sm:text-[1.05rem] md:text-[1.3rem] leading-[1.82] text-[#2c2c2c] mb-6 md:mb-8">
+                  By highlighting new ideas and solutions, this award aims to
+                  encourage engineers to think in new ways and develop
+                  technologies that meet the demands of the future — whether
+                  they relate to climate challenges, digitalization or solutions
+                  that improve society.
+                </p>
 
-            <p className="text-[1rem] sm:text-[1.05rem] md:text-[1.3rem] leading-[1.82] text-[#2c2c2c] mb-0">
-              With this award, we want to recognize innovations that are not
-              only technically groundbreaking, but also feasible and scalable —
-              solutions that can make a real difference both today and in the
-              future.
-            </p>
+                <p className="text-[1rem] sm:text-[1.05rem] md:text-[1.3rem] leading-[1.82] text-[#2c2c2c] mb-0">
+                  With this award, we want to recognize innovations that are not
+                  only technically groundbreaking, but also feasible and scalable
+                  — solutions that can make a real difference both today and in
+                  the future.
+                </p>
+              </>
+            )}
           </div>
         </div>
       </section>
@@ -109,7 +309,7 @@ export default function InnovationPage() {
             <p
               className={`${firaSans.className} text-[11px] md:text-[13px] uppercase tracking-[0.24em] text-[#a27a26] mb-3 md:mb-4`}
             >
-              WHO?
+              {whoSection.eyebrow || "WHO?"}
             </p>
 
             <div className="w-14 h-px bg-[#d9a441]" />
@@ -117,34 +317,31 @@ export default function InnovationPage() {
 
           <div className="max-w-4xl mx-auto text-center mb-10 md:mb-14">
             <h2 className="text-[2.2rem] sm:text-[2.6rem] md:text-[4.05rem] lg:text-[4.6rem] leading-[1.04] font-serif font-light text-[#1f1f1f] mb-5 md:mb-6">
-              Who can win?
+              {whoSection.title || fallbackWhoSection.title}
             </h2>
 
             <p className="italic text-[1.04rem] sm:text-[1.12rem] md:text-[1.4rem] leading-[1.45] text-[#5f5a52]">
-              A person or team whose idea represents a high degree of
-              innovation.
+              {whoSection.subtitle || fallbackWhoSection.subtitle}
             </p>
           </div>
 
           <div className="max-w-3xl mx-auto">
-            <p className="text-[1rem] sm:text-[1.05rem] md:text-[1.3rem] leading-[1.82] text-[#2c2c2c] mb-6 md:mb-8">
-              The Innovation prize in engineering is awarded to a person or a
-              team that has developed an idea with a high level of innovation.
-              The innovation may represent an entirely new way of thinking, a
-              new method or a concrete solution to an existing problem.
-            </p>
+            {whoParagraphs.map((paragraph, index) => {
+              const isLast = index === whoParagraphs.length - 1;
 
-            <p className="text-[1rem] sm:text-[1.05rem] md:text-[1.3rem] leading-[1.82] text-[#2c2c2c] mb-6 md:mb-8">
-              We value innovation that is implementable and has the potential to
-              scale, that has a positive impact on society and the economy, and
-              that takes climate challenges into account while contributing to a
-              more sustainable world.
-            </p>
-
-            <p className="text-[0.98rem] sm:text-[1.02rem] md:text-[1.22rem] leading-[1.85] md:leading-[1.9] text-[#555]">
-              It does not have to be a complex solution — the best innovations
-              are often the simplest and most effective.
-            </p>
+              return (
+                <p
+                  key={index}
+                  className={
+                    isLast
+                      ? "text-[0.98rem] sm:text-[1.02rem] md:text-[1.22rem] leading-[1.85] md:leading-[1.9] text-[#555]"
+                      : "text-[1rem] sm:text-[1.05rem] md:text-[1.3rem] leading-[1.82] text-[#2c2c2c] mb-6 md:mb-8"
+                  }
+                >
+                  {paragraph}
+                </p>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -155,7 +352,7 @@ export default function InnovationPage() {
             <p
               className={`${firaSans.className} text-[11px] md:text-[13px] uppercase tracking-[0.24em] text-[#a27a26] mb-3 md:mb-4`}
             >
-              CRITERIA
+              {criteriaSection.eyebrow || "CRITERIA"}
             </p>
 
             <div className="w-14 h-px bg-[#d9a441]" />
@@ -163,73 +360,30 @@ export default function InnovationPage() {
 
           <div className="max-w-4xl mx-auto text-center mb-12 md:mb-16">
             <h2 className="text-[2.2rem] sm:text-[2.6rem] md:text-[4.05rem] lg:text-[4.6rem] leading-[1.04] font-serif font-light text-[#1f1f1f] mb-5 md:mb-6">
-              What defines the award
+              {criteriaSection.title || fallbackCriteriaSection.title}
             </h2>
 
             <p className="italic text-[1.04rem] sm:text-[1.12rem] md:text-[1.4rem] leading-[1.45] text-[#5f5a52]">
-              The fundamental criteria for nomination.
+              {criteriaSection.subtitle || fallbackCriteriaSection.subtitle}
             </p>
           </div>
 
           <div className="max-w-4xl mx-auto border-t border-black/10">
-            <div className="grid grid-cols-1 md:grid-cols-[220px_1fr] gap-3 md:gap-5 border-b border-black/10 py-6 md:py-8">
-              <p
-                className={`${firaSans.className} text-[11px] md:text-[12px] uppercase tracking-[0.18em] text-[#8b8276]`}
+            {criteriaItems.map((item, index) => (
+              <div
+                key={`${item.label}-${index}`}
+                className="grid grid-cols-1 md:grid-cols-[220px_1fr] gap-3 md:gap-5 border-b border-black/10 py-6 md:py-8"
               >
-                Connection to Sweden
-              </p>
-              <p className="text-[0.98rem] md:text-[1.12rem] leading-[1.82] md:leading-[1.85] text-[#2c2c2c]">
-                The person or the solution must have a strong connection to
-                Sweden through place of residence, development or another clear
-                link.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-[220px_1fr] gap-3 md:gap-5 border-b border-black/10 py-6 md:py-8">
-              <p
-                className={`${firaSans.className} text-[11px] md:text-[12px] uppercase tracking-[0.18em] text-[#8b8276]`}
-              >
-                Societal benefit
-              </p>
-              <p className="text-[0.98rem] md:text-[1.12rem] leading-[1.82] md:leading-[1.85] text-[#2c2c2c]">
-                The work must have a positive impact on society or the
-                environment.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-[220px_1fr] gap-3 md:gap-5 border-b border-black/10 py-6 md:py-8">
-              <p
-                className={`${firaSans.className} text-[11px] md:text-[12px] uppercase tracking-[0.18em] text-[#8b8276]`}
-              >
-                Ethics and sustainability
-              </p>
-              <p className="text-[0.98rem] md:text-[1.12rem] leading-[1.82] md:leading-[1.85] text-[#2c2c2c]">
-                The solution must meet high ethical standards and promote
-                sustainable development.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-[220px_1fr] gap-3 md:gap-5 border-b border-black/10 py-6 md:py-8">
-              <p
-                className={`${firaSans.className} text-[11px] md:text-[12px] uppercase tracking-[0.18em] text-[#8b8276]`}
-              >
-                Current work
-              </p>
-              <p className="text-[0.98rem] md:text-[1.12rem] leading-[1.82] md:leading-[1.85] text-[#2c2c2c]">
-                Nominees must have been active in the area during the past year.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-[220px_1fr] gap-3 md:gap-5 border-b border-black/10 py-6 md:py-8">
-              <p
-                className={`${firaSans.className} text-[11px] md:text-[12px] uppercase tracking-[0.18em] text-[#8b8276]`}
-              >
-                Note
-              </p>
-              <p className="text-[0.98rem] md:text-[1.12rem] leading-[1.82] md:leading-[1.85] text-[#2c2c2c]">
-                Employees of VAROPreem cannot be nominated.
-              </p>
-            </div>
+                <p
+                  className={`${firaSans.className} text-[11px] md:text-[12px] uppercase tracking-[0.18em] text-[#8b8276]`}
+                >
+                  {item.label}
+                </p>
+                <p className="text-[0.98rem] md:text-[1.12rem] leading-[1.82] md:leading-[1.85] text-[#2c2c2c]">
+                  {item.text}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -240,7 +394,7 @@ export default function InnovationPage() {
             <p
               className={`${firaSans.className} text-[11px] md:text-[13px] uppercase tracking-[0.24em] text-[#a27a26] mb-3 md:mb-4`}
             >
-              HALL OF FAME
+              {hallOfFameSection.eyebrow || "HALL OF FAME"}
             </p>
 
             <div className="w-14 h-px bg-[#d9a441]" />
@@ -248,12 +402,11 @@ export default function InnovationPage() {
 
           <div className="max-w-4xl mx-auto text-center mb-12 md:mb-16">
             <h2 className="text-[2.2rem] sm:text-[2.6rem] md:text-[4.05rem] lg:text-[4.6rem] leading-[1.04] font-serif font-light text-[#1f1f1f] mb-5 md:mb-6">
-              Previous winners
+              {hallOfFameSection.title || fallbackHallOfFameSection.title}
             </h2>
 
             <p className="italic text-[1.04rem] sm:text-[1.12rem] md:text-[1.4rem] leading-[1.45] text-[#5f5a52]">
-              A selection of innovators and teams previously recognized by the
-              award.
+              {hallOfFameSection.subtitle || fallbackHallOfFameSection.subtitle}
             </p>
           </div>
 
@@ -262,40 +415,38 @@ export default function InnovationPage() {
               <p
                 className={`${firaSans.className} text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-[#a27a26] mb-3`}
               >
-                Featured winner · 2025
+                {(featuredWinner?.label || "Featured winner") +
+                  " · " +
+                  (featuredWinner?.year || "2025")}
               </p>
 
               <h3 className="font-serif text-[1.7rem] sm:text-[1.9rem] md:text-[2.7rem] leading-[1.08] text-[#1f1f1f] mb-3">
-                Sunsurf Solar
+                {featuredWinner?.winner || fallbackFeaturedWinner.winner}
               </h3>
 
               <p className="text-[0.95rem] md:text-[1.04rem] text-[#6a6256]">
-                Presented by Preem
+                {featuredWinner?.presentedBy ||
+                  fallbackFeaturedWinner.presentedBy}
               </p>
             </div>
 
             <div className="px-5 py-6 md:px-8 md:py-9">
               <p className="text-[1rem] md:text-[1.14rem] leading-[1.85] md:leading-[1.9] text-[#2c2c2c] mb-5 md:mb-6">
-                When land is already occupied, why not move solar parks out onto
-                the water? SunSurf Solar has developed a modular floating solar
-                technology adapted to Nordic conditions, with solutions for
-                snow, ice, wind and varying water levels. The water surface
-                cools the panels and increases efficiency, while also reducing
-                evaporation and algal bloom.
+                {featuredWinner?.summary || fallbackFeaturedWinner.summary}
               </p>
 
-              <p className="text-[0.98rem] md:text-[1.1rem] leading-[1.85] md:leading-[1.9] text-[#555]">
-                The jury highlights that SunSurf has not only developed the
-                technology — they have also proven it in operation. That makes
-                them pioneers within a solution with global potential.
-              </p>
+              {(featuredWinner?.jury || fallbackFeaturedWinner.jury) && (
+                <p className="text-[0.98rem] md:text-[1.1rem] leading-[1.85] md:leading-[1.9] text-[#555]">
+                  {featuredWinner?.jury || fallbackFeaturedWinner.jury}
+                </p>
+              )}
             </div>
           </div>
 
           <div className="max-w-5xl mx-auto border-t border-black/10">
-            {hallOfFame.map((item) => (
+            {hallOfFameItems.map((item, index) => (
               <div
-                key={item.year}
+                key={`${item.year}-${item.winner}-${index}`}
                 className="grid grid-cols-1 md:grid-cols-[120px_1fr] gap-4 md:gap-5 border-b border-black/10 py-7 md:py-9"
               >
                 <div>
