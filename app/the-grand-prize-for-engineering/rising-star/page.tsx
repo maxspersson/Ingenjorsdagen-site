@@ -1,14 +1,140 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import SiteHeader from "@/app/components/SiteHeader";
 import { Fira_Sans } from "next/font/google";
+import { client } from "@/sanity/lib/client";
+import { grandPrizeCategoryPageQuery } from "@/sanity/lib/queries";
 
 const firaSans = Fira_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
 });
 
-const hallOfFame = [
+type HeroImage = {
+  asset?: {
+    url?: string;
+  };
+};
+
+type HeroSection = {
+  mediaType?: "image" | "video";
+  image?: HeroImage;
+  videoUrl?: string;
+};
+
+type TextSection = {
+  eyebrow?: string;
+  title?: string;
+  subtitle?: string;
+  body?: string;
+};
+
+type CriteriaItem = {
+  label?: string;
+  text?: string;
+};
+
+type FeaturedWinner = {
+  label?: string;
+  year?: string;
+  winner?: string;
+  presentedBy?: string;
+  summary?: string;
+  jury?: string;
+};
+
+type HallOfFameItem = {
+  year?: string;
+  winner?: string;
+  presentedBy?: string;
+  summary?: string;
+  jury?: string;
+};
+
+type GrandPrizeCategoryPageData = {
+  hero?: HeroSection;
+  whySection?: TextSection;
+  whoSection?: TextSection;
+  criteriaSection?: TextSection;
+  criteriaItems?: CriteriaItem[];
+  hallOfFameSection?: TextSection;
+  featuredWinner?: FeaturedWinner;
+  hallOfFameItems?: HallOfFameItem[];
+};
+
+const fallbackWhySection = {
+  eyebrow: "WHY?",
+  title: "Why rising stars matter",
+  subtitle:
+    "Young engineers with new ideas, leadership and commitment are essential to the future.",
+  body: `To meet the major challenges facing society and infrastructure, we need young engineers with new ideas, leadership and commitment. By highlighting the technical talents of the future, this award aims to inspire the next generation to think big, challenge convention and contribute to more sustainable development.
+
+The prize is intended to recognize innovative perspectives and solutions in technology and sustainability, with a particular focus on the engineer’s role in shaping the future of transport and infrastructure. By celebrating young role models, we create a platform for new ideas and inspire more people to choose an engineering path where they can make a difference.
+
+The award was previously called “The Grand Prize for Engineering – Student”, but changed its name in 2024 to Rising Star in order to better reflect the next generation of engineers.`,
+};
+
+const fallbackWhoSection = {
+  eyebrow: "WHO?",
+  title: "Who can win?",
+  subtitle:
+    "An individual or team that has made a significant impact early in their career or during their studies.",
+  body: `The Rising Star award is presented to an individual or a team that has made a significant impact early in their career or during their studies. The winner is someone who, through innovation, leadership or technical ingenuity, has inspired others and shown a strong desire to influence their industry and society at large.
+
+We are looking for people whose work has developed an innovative idea or solution, demonstrated impressive leadership and inspired others, or engaged with sustainability, inclusion or societal development.
+
+The nominee must be a student or have started their career within the past three years.`,
+};
+
+const fallbackCriteriaSection = {
+  eyebrow: "CRITERIA",
+  title: "What defines the award",
+  subtitle: "The fundamental criteria for nomination.",
+};
+
+const fallbackCriteriaItems = [
+  {
+    label: "Connection to Sweden",
+    text: "The person or the solution must have a strong connection to Sweden through place of residence, development or another clear link.",
+  },
+  {
+    label: "Societal benefit",
+    text: "The work must have a positive impact on society or the environment.",
+  },
+  {
+    label: "Ethics and sustainability",
+    text: "The solution must meet high ethical standards and promote sustainable development.",
+  },
+  {
+    label: "Current work",
+    text: "Nominees must have been active in the area during the past year.",
+  },
+  {
+    label: "Note",
+    text: "Employees of Trafikverket cannot be nominated.",
+  },
+];
+
+const fallbackHallOfFameSection = {
+  eyebrow: "HALL OF FAME",
+  title: "Previous winners",
+  subtitle:
+    "A selection of individuals and teams previously recognized by the award.",
+};
+
+const fallbackFeaturedWinner = {
+  label: "Featured winner",
+  year: "2025",
+  winner: "Jonatan Persson, Helios Innovation",
+  presentedBy: "Presented by Trafikverket",
+  summary:
+    "In just a few years, Jonatan Persson has gone from student to founder of Helios Innovation. The company develops a technology that uses waste heat to purify industrial wastewater — a solution that both saves energy and reduces emissions. The jury sees him as a prime example of the next generation of engineers: young, courageous and entrepreneurial.",
+  jury:
+    "He has already received several awards, but most importantly, his innovation works in practice and drives industry toward a more sustainable future.",
+};
+
+const fallbackHallOfFame = [
   {
     year: "2024",
     winner: "Jonna Matthiesen",
@@ -37,20 +163,82 @@ const hallOfFame = [
   },
 ];
 
+function splitParagraphs(text?: string) {
+  if (!text) return [];
+  return text
+    .split(/\n\s*\n/)
+    .map((paragraph) => paragraph.trim())
+    .filter(Boolean);
+}
+
 export default function RisingStarPage() {
+  const [pageData, setPageData] = useState<GrandPrizeCategoryPageData | null>(
+    null
+  );
+
+  useEffect(() => {
+    async function loadPageData() {
+      try {
+        const data = await client.fetch(grandPrizeCategoryPageQuery, {
+          slug: "rising-star",
+        });
+        setPageData(data);
+      } catch (error) {
+        console.error("Failed to load rising star page data:", error);
+      }
+    }
+
+    loadPageData();
+  }, []);
+
+  const hero = pageData?.hero;
+  const whySection = pageData?.whySection || fallbackWhySection;
+  const whoSection = pageData?.whoSection || fallbackWhoSection;
+  const criteriaSection = pageData?.criteriaSection || fallbackCriteriaSection;
+  const criteriaItems =
+    pageData?.criteriaItems && pageData.criteriaItems.length > 0
+      ? pageData.criteriaItems
+      : fallbackCriteriaItems;
+  const hallOfFameSection =
+    pageData?.hallOfFameSection || fallbackHallOfFameSection;
+  const featuredWinner =
+    pageData?.featuredWinner?.winner || pageData?.featuredWinner?.summary
+      ? pageData.featuredWinner
+      : fallbackFeaturedWinner;
+  const hallOfFameItems =
+    pageData?.hallOfFameItems && pageData.hallOfFameItems.length > 0
+      ? pageData.hallOfFameItems
+      : fallbackHallOfFame;
+
+  const heroImageUrl = hero?.image?.asset?.url || "/rising-star-2026.png";
+  const whyParagraphs = splitParagraphs(whySection.body);
+  const whoParagraphs = splitParagraphs(whoSection.body);
+
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#f3f1ed] text-[#1f1f1f]">
       <SiteHeader />
 
-<section className="relative min-h-[44vh] overflow-hidden bg-[#f3f1ed] sm:min-h-[52vh] md:min-h-[70vh] lg:min-h-[82vh]">
-  <div
-    className="absolute inset-0 bg-no-repeat bg-center bg-contain lg:bg-cover lg:bg-center"
-    style={{
-      backgroundImage: "url('/rising-star-2026.png')",
-      backgroundPosition: "left center",
-    }}
-  />
-</section>
+      <section className="relative min-h-[44vh] overflow-hidden bg-[#f3f1ed] sm:min-h-[52vh] md:min-h-[70vh] lg:min-h-[82vh]">
+        {hero?.mediaType === "video" && hero?.videoUrl ? (
+          <video
+            className="absolute inset-0 h-full w-full object-cover"
+            autoPlay
+            muted
+            loop
+            playsInline
+          >
+            <source src={hero.videoUrl} type="video/mp4" />
+          </video>
+        ) : (
+          <div
+            className="absolute inset-0 bg-no-repeat bg-center bg-contain lg:bg-cover lg:bg-center"
+            style={{
+              backgroundImage: `url('${heroImageUrl}')`,
+              backgroundPosition: "left center",
+            }}
+          />
+        )}
+      </section>
 
       <section className="bg-[#f3f1ed] px-5 pt-14 pb-20 md:px-12 md:pt-28 md:pb-28 lg:px-20">
         <div className="mx-auto max-w-6xl">
@@ -58,7 +246,7 @@ export default function RisingStarPage() {
             <p
               className={`${firaSans.className} mb-4 text-[12px] uppercase tracking-[0.22em] text-[#a27a26] md:text-[13px] md:tracking-[0.24em]`}
             >
-              WHY?
+              {whySection.eyebrow || "WHY?"}
             </p>
 
             <div className="h-px w-14 bg-[#d9a441]" />
@@ -66,38 +254,31 @@ export default function RisingStarPage() {
 
           <div className="mx-auto mb-10 max-w-4xl text-center md:mb-14">
             <h2 className="mb-5 font-serif text-[2.2rem] font-light leading-[1.03] text-[#1f1f1f] sm:text-[2.6rem] md:mb-6 md:text-[4.05rem] lg:text-[4.6rem]">
-              Why rising stars matter
+              {whySection.title || fallbackWhySection.title}
             </h2>
 
             <p className="mx-auto max-w-[22rem] text-[1.06rem] italic leading-[1.5] text-[#5f5a52] sm:max-w-[30rem] sm:text-[1.14rem] md:max-w-none md:text-[1.4rem]">
-              Young engineers with new ideas, leadership and commitment are
-              essential to the future.
+              {whySection.subtitle || fallbackWhySection.subtitle}
             </p>
           </div>
 
           <div className="mx-auto max-w-3xl">
-            <p className="mb-7 text-[1.02rem] leading-[1.78] text-[#2c2c2c] sm:text-[1.08rem] md:mb-8 md:text-[1.3rem] md:leading-[1.82]">
-              To meet the major challenges facing society and infrastructure, we
-              need young engineers with new ideas, leadership and commitment. By
-              highlighting the technical talents of the future, this award aims
-              to inspire the next generation to think big, challenge convention
-              and contribute to more sustainable development.
-            </p>
+            {whyParagraphs.map((paragraph, index) => {
+              const isLast = index === whyParagraphs.length - 1;
 
-            <p className="mb-7 text-[1.02rem] leading-[1.78] text-[#2c2c2c] sm:text-[1.08rem] md:mb-8 md:text-[1.3rem] md:leading-[1.82]">
-              The prize is intended to recognize innovative perspectives and
-              solutions in technology and sustainability, with a particular
-              focus on the engineer’s role in shaping the future of transport
-              and infrastructure. By celebrating young role models, we create a
-              platform for new ideas and inspire more people to choose an
-              engineering path where they can make a difference.
-            </p>
-
-            <p className="text-[1rem] leading-[1.82] text-[#555] sm:text-[1.05rem] md:text-[1.22rem] md:leading-[1.9]">
-              The award was previously called “The Grand Prize for Engineering –
-              Student”, but changed its name in 2024 to Rising Star in order to
-              better reflect the next generation of engineers.
-            </p>
+              return (
+                <p
+                  key={index}
+                  className={
+                    isLast
+                      ? "text-[1rem] leading-[1.82] text-[#555] sm:text-[1.05rem] md:text-[1.22rem] md:leading-[1.9]"
+                      : "mb-7 text-[1.02rem] leading-[1.78] text-[#2c2c2c] sm:text-[1.08rem] md:mb-8 md:text-[1.3rem] md:leading-[1.82]"
+                  }
+                >
+                  {paragraph}
+                </p>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -108,7 +289,7 @@ export default function RisingStarPage() {
             <p
               className={`${firaSans.className} mb-4 text-[12px] uppercase tracking-[0.22em] text-[#a27a26] md:text-[13px] md:tracking-[0.24em]`}
             >
-              WHO?
+              {whoSection.eyebrow || "WHO?"}
             </p>
 
             <div className="h-px w-14 bg-[#d9a441]" />
@@ -116,35 +297,31 @@ export default function RisingStarPage() {
 
           <div className="mx-auto mb-10 max-w-4xl text-center md:mb-14">
             <h2 className="mb-5 font-serif text-[2.2rem] font-light leading-[1.03] text-[#1f1f1f] sm:text-[2.6rem] md:mb-6 md:text-[4.05rem] lg:text-[4.6rem]">
-              Who can win?
+              {whoSection.title || fallbackWhoSection.title}
             </h2>
 
             <p className="mx-auto max-w-[24rem] text-[1.06rem] italic leading-[1.5] text-[#5f5a52] sm:max-w-[31rem] sm:text-[1.14rem] md:max-w-none md:text-[1.4rem]">
-              An individual or team that has made a significant impact early in
-              their career or during their studies.
+              {whoSection.subtitle || fallbackWhoSection.subtitle}
             </p>
           </div>
 
           <div className="mx-auto max-w-3xl">
-            <p className="mb-7 text-[1.02rem] leading-[1.78] text-[#2c2c2c] sm:text-[1.08rem] md:mb-8 md:text-[1.3rem] md:leading-[1.82]">
-              The Rising Star award is presented to an individual or a team that
-              has made a significant impact early in their career or during
-              their studies. The winner is someone who, through innovation,
-              leadership or technical ingenuity, has inspired others and shown a
-              strong desire to influence their industry and society at large.
-            </p>
+            {whoParagraphs.map((paragraph, index) => {
+              const isLast = index === whoParagraphs.length - 1;
 
-            <p className="mb-7 text-[1.02rem] leading-[1.78] text-[#2c2c2c] sm:text-[1.08rem] md:mb-8 md:text-[1.3rem] md:leading-[1.82]">
-              We are looking for people whose work has developed an innovative
-              idea or solution, demonstrated impressive leadership and inspired
-              others, or engaged with sustainability, inclusion or societal
-              development.
-            </p>
-
-            <p className="text-[1rem] leading-[1.82] text-[#555] sm:text-[1.05rem] md:text-[1.22rem] md:leading-[1.9]">
-              The nominee must be a student or have started their career within
-              the past three years.
-            </p>
+              return (
+                <p
+                  key={index}
+                  className={
+                    isLast
+                      ? "text-[1rem] leading-[1.82] text-[#555] sm:text-[1.05rem] md:text-[1.22rem] md:leading-[1.9]"
+                      : "mb-7 text-[1.02rem] leading-[1.78] text-[#2c2c2c] sm:text-[1.08rem] md:mb-8 md:text-[1.3rem] md:leading-[1.82]"
+                  }
+                >
+                  {paragraph}
+                </p>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -155,7 +332,7 @@ export default function RisingStarPage() {
             <p
               className={`${firaSans.className} mb-4 text-[12px] uppercase tracking-[0.22em] text-[#a27a26] md:text-[13px] md:tracking-[0.24em]`}
             >
-              CRITERIA
+              {criteriaSection.eyebrow || "CRITERIA"}
             </p>
 
             <div className="h-px w-14 bg-[#d9a441]" />
@@ -163,73 +340,30 @@ export default function RisingStarPage() {
 
           <div className="mx-auto mb-10 max-w-4xl text-center md:mb-16">
             <h2 className="mb-5 font-serif text-[2.2rem] font-light leading-[1.03] text-[#1f1f1f] sm:text-[2.6rem] md:mb-6 md:text-[4.05rem] lg:text-[4.6rem]">
-              What defines the award
+              {criteriaSection.title || fallbackCriteriaSection.title}
             </h2>
 
             <p className="mx-auto max-w-[22rem] text-[1.06rem] italic leading-[1.5] text-[#5f5a52] sm:max-w-[28rem] sm:text-[1.14rem] md:max-w-none md:text-[1.4rem]">
-              The fundamental criteria for nomination.
+              {criteriaSection.subtitle || fallbackCriteriaSection.subtitle}
             </p>
           </div>
 
           <div className="mx-auto max-w-4xl border-t border-black/10">
-            <div className="grid grid-cols-1 gap-3 border-b border-black/10 py-6 md:grid-cols-[220px_1fr] md:gap-5 md:py-8">
-              <p
-                className={`${firaSans.className} text-[11px] uppercase tracking-[0.16em] text-[#8b8276] md:text-[12px] md:tracking-[0.18em]`}
+            {criteriaItems.map((item, index) => (
+              <div
+                key={`${item.label}-${index}`}
+                className="grid grid-cols-1 gap-3 border-b border-black/10 py-6 md:grid-cols-[220px_1fr] md:gap-5 md:py-8"
               >
-                Connection to Sweden
-              </p>
-              <p className="text-[0.98rem] leading-[1.78] text-[#2c2c2c] sm:text-[1.02rem] md:text-[1.12rem] md:leading-[1.85]">
-                The person or the solution must have a strong connection to
-                Sweden through place of residence, development or another clear
-                link.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 gap-3 border-b border-black/10 py-6 md:grid-cols-[220px_1fr] md:gap-5 md:py-8">
-              <p
-                className={`${firaSans.className} text-[11px] uppercase tracking-[0.16em] text-[#8b8276] md:text-[12px] md:tracking-[0.18em]`}
-              >
-                Societal benefit
-              </p>
-              <p className="text-[0.98rem] leading-[1.78] text-[#2c2c2c] sm:text-[1.02rem] md:text-[1.12rem] md:leading-[1.85]">
-                The work must have a positive impact on society or the
-                environment.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 gap-3 border-b border-black/10 py-6 md:grid-cols-[220px_1fr] md:gap-5 md:py-8">
-              <p
-                className={`${firaSans.className} text-[11px] uppercase tracking-[0.16em] text-[#8b8276] md:text-[12px] md:tracking-[0.18em]`}
-              >
-                Ethics and sustainability
-              </p>
-              <p className="text-[0.98rem] leading-[1.78] text-[#2c2c2c] sm:text-[1.02rem] md:text-[1.12rem] md:leading-[1.85]">
-                The solution must meet high ethical standards and promote
-                sustainable development.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 gap-3 border-b border-black/10 py-6 md:grid-cols-[220px_1fr] md:gap-5 md:py-8">
-              <p
-                className={`${firaSans.className} text-[11px] uppercase tracking-[0.16em] text-[#8b8276] md:text-[12px] md:tracking-[0.18em]`}
-              >
-                Current work
-              </p>
-              <p className="text-[0.98rem] leading-[1.78] text-[#2c2c2c] sm:text-[1.02rem] md:text-[1.12rem] md:leading-[1.85]">
-                Nominees must have been active in the area during the past year.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 gap-3 border-b border-black/10 py-6 md:grid-cols-[220px_1fr] md:gap-5 md:py-8">
-              <p
-                className={`${firaSans.className} text-[11px] uppercase tracking-[0.16em] text-[#8b8276] md:text-[12px] md:tracking-[0.18em]`}
-              >
-                Note
-              </p>
-              <p className="text-[0.98rem] leading-[1.78] text-[#2c2c2c] sm:text-[1.02rem] md:text-[1.12rem] md:leading-[1.85]">
-                Employees of Trafikverket cannot be nominated.
-              </p>
-            </div>
+                <p
+                  className={`${firaSans.className} text-[11px] uppercase tracking-[0.16em] text-[#8b8276] md:text-[12px] md:tracking-[0.18em]`}
+                >
+                  {item.label}
+                </p>
+                <p className="text-[0.98rem] leading-[1.78] text-[#2c2c2c] sm:text-[1.02rem] md:text-[1.12rem] md:leading-[1.85]">
+                  {item.text}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -240,7 +374,7 @@ export default function RisingStarPage() {
             <p
               className={`${firaSans.className} mb-4 text-[12px] uppercase tracking-[0.22em] text-[#a27a26] md:text-[13px] md:tracking-[0.24em]`}
             >
-              HALL OF FAME
+              {hallOfFameSection.eyebrow || "HALL OF FAME"}
             </p>
 
             <div className="h-px w-14 bg-[#d9a441]" />
@@ -248,12 +382,11 @@ export default function RisingStarPage() {
 
           <div className="mx-auto mb-10 max-w-4xl text-center md:mb-16">
             <h2 className="mb-5 font-serif text-[2.2rem] font-light leading-[1.03] text-[#1f1f1f] sm:text-[2.6rem] md:mb-6 md:text-[4.05rem] lg:text-[4.6rem]">
-              Previous winners
+              {hallOfFameSection.title || fallbackHallOfFameSection.title}
             </h2>
 
             <p className="mx-auto max-w-[24rem] text-[1.06rem] italic leading-[1.5] text-[#5f5a52] sm:max-w-[31rem] sm:text-[1.14rem] md:max-w-none md:text-[1.4rem]">
-              A selection of individuals and teams previously recognized by the
-              award.
+              {hallOfFameSection.subtitle || fallbackHallOfFameSection.subtitle}
             </p>
           </div>
 
@@ -262,40 +395,38 @@ export default function RisingStarPage() {
               <p
                 className={`${firaSans.className} mb-3 text-[10px] uppercase tracking-[0.18em] text-[#a27a26] md:text-[11px] md:tracking-[0.2em]`}
               >
-                Featured winner · 2025
+                {(featuredWinner?.label || "Featured winner") +
+                  " · " +
+                  (featuredWinner?.year || "2025")}
               </p>
 
               <h3 className="mb-3 font-serif text-[1.7rem] leading-[1.08] text-[#1f1f1f] sm:text-[1.95rem] md:text-[2.7rem]">
-                Jonatan Persson, Helios Innovation
+                {featuredWinner?.winner || fallbackFeaturedWinner.winner}
               </h3>
 
               <p className="text-[0.94rem] text-[#6a6256] md:text-[1.04rem]">
-                Presented by Trafikverket
+                {featuredWinner?.presentedBy ||
+                  fallbackFeaturedWinner.presentedBy}
               </p>
             </div>
 
             <div className="px-5 py-6 md:px-8 md:py-9">
               <p className="mb-5 text-[1rem] leading-[1.82] text-[#2c2c2c] sm:text-[1.03rem] md:mb-6 md:text-[1.14rem] md:leading-[1.9]">
-                In just a few years, Jonatan Persson has gone from student to
-                founder of Helios Innovation. The company develops a technology
-                that uses waste heat to purify industrial wastewater — a
-                solution that both saves energy and reduces emissions. The jury
-                sees him as a prime example of the next generation of engineers:
-                young, courageous and entrepreneurial.
+                {featuredWinner?.summary || fallbackFeaturedWinner.summary}
               </p>
 
-              <p className="text-[0.98rem] leading-[1.82] text-[#555] sm:text-[1rem] md:text-[1.1rem] md:leading-[1.9]">
-                He has already received several awards, but most importantly,
-                his innovation works in practice and drives industry toward a
-                more sustainable future.
-              </p>
+              {(featuredWinner?.jury || fallbackFeaturedWinner.jury) && (
+                <p className="text-[0.98rem] leading-[1.82] text-[#555] sm:text-[1rem] md:text-[1.1rem] md:leading-[1.9]">
+                  {featuredWinner?.jury || fallbackFeaturedWinner.jury}
+                </p>
+              )}
             </div>
           </div>
 
           <div className="mx-auto max-w-5xl border-t border-black/10">
-            {hallOfFame.map((item) => (
+            {hallOfFameItems.map((item, index) => (
               <div
-                key={item.year}
+                key={`${item.year}-${item.winner}-${index}`}
                 className="grid grid-cols-1 gap-4 border-b border-black/10 py-7 md:grid-cols-[120px_1fr] md:gap-5 md:py-9"
               >
                 <div>
