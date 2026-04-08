@@ -6,6 +6,7 @@ import SiteHeader from "@/app/components/SiteHeader";
 const lora = Lora({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
+  variable: "--font-lora",
 });
 
 export const metadata: Metadata = {
@@ -15,12 +16,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="sv">
-      <body className={lora.className}>
+      <body className={`${lora.variable} ${lora.className}`}>
         <SiteHeader />
 
         <main className="pt-[126px] sm:pt-[140px] md:pt-[186px]">

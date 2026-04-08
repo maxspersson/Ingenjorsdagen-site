@@ -1,11 +1,16 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Fira_Sans } from "next/font/google";
 import SiteHeader from "@/app/components/SiteHeader";
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import { grandPrizePageQuery } from "@/sanity/lib/queries";
+import { Fira_Sans, Lora } from "next/font/google";
+
+const lora = Lora({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+});
 
 const firaSans = Fira_Sans({
   subsets: ["latin"],
@@ -316,15 +321,16 @@ export default function Page() {
                 {pageData?.page?.hero?.eyebrow || "The Grand Prize for Engineering"}
               </p>
 
-              <h1 className="font-serif text-[2.7rem] leading-[0.94] font-light tracking-[-0.04em] text-[#f7f1e8] sm:text-[3.4rem] md:text-[5.1rem] lg:text-[6.2rem]">
-                {pageData?.page?.hero?.title || (
-                  <>
-                    Celebrating the people
-                    <br />
-                    behind the progress
-                  </>
-                )}
-              </h1>
+              <h1 className={`${lora.className} text-[2.7rem] leading-[0.94] font-light tracking-[-0.04em] text-[#f7f1e8] sm:text-[3.4rem] md:text-[5.1rem] lg:text-[6.2rem] whitespace-pre-line`}>
+  {pageData?.page?.hero?.title ? (
+    pageData.page.hero.title
+  ) : (
+    <>
+      Celebrating the people
+      behind the progress
+    </>
+  )}
+</h1>
 
               <p className="mt-6 max-w-xl text-[1rem] leading-[1.75] text-[#d6d0c7] sm:mt-7 sm:text-[1.05rem] md:mt-8 md:text-[15px] md:leading-relaxed">
                 {pageData?.page?.hero?.text ||

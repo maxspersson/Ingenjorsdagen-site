@@ -168,28 +168,28 @@ export default defineType({
     }),
 
     defineField({
-      name: 'criteriaItems',
-      title: 'Criteria items',
-      type: 'array',
-      of: [
-        {
-          type: 'object',
-          fields: [
-            defineField({
-              name: 'title',
-              title: 'Title',
-              type: 'string',
-            }),
-            defineField({
-              name: 'text',
-              title: 'Text',
-              type: 'text',
-              rows: 3,
-            }),
-          ],
-        },
+  name: 'criteriaItems',
+  title: 'Criteria items',
+  type: 'array',
+  of: [
+    {
+      type: 'object',
+      fields: [
+        defineField({
+          name: 'label',
+          title: 'Label',
+          type: 'string',
+        }),
+        defineField({
+          name: 'text',
+          title: 'Text',
+          type: 'text',
+          rows: 3,
+        }),
       ],
-    }),
+    },
+  ],
+}),
 
     defineField({
       name: 'hallOfFameSection',

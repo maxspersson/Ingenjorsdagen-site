@@ -1,13 +1,18 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Fira_Sans } from "next/font/google";
+import { Fira_Sans, Lora } from "next/font/google";
 import SiteHeader from "@/app/components/SiteHeader";
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import { homePageQuery } from "@/sanity/lib/queries";
 
 const firaSans = Fira_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+});
+
+const lora = Lora({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
 });
@@ -21,6 +26,14 @@ type FoundationPillar = {
 type WhyItMattersPoint = {
   body: string;
 };
+
+const fallbackHeroTitle = `Engineering,
+ideas and the future
+built into one
+platform.`;
+
+const fallbackWhyItMattersTitle = `Engineering is shaping the future.
+But rarely in one place.`;
 
 const foundationPillarsFallback: FoundationPillar[] = [
   {
@@ -49,13 +62,21 @@ const whyItMattersPointsFallback: WhyItMattersPoint[] = [
   },
 ];
 
+function renderTextWithLineBreaks(text: string) {
+  return text.split("\n").map((line, index, array) => (
+    <span key={`${line}-${index}`}>
+      {line}
+      {index < array.length - 1 ? <br /> : null}
+    </span>
+  ));
+}
+
 export default function Home() {
   const [pageData, setPageData] = useState<any>(null);
 
   useEffect(() => {
     async function loadPageData() {
       const data = await client.fetch(homePageQuery);
-      console.log("HOME PAGE DATA", data);
       setPageData(data);
     }
 
@@ -73,6 +94,10 @@ export default function Home() {
   const hasHeroMedia =
     (pageData?.hero?.mediaType === "image" && pageData?.hero?.image?.asset) ||
     (pageData?.hero?.mediaType === "video" && pageData?.hero?.videoUrl);
+
+  const heroTitle = pageData?.hero?.title || fallbackHeroTitle;
+  const whyItMattersTitle =
+    pageData?.whyItMatters?.title || fallbackWhyItMattersTitle;
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#f3f1ed] text-[#1f1f1f]">
@@ -141,21 +166,11 @@ export default function Home() {
                 {pageData?.hero?.kicker || "A Platform for Engineering"}
               </p>
 
-              <h1 className="font-serif text-[2.7rem] leading-[0.94] tracking-[-0.04em] text-[#f7f1e8] sm:text-[3.4rem] md:text-[5rem] lg:text-[6.4rem]">
-                {pageData?.hero?.title ? (
-                  pageData.hero.title
-                ) : (
-                  <>
-                    Engineering,
-                    <br />
-                    ideas and the future
-                    <br />
-                    built into one
-                    <br />
-                    platform.
-                  </>
-                )}
-              </h1>
+              <h1
+  className={`${lora.className} whitespace-pre-line text-[2.7rem] leading-[0.94] tracking-[-0.04em] text-[#f7f1e8] sm:text-[3.4rem] md:text-[5rem] lg:text-[6.4rem]`}
+>
+  {heroTitle}
+</h1>
 
               <p className="mt-6 max-w-[39rem] text-[1rem] leading-[1.75] text-white/78 sm:mt-7 sm:text-[1.06rem] md:mt-8 md:text-[1.18rem] md:leading-[1.9]">
                 {pageData?.hero?.subtitle ||
@@ -164,7 +179,9 @@ export default function Home() {
 
               <div className="mt-8 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:flex-wrap sm:gap-4 md:mt-12">
                 <a
-                  href={pageData?.hero?.primaryCtaHref || "/engineering-day-2026"}
+                  href={
+                    pageData?.hero?.primaryCtaHref || "/engineering-day-2026"
+                  }
                   className={`${firaSans.className} inline-flex min-h-[54px] items-center justify-center bg-[#d9a441] px-6 text-[10px] font-medium uppercase tracking-[0.22em] text-white transition-colors hover:bg-[#c8932f] sm:px-8 sm:text-[11px]`}
                 >
                   {pageData?.hero?.primaryCtaText ||
@@ -196,10 +213,12 @@ export default function Home() {
               {pageData?.foundation?.kicker || "Our foundation"}
             </p>
 
-            <h2 className="max-w-4xl font-serif text-[2.1rem] leading-[1.02] font-light text-[#1f1f1f] sm:text-[2.5rem] md:text-[3.3rem] lg:text-[4.1rem]">
-              {pageData?.foundation?.title ||
-                "Engineering Day is built on three pillars."}
-            </h2>
+            <h2
+  className={`${lora.className} whitespace-pre-line max-w-4xl text-[2.1rem] leading-[1.02] font-light text-[#1f1f1f] sm:text-[2.6rem] md:text-[3.4rem] lg:text-[4.2rem]`}
+>
+  {pageData?.foundation?.title ||
+    "Engineering Day is built on three pillars."}
+</h2>
 
             <p className="mt-5 max-w-2xl text-[1rem] leading-[1.85] text-[#4c4a46] md:mt-6 md:text-[1.08rem]">
               {pageData?.foundation?.body ||
@@ -224,7 +243,9 @@ export default function Home() {
                   {pillar.number || String(index + 1).padStart(2, "0")}
                 </p>
 
-                <h3 className="mb-5 font-serif text-[1.65rem] leading-[1.05] font-light text-[#1f1f1f] sm:text-[1.8rem] md:text-[2rem]">
+                <h3
+                  className={`${lora.className} mb-5 text-[1.65rem] leading-[1.05] font-light text-[#1f1f1f] sm:text-[1.8rem] md:text-[2rem]`}
+                >
                   {pillar.title}
                 </h3>
 
@@ -246,17 +267,10 @@ export default function Home() {
               {pageData?.whyItMatters?.kicker || "Why it matters"}
             </p>
 
-            <h2 className="max-w-4xl font-serif text-[2.1rem] leading-[1.02] font-light text-[#1f1f1f] sm:text-[2.6rem] md:text-[3.4rem] lg:text-[4.2rem]">
-              {pageData?.whyItMatters?.title ? (
-                pageData.whyItMatters.title
-              ) : (
-                <>
-                  Engineering is shaping the future.
-                  <br className="hidden sm:block" />
-                  <span className="sm:hidden"> </span>
-                  But rarely in one place.
-                </>
-              )}
+            <h2
+              className={`${lora.className} max-w-4xl text-[2.1rem] leading-[1.02] font-light text-[#1f1f1f] sm:text-[2.6rem] md:text-[3.4rem] lg:text-[4.2rem]`}
+            >
+              {renderTextWithLineBreaks(whyItMattersTitle)}
             </h2>
           </div>
 

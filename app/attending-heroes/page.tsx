@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import SiteHeader from "@/app/components/SiteHeader";
-import { Fira_Sans } from "next/font/google";
+import { Fira_Sans, Lora } from "next/font/google";
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import {
@@ -12,6 +12,11 @@ import {
 } from "@/sanity/lib/queries";
 
 const firaSans = Fira_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+});
+
+const lora = Lora({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
 });
@@ -65,7 +70,9 @@ function SpeakerCard({
           {person.cardLabel || person.format}
         </p>
 
-        <h3 className="mt-2 font-serif text-[1.22rem] leading-[1.1] text-[#1f1f1f] sm:text-[1.3rem]">
+        <h3
+          className={`${lora.className} mt-2 text-[1.22rem] leading-[1.1] text-[#1f1f1f] sm:text-[1.3rem]`}
+        >
           {person.name}
         </h3>
 
@@ -103,7 +110,9 @@ function SectionHeader({
       </p>
       <div className="mb-7 h-px w-14 bg-[#d9a441] md:mb-8" />
 
-      <h2 className="font-serif text-[2.05rem] font-light leading-[1.04] text-[#1f1f1f] sm:text-[2.35rem] md:text-[3.2rem] lg:text-[3.7rem]">
+      <h2
+        className={`${lora.className} text-[2.05rem] font-light leading-[1.04] text-[#1f1f1f] sm:text-[2.35rem] md:text-[3.2rem] lg:text-[3.7rem]`}
+      >
         {title}
       </h2>
 
@@ -140,7 +149,9 @@ function SessionSection({
               key={session.title}
               className="border-t border-black/10 pt-7 md:pt-10"
             >
-              <h3 className="font-serif text-[1.55rem] leading-[1.08] text-[#1f1f1f] sm:text-[1.75rem] md:text-[2.25rem]">
+              <h3
+                className={`${lora.className} text-[1.55rem] leading-[1.08] text-[#1f1f1f] sm:text-[1.75rem] md:text-[2.25rem]`}
+              >
                 {session.title}
               </h3>
 
@@ -242,9 +253,8 @@ export default function AttendingHeroesPage() {
     <main className="min-h-screen overflow-x-hidden bg-[#f3f1ed]">
       <SiteHeader />
 
-      {/* HERO */}
       {hasHeroMedia ? (
-        <section className="relative min-h-[78vh] overflow-hidden bg-[#111111] mb-16 md:mb-20 lg:mb-24">
+        <section className="relative mb-16 min-h-[78vh] overflow-hidden bg-[#111111] md:mb-20 lg:mb-24">
           <div className="absolute inset-0">
             {pageData?.hero?.mediaType === "video" && pageData?.hero?.videoUrl ? (
               <video
@@ -271,7 +281,7 @@ export default function AttendingHeroesPage() {
 
           <div className="absolute inset-0 bg-black/45" />
 
-          <div className="relative z-10 flex min-h-[78vh] items-center justify-center px-5 pt-24 pb-16 md:px-12 md:pt-28 md:pb-20 lg:px-20">
+          <div className="relative z-10 flex min-h-[78vh] items-center justify-center px-5 pb-16 pt-24 md:px-12 md:pb-20 md:pt-28 lg:px-20">
             <div className="mx-auto max-w-5xl text-center text-white">
               <p
                 className={`${firaSans.className} mb-5 text-[10px] uppercase tracking-[0.24em] text-[#d9a441] sm:text-[11px] sm:tracking-[0.3em] md:mb-6`}
@@ -279,7 +289,9 @@ export default function AttendingHeroesPage() {
                 {pageData?.hero?.kicker || "Attending heroes"}
               </p>
 
-              <h1 className="font-serif text-[2.55rem] leading-[1.04] text-white sm:text-[3rem] md:text-[4.4rem] lg:text-[5.1rem]">
+              <h1
+                className={`${lora.className} whitespace-pre-line text-[2.55rem] leading-[1.04] text-white sm:text-[3rem] md:text-[4.4rem] lg:text-[5.1rem]`}
+              >
                 {pageData?.hero?.title ? (
                   pageData.hero.title
                 ) : (
@@ -299,7 +311,7 @@ export default function AttendingHeroesPage() {
           </div>
         </section>
       ) : (
-        <section className="px-5 pt-20 pb-14 md:px-12 md:pt-24 md:pb-20 lg:px-20">
+        <section className="px-5 pb-14 pt-20 md:px-12 md:pb-20 md:pt-24 lg:px-20">
           <div className="mx-auto max-w-5xl text-center">
             <p
               className={`${firaSans.className} mb-5 text-[10px] uppercase tracking-[0.24em] text-[#d9a441] sm:text-[11px] sm:tracking-[0.3em] md:mb-6`}
@@ -307,7 +319,9 @@ export default function AttendingHeroesPage() {
               {pageData?.hero?.kicker || "Attending heroes"}
             </p>
 
-            <h1 className="font-serif text-[2.55rem] leading-[1.04] text-[#1f1f1f] sm:text-[3rem] md:text-[4.4rem] lg:text-[5.1rem]">
+            <h1
+              className={`${lora.className} whitespace-pre-line text-[2.55rem] leading-[1.04] text-[#1f1f1f] sm:text-[3rem] md:text-[4.4rem] lg:text-[5.1rem]`}
+            >
               {pageData?.hero?.title ? (
                 pageData.hero.title
               ) : (
@@ -327,7 +341,6 @@ export default function AttendingHeroesPage() {
         </section>
       )}
 
-      {/* FEATURED */}
       <section className="px-5 pb-20 md:px-12 md:pb-24 lg:px-20">
         <div className="mx-auto max-w-6xl">
           <SectionHeader
@@ -353,7 +366,6 @@ export default function AttendingHeroesPage() {
         </div>
       </section>
 
-      {/* MODERATOR */}
       <section className="px-5 pb-20 md:px-12 md:pb-24 lg:px-20">
         <div className="mx-auto max-w-6xl">
           <SectionHeader
@@ -379,7 +391,6 @@ export default function AttendingHeroesPage() {
         </div>
       </section>
 
-      {/* HERO TALKS */}
       <section className="px-5 pb-20 md:px-12 md:pb-24 lg:px-20">
         <div className="mx-auto max-w-6xl">
           <SectionHeader
@@ -405,7 +416,6 @@ export default function AttendingHeroesPage() {
         </div>
       </section>
 
-      {/* PANELS */}
       <SessionSection
         label={pageData?.panelsSection?.label || "Panels"}
         title={
@@ -420,7 +430,6 @@ export default function AttendingHeroesPage() {
         onOpen={setSelectedPerson}
       />
 
-      {/* FIRESIDES */}
       <SessionSection
         label={pageData?.firesidesSection?.label || "Fireside conversations"}
         title={
@@ -434,7 +443,6 @@ export default function AttendingHeroesPage() {
         onOpen={setSelectedPerson}
       />
 
-      {/* MASTERCLASSES */}
       <SessionSection
         label={pageData?.masterclassesSection?.label || "Masterclasses"}
         title={
@@ -449,7 +457,6 @@ export default function AttendingHeroesPage() {
         onOpen={setSelectedPerson}
       />
 
-      {/* KEYNOTE */}
       <section className="px-5 pb-24 md:px-12 md:pb-32 lg:px-20">
         <div className="mx-auto max-w-6xl">
           <SectionHeader
@@ -470,7 +477,6 @@ export default function AttendingHeroesPage() {
         </div>
       </section>
 
-      {/* MODAL */}
       {selectedPerson ? (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/55 px-4 py-4 sm:px-6 sm:py-8 md:px-6 md:py-10">
           <div className="relative max-h-[92vh] w-full max-w-4xl overflow-y-auto bg-[#f3f1ed] shadow-2xl">
@@ -498,7 +504,9 @@ export default function AttendingHeroesPage() {
                   {selectedPerson.cardLabel || selectedPerson.format}
                 </p>
 
-                <h2 className="mt-3 font-serif text-[1.95rem] leading-[1.05] text-[#1f1f1f] sm:text-[2.2rem] md:text-[2.8rem]">
+                <h2
+                  className={`${lora.className} mt-3 text-[1.95rem] leading-[1.05] text-[#1f1f1f] sm:text-[2.2rem] md:text-[2.8rem]`}
+                >
                   {selectedPerson.name}
                 </h2>
 
@@ -512,7 +520,9 @@ export default function AttendingHeroesPage() {
                   >
                     Session
                   </p>
-                  <p className="mt-2 font-serif text-[1.2rem] leading-[1.18] text-[#1f1f1f] sm:text-[1.3rem] md:text-[1.4rem]">
+                  <p
+                    className={`${lora.className} mt-2 text-[1.2rem] leading-[1.18] text-[#1f1f1f] sm:text-[1.3rem] md:text-[1.4rem]`}
+                  >
                     {selectedPerson.session}
                   </p>
                 </div>

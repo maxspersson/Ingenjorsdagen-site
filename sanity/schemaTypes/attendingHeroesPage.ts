@@ -23,10 +23,11 @@ export default defineType({
           type: 'string',
         }),
         defineField({
-          name: 'title',
-          title: 'Title',
-          type: 'string',
-        }),
+  name: 'title',
+  title: 'Title',
+  type: 'text',
+  rows: 2,
+}),
         defineField({
           name: 'subtitle',
           title: 'Subtitle',

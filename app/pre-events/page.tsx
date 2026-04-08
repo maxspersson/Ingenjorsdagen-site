@@ -1,12 +1,17 @@
 "use client";
 
 import SiteHeader from "@/app/components/SiteHeader";
-import { Fira_Sans } from "next/font/google";
+import { Fira_Sans, Lora } from "next/font/google";
 import { useEffect, useState } from "react";
 import { client } from "@/sanity/lib/client";
 import { preEventsPageQuery } from "@/sanity/lib/queries";
 
 const firaSans = Fira_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+});
+
+const lora = Lora({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
 });
@@ -171,23 +176,12 @@ export default function PreEventsPage() {
               {pageData?.hero?.eyebrow || "Pre-events"}
             </p>
 
-            <h1 className="font-serif leading-[0.98] text-white">
-              {pageData?.hero?.title ? (
-                <span className="block text-[2.15rem] tracking-[-0.02em] sm:text-[2.7rem] md:text-[4.6rem] lg:text-[5.8rem]">
-                  {pageData.hero.title}
-                </span>
-              ) : (
-                <>
-                  <span className="block text-[2.15rem] tracking-[-0.02em] sm:text-[2.7rem] md:text-[4.6rem] lg:text-[5.8rem]">
-                    A fair designed for
-                  </span>
-
-                  <span className="block text-center text-[2.15rem] tracking-[-0.02em] sm:text-[2.7rem] md:text-[4.6rem] lg:text-[5.8rem]">
-                    your next step
-                  </span>
-                </>
-              )}
-            </h1>
+            <h1
+  className={`${lora.className} leading-[0.98] text-white whitespace-pre-line text-[2.15rem] tracking-[-0.02em] sm:text-[2.7rem] md:text-[4.6rem] lg:text-[5.8rem]`}
+>
+  {pageData?.hero?.title || `A fair designed for
+your next step`}
+</h1>
 
             <p className="mx-auto mt-6 max-w-[22rem] text-[1rem] leading-[1.58] text-white/82 sm:mt-7 sm:max-w-[32rem] sm:text-[1.08rem] md:mt-8 md:max-w-3xl md:text-[1.28rem] md:leading-[1.65]">
               {pageData?.hero?.subtitle ||
