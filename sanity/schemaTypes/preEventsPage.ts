@@ -12,6 +12,12 @@ export default defineType({
       type: 'string',
     }),
 
+    defineField({
+  name: 'seo',
+  title: 'SEO',
+  type: 'seo',
+}),
+
     // ✅ HERO (nu samma struktur som Home)
     defineField({
       name: 'hero',

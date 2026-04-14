@@ -13,6 +13,52 @@ export default defineType({
     }),
 
     defineField({
+  name: 'seo',
+  title: 'SEO',
+  type: 'object',
+  fields: [
+    defineField({
+      name: 'title',
+      title: 'Meta title',
+      type: 'string',
+    }),
+    defineField({
+      name: 'description',
+      title: 'Meta description',
+      type: 'text',
+    }),
+    defineField({
+      name: 'ogTitle',
+      title: 'OG title',
+      type: 'string',
+    }),
+    defineField({
+      name: 'ogDescription',
+      title: 'OG description',
+      type: 'text',
+    }),
+    defineField({
+      name: 'noIndex',
+      title: 'No index',
+      type: 'boolean',
+    }),
+    defineField({
+      name: 'ogImage',
+      title: 'OG image',
+      type: 'image',
+      options: { hotspot: true },
+      fields: [
+        defineField({
+          name: 'alt',
+          title: 'Alt text',
+          type: 'string',
+        }),
+      ],
+    }),
+  ],
+}),
+
+    defineField({
       name: 'hero',
       title: 'Hero',
       type: 'object',

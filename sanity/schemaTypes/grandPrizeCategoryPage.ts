@@ -11,6 +11,7 @@ export default defineType({
       title: 'Internal title (only for CMS)',
       type: 'string',
     }),
+    
 
     defineField({
       name: 'slug',
@@ -21,6 +22,12 @@ export default defineType({
         maxLength: 96,
       },
     }),
+
+    defineField({
+  name: 'seo',
+  title: 'SEO',
+  type: 'seo',
+}),
 
     defineField({
       name: 'hero',
@@ -225,6 +232,11 @@ export default defineType({
           title: 'Eyebrow',
           type: 'string',
         }),
+        defineField({
+  name: 'year',
+  title: 'Year',
+  type: 'string',
+}),
         defineField({
           name: 'winner',
           title: 'Winner',

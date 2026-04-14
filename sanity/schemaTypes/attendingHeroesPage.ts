@@ -13,6 +13,12 @@ export default defineType({
     }),
 
     defineField({
+  name: 'seo',
+  title: 'SEO',
+  type: 'seo',
+}),
+
+    defineField({
       name: 'hero',
       title: 'Hero',
       type: 'object',

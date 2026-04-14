@@ -58,7 +58,21 @@ export const masterclassesQuery = groq`
 `
 
 export const engineeringDayPageQuery = groq`
-  *[_type == "engineeringDayPage"][0]{
+{
+  "page": *[_type == "engineeringDayPage"][0]{
+    seo{
+      title,
+      description,
+      ogTitle,
+      ogDescription,
+      noIndex,
+      ogImage{
+        alt,
+        asset->{
+          url
+        }
+      }
+    },
     hero{
       dateText,
       title,
@@ -86,11 +100,73 @@ export const engineeringDayPageQuery = groq`
       title,
       body
     }
+  },
+  "partners": *[_type == "partner"] | order(order asc) {
+    _id,
+    name,
+    url,
+    tier,
+    order,
+    logoVariant,
+    alt,
+    logo {
+      asset->{
+        _id,
+        url
+      }
+    }
+  },
+  "programme": *[_type == "programmeItem"] | order(order asc) {
+    id,
+    time,
+    title,
+    description,
+    detailsLabel,
+    detailsText,
+    subItems[] {
+      time,
+      title,
+      meta
+    }
+  },
+  "masterclasses": *[_type == "masterclass"] | order(order asc) {
+    _id,
+    order,
+    kicker,
+    title,
+    speaker,
+    role,
+    company,
+    image {
+      asset->{
+        url
+      }
+    },
+    avatar {
+      asset->{
+        url
+      }
+    },
+    details
   }
+}
 `
 
 export const homePageQuery = `
   *[_type == "homePage"][0]{
+    seo{
+      title,
+      description,
+      ogTitle,
+      ogDescription,
+      noIndex,
+      ogImage{
+        alt,
+        asset->{
+          url
+        }
+      }
+    },
     hero{
       kicker,
       title,
@@ -150,6 +226,19 @@ export const attendingHeroesPageQuery = groq`
   *[_type == "attendingHeroesPage"][0]{
     _id,
     internalTitle,
+    seo{
+      title,
+      description,
+      ogTitle,
+      ogDescription,
+      noIndex,
+      ogImage{
+        alt,
+        asset->{
+          url
+        }
+      }
+    },
     hero{
       kicker,
       title,
@@ -238,6 +327,19 @@ export const sessionGroupsQuery = groq`
 export const grandPrizePageQuery = `
 {
   "page": *[_type == "grandPrizePage"][0]{
+  seo{
+    title,
+    description,
+    ogTitle,
+    ogDescription,
+    noIndex,
+    ogImage{
+      alt,
+      asset->{
+        url
+      }
+    }
+  },
     hero{
       eyebrow,
       title,
@@ -271,6 +373,20 @@ export const grandPrizePageQuery = `
 
 export const preEventsPageQuery = groq`
   *[_type == "preEventsPage"][0]{
+    internalTitle,
+    seo{
+      title,
+      description,
+      ogTitle,
+      ogDescription,
+      noIndex,
+      ogImage{
+        alt,
+        asset->{
+          url
+        }
+      }
+    },
     hero{
       eyebrow,
       title,
@@ -309,6 +425,19 @@ export const preEventsPageQuery = groq`
 
 export const preEventsCityQuery = groq`
   *[_type == "preEventsCity" && slug.current == $slug][0]{
+    seo{
+      title,
+      description,
+      ogTitle,
+      ogDescription,
+      noIndex,
+      ogImage{
+        alt,
+        asset->{
+          url
+        }
+      }
+    },
     hero{
       eyebrow,
       title,
@@ -331,6 +460,19 @@ export const preEventsCityQuery = groq`
 export const contactPageQuery = groq`
   *[_type == "contactPage"][0]{
     internalTitle,
+    seo{
+      title,
+      description,
+      ogTitle,
+      ogDescription,
+      noIndex,
+      ogImage{
+        alt,
+        asset->{
+          url
+        }
+      }
+    },
     hero{
       label,
       title,
@@ -352,6 +494,19 @@ export const contactPageQuery = groq`
 `
 export const grandPrizeCategoryPageQuery = groq`
   *[_type == "grandPrizeCategoryPage" && slug.current == $slug][0]{
+    seo{
+      title,
+      description,
+      ogTitle,
+      ogDescription,
+      noIndex,
+      ogImage{
+        alt,
+        asset->{
+          url
+        }
+      }
+    },
     hero{
       mediaType,
       videoUrl,
@@ -363,24 +518,43 @@ export const grandPrizeCategoryPageQuery = groq`
         alt
       }
     },
-    whySection,
-    whoSection,
-    criteriaSection,
+    whySection{
+      "eyebrow": label,
+      title,
+      "subtitle": intro,
+      "body": pt::text([body1, body2])
+    },
+    whoSection{
+      "eyebrow": label,
+      title,
+      "subtitle": intro,
+      "body": pt::text([body1, body2, body3])
+    },
+    criteriaSection{
+      "eyebrow": label,
+      title,
+      "subtitle": intro
+    },
     criteriaItems,
-    hallOfFameSection,
+    hallOfFameSection{
+      "eyebrow": label,
+      title,
+      "subtitle": intro
+    },
     featuredWinner{
-      eyebrow,
+      "label": eyebrow,
+      year,
       winner,
       presentedBy,
       summary,
-      secondaryText
+      "jury": secondaryText
     },
     hallOfFameItems[]{
       year,
       winner,
       presentedBy,
       summary,
-      secondaryText
+      "jury": secondaryText
     }
   }
 `

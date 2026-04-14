@@ -1,6 +1,9 @@
+import { type SchemaTypeDefinition } from 'sanity'
+
+import seo from './seo'
+
 import homePage from './homePage'
 import engineeringDayPage from './engineeringDayPage'
-import { type SchemaTypeDefinition } from 'sanity'
 import partner from './partner'
 import programmeItem, { programmeSubItem } from './programmeItem'
 import masterclass from './masterclass'
@@ -16,6 +19,8 @@ import grandPrizeCategoryPage from './grandPrizeCategoryPage'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
+    seo, // 👈 viktigt att denna ligger här
+
     partner,
     programmeItem,
     programmeSubItem,

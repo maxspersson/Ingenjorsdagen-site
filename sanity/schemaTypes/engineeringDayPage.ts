@@ -11,6 +11,12 @@ export default defineType({
       title: 'Internal title (only for CMS)',
       type: 'string',
     }),
+    
+    defineField({
+  name: 'seo',
+  title: 'SEO',
+  type: 'seo',
+}),
 
     defineField({
       name: 'hero',
