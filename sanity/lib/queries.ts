@@ -18,21 +18,25 @@ export const partnersQuery = groq`
   }
 `
 
-export const programmeQuery = groq`
-  *[_type == "programmeItem"] | order(order asc) {
-    id,
+export const programmeQuery = `*[_type == "programmeItem"] | order(order asc) {
+  id,
+  time,
+  title,
+
+  showDescription,
+  description,
+
+  showDetails,
+  detailsLabel,
+  detailsText,
+
+  showSubItems,
+  subItems[]{
     time,
     title,
-    description,
-    detailsLabel,
-    detailsText,
-    subItems[] {
-      time,
-      title,
-      meta
-    }
+    meta
   }
-`
+}`
 
 export const masterclassesQuery = groq`
   *[_type == "masterclass"] | order(order asc) {

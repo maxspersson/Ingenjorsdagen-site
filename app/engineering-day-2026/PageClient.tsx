@@ -9,10 +9,12 @@ import { PortableText } from "@portabletext/react";
 const portableTextComponents = {
   block: {
     normal: ({ children }: any) => (
-      <p className="mb-5 last:mb-0">{children}</p>
+      <p className="mb-5 last:mb-0 whitespace-pre-line">{children}</p>
     ),
     h3: ({ children }: any) => (
-      <h3 className="mb-3 font-semibold text-[#242424]">{children}</h3>
+      <h3 className="mb-3 font-semibold text-[#242424] whitespace-pre-line">
+        {children}
+      </h3>
     ),
   },
   list: {
@@ -171,9 +173,12 @@ type ProgrammeItem = {
   id: string;
   time: string;
   title: string;
+  showDescription?: boolean;
   description?: string;
+  showDetails?: boolean;
   detailsLabel?: string;
   detailsText?: string;
+  showSubItems?: boolean;
   subItems?: ProgrammeSubItem[];
 };
 
@@ -414,11 +419,11 @@ export default function PageClient({
           <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
 
           <div className="relative z-10 max-w-4xl py-20 sm:py-24">
-            <p className="mb-6 text-[10px] uppercase tracking-[0.28em] text-white/80 sm:text-[11px] sm:tracking-[0.4em] md:mb-8">
+            <p className="mb-6 text-[10px] uppercase tracking-[0.28em] text-white/80 sm:text-[11px] sm:tracking-[0.4em] md:mb-8 whitespace-pre-line">
               {pageData?.hero?.dateText || "OCTOBER 21, 2026 – STOCKHOLM"}
             </p>
 
-            <h1 className="mb-8 font-serif text-[2.7rem] font-light leading-[1.02] sm:text-[3.35rem] md:mb-10 md:text-7xl lg:text-8xl">
+            <h1 className="mb-8 font-serif text-[2.7rem] font-light leading-[1.02] sm:text-[3.35rem] md:mb-10 md:text-7xl lg:text-8xl whitespace-pre-line">
               {pageData?.hero?.title || (
                 <>
                   Engineering Day
@@ -428,7 +433,7 @@ export default function PageClient({
               )}
             </h1>
 
-            <p className="mb-10 text-[1.02rem] opacity-90 sm:text-[1.1rem] md:mb-12 md:text-xl">
+            <p className="mb-10 text-[1.02rem] opacity-90 sm:text-[1.1rem] md:mb-12 md:text-xl whitespace-pre-line">
               {pageData?.hero?.subtitle ||
                 "We the engineers. Together. For the future."}
             </p>
@@ -450,11 +455,11 @@ export default function PageClient({
           <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
 
           <div className="relative z-10 max-w-4xl py-20 sm:py-24">
-            <p className="mb-6 text-[10px] uppercase tracking-[0.28em] text-white/80 sm:text-[11px] sm:tracking-[0.4em] md:mb-8">
+            <p className="mb-6 text-[10px] uppercase tracking-[0.28em] text-white/80 sm:text-[11px] sm:tracking-[0.4em] md:mb-8 whitespace-pre-line">
               {pageData?.hero?.dateText || "OCTOBER 21, 2026 – STOCKHOLM"}
             </p>
 
-            <h1 className="mb-8 font-serif text-[2.7rem] font-light leading-[1.02] sm:text-[3.35rem] md:mb-10 md:text-7xl lg:text-8xl">
+            <h1 className="mb-8 font-serif text-[2.7rem] font-light leading-[1.02] sm:text-[3.35rem] md:mb-10 md:text-7xl lg:text-8xl whitespace-pre-line">
               {pageData?.hero?.title || (
                 <>
                   Engineering Day
@@ -464,7 +469,7 @@ export default function PageClient({
               )}
             </h1>
 
-            <p className="mb-10 text-[1.02rem] opacity-90 sm:text-[1.1rem] md:mb-12 md:text-xl">
+            <p className="mb-10 text-[1.02rem] opacity-90 sm:text-[1.1rem] md:mb-12 md:text-xl whitespace-pre-line">
               {pageData?.hero?.subtitle ||
                 "We the engineers. Together. For the future."}
             </p>
@@ -483,7 +488,7 @@ export default function PageClient({
         <div className="mx-auto max-w-6xl">
           <div className="mb-9 md:mb-12">
             <p
-              className={`${firaSans.className} mb-4 text-[12px] uppercase tracking-[0.22em] text-[#a27a26] md:text-[13px] md:tracking-[0.24em]`}
+              className={`${firaSans.className} mb-4 text-[12px] uppercase tracking-[0.22em] text-[#a27a26] md:text-[13px] md:tracking-[0.24em] whitespace-pre-line`}
             >
               {pageData?.themeSection?.kicker || "THIS YEAR'S THEME"}
             </p>
@@ -492,7 +497,7 @@ export default function PageClient({
           </div>
 
           <div className="mx-auto mb-10 max-w-4xl text-center md:mb-14">
-            <h2 className="mb-5 font-serif text-[2.35rem] font-light leading-[1.02] text-[#1f1f1f] sm:text-[2.85rem] md:text-[4.25rem] lg:text-[4.85rem]">
+            <h2 className="mb-5 font-serif text-[2.35rem] font-light leading-[1.02] text-[#1f1f1f] sm:text-[2.85rem] md:text-[4.25rem] lg:text-[4.85rem] whitespace-pre-line">
               {pageData?.themeSection?.title || (
                 <>
                   Engineering Intelligent
@@ -502,7 +507,7 @@ export default function PageClient({
               )}
             </h2>
 
-            <p className="text-[1.08rem] italic leading-[1.48] text-[#5a5a5a] sm:text-[1.16rem] md:text-[1.48rem]">
+            <p className="text-[1.08rem] italic leading-[1.48] text-[#5a5a5a] sm:text-[1.16rem] md:text-[1.48rem] whitespace-pre-line">
               {pageData?.themeSection?.subtitle ||
                 "Where AI enters the physical world"}
             </p>
@@ -549,7 +554,7 @@ export default function PageClient({
         <div className="mx-auto max-w-6xl">
           <div className="mb-9 md:mb-12">
             <p
-              className={`${firaSans.className} mb-4 text-[12px] uppercase tracking-[0.22em] text-[#a27a26] md:text-[13px] md:tracking-[0.24em]`}
+              className={`${firaSans.className} mb-4 text-[12px] uppercase tracking-[0.22em] text-[#a27a26] md:text-[13px] md:tracking-[0.24em] whitespace-pre-line`}
             >
               MASTERCLASSES
             </p>
@@ -558,24 +563,11 @@ export default function PageClient({
           </div>
 
           <div className="mx-auto mb-8 max-w-4xl text-center md:mb-12">
-            <h2 className="mb-5 font-serif text-[2.1rem] font-light leading-[1.08] text-[#1f1f1f] sm:text-[2.45rem] md:mb-6 md:text-[3.2rem] lg:text-[3.55rem]">
+            <h2 className="mb-5 font-serif text-[2.1rem] font-light leading-[1.08] text-[#1f1f1f] sm:text-[2.45rem] md:mb-6 md:text-[3.2rem] lg:text-[3.55rem] whitespace-pre-line">
               {pageData?.masterclassesIntro?.title
                 ? pageData.masterclassesIntro.title
-                    .split(". ")
-                    .map((part: string, i: number, arr: string[]) => (
-                      <span key={i}>
-                        {part}
-                        {i < arr.length - 1 && "."}
-                        <br />
-                      </span>
-                    ))
-                : (
-                  <>
-                    Focused sessions.
-                    <br />
-                    Deeper technical insight.
-                  </>
-                )}
+                : `Focused sessions.
+Deeper technical insight.`}
             </h2>
           </div>
 
@@ -658,12 +650,12 @@ export default function PageClient({
                                 <div className="relative z-10 flex h-full flex-col justify-between p-5 text-white sm:p-6 md:p-8">
                                   <div>
                                     <p
-                                      className={`${firaSans.className} mb-3 text-[9px] uppercase tracking-[0.2em] text-white/80 sm:text-[10px] md:mb-4 md:text-[11px] md:tracking-[0.24em]`}
+                                      className={`${firaSans.className} mb-3 text-[9px] uppercase tracking-[0.2em] text-white/80 sm:text-[10px] md:mb-4 md:text-[11px] md:tracking-[0.24em] whitespace-pre-line`}
                                     >
                                       {item.kicker}
                                     </p>
 
-                                    <h3 className="max-w-[30rem] font-serif text-[1.62rem] font-semibold leading-[1.05] sm:text-[1.8rem] md:text-[2.15rem]">
+                                    <h3 className="max-w-[30rem] font-serif text-[1.62rem] font-semibold leading-[1.05] sm:text-[1.8rem] md:text-[2.15rem] whitespace-pre-line">
                                       {item.title}
                                     </h3>
                                   </div>
@@ -677,14 +669,14 @@ export default function PageClient({
                                       />
 
                                       <div className="leading-[1.35]">
-                                        <p className="text-[1rem] font-semibold md:text-[1.12rem]">
+                                        <p className="text-[1rem] font-semibold md:text-[1.12rem] whitespace-pre-line">
                                           {item.speaker}
                                         </p>
-                                        <p className="text-[0.9rem] text-white/90 md:text-[1rem]">
+                                        <p className="text-[0.9rem] text-white/90 md:text-[1rem] whitespace-pre-line">
                                           {item.role}
                                         </p>
                                         {item.company ? (
-                                          <p className="text-[0.9rem] text-white/90 md:text-[1rem]">
+                                          <p className="text-[0.9rem] text-white/90 md:text-[1rem] whitespace-pre-line">
                                             {item.company}
                                           </p>
                                         ) : null}
@@ -731,7 +723,7 @@ export default function PageClient({
                                     </button>
                                   </div>
 
-                                  <div className="max-w-[52rem] text-[0.98rem] leading-[1.85] text-[#434343]">
+                                  <div className="max-w-[52rem] text-[0.98rem] leading-[1.85] text-[#434343] whitespace-pre-line">
                                     {"details" in item && item.details ? (
                                       <PortableText
                                         value={item.details}
@@ -769,7 +761,7 @@ export default function PageClient({
                             </button>
                           </div>
 
-                          <div className="max-w-[52rem] text-[1.08rem] leading-[1.95] text-[#434343]">
+                          <div className="max-w-[52rem] text-[1.08rem] leading-[1.95] text-[#434343] whitespace-pre-line">
                             {selectedMasterclass &&
                             "details" in selectedMasterclass &&
                             selectedMasterclass.details ? (
@@ -796,7 +788,7 @@ export default function PageClient({
         <div className="mx-auto max-w-6xl">
           <div className="mb-9 md:mb-12">
             <p
-              className={`${firaSans.className} mb-4 text-[12px] uppercase tracking-[0.22em] text-[#a27a26] md:text-[13px] md:tracking-[0.24em]`}
+              className={`${firaSans.className} mb-4 text-[12px] uppercase tracking-[0.22em] text-[#a27a26] md:text-[13px] md:tracking-[0.24em] whitespace-pre-line`}
             >
               PROGRAMME
             </p>
@@ -805,24 +797,11 @@ export default function PageClient({
           </div>
 
           <div className="mx-auto mb-8 max-w-4xl text-center md:mb-12">
-            <h2 className="mb-5 font-serif text-[2.15rem] font-light leading-[1.08] text-[#1f1f1f] sm:text-[2.5rem] md:mb-6 md:text-[3.35rem] lg:text-[3.85rem]">
+            <h2 className="mb-5 font-serif text-[2.15rem] font-light leading-[1.08] text-[#1f1f1f] sm:text-[2.5rem] md:mb-6 md:text-[3.35rem] lg:text-[3.85rem] whitespace-pre-line">
               {pageData?.programmeIntro?.title
                 ? pageData.programmeIntro.title
-                    .split(". ")
-                    .map((part: string, i: number, arr: string[]) => (
-                      <span key={i}>
-                        {part}
-                        {i < arr.length - 1 && "."}
-                        <br />
-                      </span>
-                    ))
-                : (
-                  <>
-                    A day designed with
-                    <br />
-                    clarity, rhythm and depth.
-                  </>
-                )}
+                : `A day designed with
+clarity, rhythm and depth.`}
             </h2>
           </div>
 
@@ -856,8 +835,16 @@ export default function PageClient({
             <div className="mx-auto max-w-5xl">
               {programmeToRender.map((item) => {
                 const isActive = activeProgramme === item.id;
+                const shouldShowDescription =
+                  item.showDescription !== false && !!item.description;
+                const shouldShowSubItems =
+                  item.showSubItems === true && !!item.subItems?.length;
+                const shouldShowDetails =
+                  item.showDetails === true &&
+                  (!!item.detailsText || !!item.detailsLabel);
+
                 const hasExpandableContent =
-                  item.subItems || item.detailsText || item.detailsLabel;
+                  shouldShowSubItems || shouldShowDetails;
 
                 return (
                   <div key={item.id} className="border-b border-black/6">
@@ -874,12 +861,12 @@ export default function PageClient({
                         <div>
                           <div className="flex items-start justify-between gap-4 md:gap-6">
                             <div className="max-w-[44rem]">
-                              <h3 className="font-serif text-[1.24rem] font-semibold leading-[1.15] text-[#1f1f1f] sm:text-[1.36rem] md:text-[1.72rem] md:leading-[1.16]">
+                              <h3 className="font-serif text-[1.24rem] font-semibold leading-[1.15] text-[#1f1f1f] sm:text-[1.36rem] md:text-[1.72rem] md:leading-[1.16] whitespace-pre-line">
                                 {item.title}
                               </h3>
 
-                              {item.description ? (
-                                <p className="mt-3 text-[0.96rem] leading-[1.78] text-[#55514a] sm:text-[1rem] md:text-[1.08rem] md:leading-[1.82]">
+                              {shouldShowDescription ? (
+                                <p className="mt-3 text-[0.96rem] leading-[1.78] text-[#55514a] sm:text-[1rem] md:text-[1.08rem] md:leading-[1.82] whitespace-pre-line">
                                   {item.description}
                                 </p>
                               ) : null}
@@ -906,10 +893,10 @@ export default function PageClient({
                             ) : null}
                           </div>
 
-                          {item.subItems ? (
+                          {shouldShowSubItems ? (
                             <div className="mt-5 pl-0 md:mt-7 md:pl-8">
                               <div className="space-y-3">
-                                {item.subItems.map((subItem, subIndex) => (
+                                {item.subItems?.map((subItem, subIndex) => (
                                   <div
                                     key={`${item.id}-${subIndex}`}
                                     className="grid grid-cols-[58px_1fr] gap-3 sm:grid-cols-[64px_1fr] md:grid-cols-[74px_1fr] md:gap-4"
@@ -921,7 +908,7 @@ export default function PageClient({
                                     </p>
 
                                     <div className="min-w-0">
-                                      <p className="text-[0.94rem] leading-[1.55] text-[#2a2a2a] sm:text-[0.98rem] md:text-[1.03rem]">
+                                      <p className="text-[0.94rem] leading-[1.55] text-[#2a2a2a] sm:text-[0.98rem] md:text-[1.03rem] whitespace-pre-line">
                                         <span className="font-medium">
                                           {subItem.title}
                                         </span>
@@ -959,7 +946,7 @@ export default function PageClient({
                             </button>
                           ) : null}
 
-                          {isActive ? (
+                          {isActive && shouldShowDetails ? (
                             <div className="mt-6 rounded-[20px] border border-black/5 bg-[#f8f6f2] px-4 py-5 shadow-[0_12px_30px_rgba(0,0,0,0.04)] md:mt-8 md:ml-8 md:rounded-[24px] md:px-7 md:py-7">
                               <p
                                 className={`${firaSans.className} mb-4 text-[10px] uppercase tracking-[0.2em] text-[#a27a26] md:text-[11px] md:tracking-[0.22em]`}
@@ -968,7 +955,9 @@ export default function PageClient({
                               </p>
 
                               <div className="max-w-[44rem] text-[0.95rem] leading-[1.82] text-[#47433d] md:text-[1.03rem] md:leading-[1.9]">
-                                <p>{item.detailsText}</p>
+                                <p className="whitespace-pre-line">
+                                  {item.detailsText}
+                                </p>
                               </div>
                             </div>
                           ) : null}

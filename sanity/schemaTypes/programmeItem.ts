@@ -56,29 +56,54 @@ const programmeItem = defineType({
       type: 'string',
       validation: (Rule) => Rule.required(),
     }),
+
+    defineField({
+      name: 'showDescription',
+      title: 'Show description',
+      type: 'boolean',
+      initialValue: true,
+    }),
     defineField({
       name: 'description',
       title: 'Description',
       type: 'text',
       rows: 3,
+      hidden: ({ parent }) => parent?.showDescription === false,
+    }),
+
+    defineField({
+      name: 'showDetails',
+      title: 'Show details section',
+      type: 'boolean',
+      initialValue: true,
     }),
     defineField({
       name: 'detailsLabel',
       title: 'Details label',
       type: 'string',
       description: 'For example SESSION DETAILS or PANEL DETAILS',
+      hidden: ({ parent }) => parent?.showDetails === false,
     }),
     defineField({
       name: 'detailsText',
       title: 'Details text',
       type: 'text',
       rows: 5,
+      hidden: ({ parent }) => parent?.showDetails === false,
+    }),
+
+    defineField({
+      name: 'showSubItems',
+      title: 'Show sub items',
+      type: 'boolean',
+      initialValue: true,
     }),
     defineField({
       name: 'subItems',
       title: 'Sub items',
       type: 'array',
       of: [{ type: 'programmeSubItem' }],
+      hidden: ({ parent }) => parent?.showSubItems === false,
     }),
   ],
   preview: {
