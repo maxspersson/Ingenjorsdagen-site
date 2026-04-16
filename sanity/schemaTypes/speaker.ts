@@ -13,6 +13,13 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'visible',
+      title: 'Visible on site',
+      type: 'boolean',
+      description: 'Turn on when this speaker should be shown on the website.',
+      initialValue: false,
+    }),
+    defineField({
       name: 'title',
       title: 'Job title',
       type: 'string',
@@ -31,35 +38,35 @@ export default defineType({
       },
     }),
     defineField({
-  name: 'cardLabel',
-  title: 'Card label',
-  type: 'string',
-  options: {
-    list: [
-      { title: 'Featured', value: 'Featured' },
-      { title: 'Moderator', value: 'Moderator' },
-      { title: 'Hero Talk', value: 'Hero Talk' },
-      { title: 'Panel', value: 'Panel' },
-      { title: 'Fireside', value: 'Fireside' },
-      { title: 'Masterclass', value: 'Masterclass' },
-      { title: 'Keynote', value: 'Keynote' },
-    ],
-  },
-}),
-defineField({
-  name: 'placements',
-  title: 'Placements',
-  type: 'array',
-  of: [{ type: 'string' }],
-  options: {
-    list: [
-      { title: 'Featured', value: 'featured' },
-      { title: 'Moderator', value: 'moderator' },
-      { title: 'Hero Talks', value: 'heroTalks' },
-      { title: 'Keynote', value: 'keynote' },
-    ],
-  },
-}),
+      name: 'cardLabel',
+      title: 'Card label',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Featured', value: 'Featured' },
+          { title: 'Moderator', value: 'Moderator' },
+          { title: 'Hero Talk', value: 'Hero Talk' },
+          { title: 'Panel', value: 'Panel' },
+          { title: 'Fireside', value: 'Fireside' },
+          { title: 'Masterclass', value: 'Masterclass' },
+          { title: 'Keynote', value: 'Keynote' },
+        ],
+      },
+    }),
+    defineField({
+      name: 'placements',
+      title: 'Placements',
+      type: 'array',
+      of: [{ type: 'string' }],
+      options: {
+        list: [
+          { title: 'Featured', value: 'featured' },
+          { title: 'Moderator', value: 'moderator' },
+          { title: 'Hero Talks', value: 'heroTalks' },
+          { title: 'Keynote', value: 'keynote' },
+        ],
+      },
+    }),
     defineField({
       name: 'session',
       title: 'Session name',

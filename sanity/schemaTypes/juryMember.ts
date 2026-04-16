@@ -12,6 +12,13 @@ export default defineType({
       type: 'string',
     }),
     defineField({
+      name: 'visible',
+      title: 'Visible on site',
+      type: 'boolean',
+      description: 'Turn on when this jury member should be shown on the website.',
+      initialValue: false,
+    }),
+    defineField({
       name: 'title',
       title: 'Title',
       type: 'string',

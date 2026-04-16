@@ -1,9 +1,14 @@
 "use client";
 
 import SiteHeader from "@/app/components/SiteHeader";
-import { Fira_Sans } from "next/font/google";
+import { Fira_Sans, Lora } from "next/font/google";
 
 const firaSans = Fira_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+});
+
+const lora = Lora({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
 });
@@ -99,11 +104,11 @@ export default function PageClient({
               {data?.hero?.eyebrow || "Pre-events"}
             </p>
 
-            <h1 className="font-serif text-[4rem]">
+            <h1 className={`${lora.className} whitespace-pre-line text-[4rem]`}>
               {data?.hero?.title || "Career Day @ Stockholm"}
             </h1>
 
-            <p className="mx-auto mt-6 max-w-2xl text-lg text-white/80">
+            <p className="mx-auto mt-6 max-w-2xl whitespace-pre-line text-lg text-white/80">
               {data?.hero?.subtitle ||
                 "A focused career fair at Kulturhuset, bringing together engineers, tech professionals and employers in the capital."}
             </p>
@@ -116,25 +121,25 @@ export default function PageClient({
         <div className="mx-auto grid max-w-4xl grid-cols-2 gap-8 text-center md:grid-cols-4">
           <div>
             <p className="text-xs uppercase text-[#8b8276]">Date</p>
-            <p className="font-serif">
+            <p className={`${lora.className}`}>
               {data?.facts?.date || "22 April 2026"}
             </p>
           </div>
           <div>
             <p className="text-xs uppercase text-[#8b8276]">Location</p>
-            <p className="font-serif">
+            <p className={`${lora.className}`}>
               {data?.facts?.location || "Kulturhuset"}
             </p>
           </div>
           <div>
             <p className="text-xs uppercase text-[#8b8276]">Time</p>
-            <p className="font-serif">
+            <p className={`${lora.className}`}>
               {data?.facts?.time || "09:00–13:00"}
             </p>
           </div>
           <div>
             <p className="text-xs uppercase text-[#8b8276]">Admission</p>
-            <p className="font-serif">
+            <p className={`${lora.className}`}>
               {data?.facts?.admission || "Free entry"}
             </p>
           </div>
@@ -144,30 +149,32 @@ export default function PageClient({
       {/* CONTENT */}
       <section className="px-5 py-20">
         <div className="mx-auto max-w-3xl text-center">
-          <p className="text-xs uppercase text-[#a27a26]">
+          <p
+            className={`${firaSans.className} text-xs uppercase tracking-[0.18em] text-[#a27a26]`}
+          >
             {data?.content?.label || "About the event"}
           </p>
 
-          <h2 className="mt-4 font-serif text-4xl">
+          <h2 className={`${lora.className} mt-4 whitespace-pre-line text-4xl`}>
             {data?.content?.title || "A more focused meeting place"}
           </h2>
 
-          <p className="mt-4 italic">
+          <p className="mt-4 whitespace-pre-line italic">
             {data?.content?.intro ||
               "Career Day Stockholm brings together engineers, tech professionals and employers in a format centred around direct contact and meaningful conversations."}
           </p>
         </div>
 
         <div className="mx-auto mt-10 max-w-3xl space-y-6">
-          <p>
+          <p className="whitespace-pre-line">
             {data?.content?.body1 ||
               "The event is designed to create a calmer and more useful environment where visitors and employers can actually connect."}
           </p>
-          <p>
+          <p className="whitespace-pre-line">
             {data?.content?.body2 ||
               "Instead of competing with noise and crowds, the format gives space for better conversations, more relevant meetings and clearer opportunities."}
           </p>
-          <p>
+          <p className="whitespace-pre-line">
             {data?.content?.body3 ||
               "Whether you are actively looking for your next role or simply exploring the market, Career Day Stockholm is designed to help you move forward."}
           </p>
@@ -178,7 +185,7 @@ export default function PageClient({
             href={data?.content?.ctaHref || "#"}
             target="_blank"
             rel="noopener noreferrer"
-            className="uppercase text-[#a27a26]"
+            className={`${firaSans.className} uppercase tracking-[0.18em] text-[#a27a26]`}
           >
             {data?.content?.ctaLabel || "Read more"}
           </a>

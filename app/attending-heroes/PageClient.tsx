@@ -113,7 +113,7 @@ function SectionHeader({
       </h2>
 
       {intro ? (
-        <p className="mt-4 max-w-3xl text-[1rem] leading-[1.75] text-[#5a5a5a] md:mt-5 md:text-[1.12rem] md:leading-[1.78]">
+        <p className="mt-4 max-w-3xl text-[1rem] leading-[1.75] text-[#5a5a5a] md:mt-5 md:text-[1.12rem] md:leading-[1.78] whitespace-pre-line">
           {intro}
         </p>
       ) : null}
@@ -205,7 +205,10 @@ export default function PageClient({
   }, []);
 
   const sanitySpeakers = (speakers || []).filter(Boolean);
-  const sanitySessionGroups = (sessionGroups || []).filter(Boolean);
+
+  const sanitySessionGroups = (sessionGroups || []).filter(
+    (group: SessionGroup) => group && group.people && group.people.length > 0
+  );
 
   const featuredSpeakers = sanitySpeakers.filter((person: Person) =>
     hasPlacement(person, "featured")
@@ -293,9 +296,9 @@ export default function PageClient({
                 )}
               </h1>
 
-              <p className="mx-auto mt-5 max-w-[22rem] text-[1rem] leading-[1.6] text-white/90 sm:mt-6 sm:max-w-[30rem] sm:text-[1.08rem] md:max-w-2xl md:text-[1.2rem] md:leading-[1.65]">
+              <p className="mx-auto mt-5 max-w-[22rem] whitespace-pre-line text-[1rem] leading-[1.6] text-white/90 sm:mt-6 sm:max-w-[30rem] sm:text-[1.08rem] md:max-w-2xl md:text-[1.2rem] md:leading-[1.65]">
                 {pageData?.hero?.subtitle ||
-                  "Engineers, leaders and innovators contributing to talks, panels, fireside conversations, masterclasses and the wider programme throughout the day."}
+                  "Engineers, leaders and innovators contributing to talks, panels, fireside conversations, masterclasses and the wider programme throughout the day.\n\nSpeakers are being announced continuously."}
               </p>
             </div>
           </div>
@@ -323,149 +326,163 @@ export default function PageClient({
               )}
             </h1>
 
-            <p className="mx-auto mt-5 max-w-[22rem] text-[1rem] leading-[1.6] text-[#5f5a52] sm:mt-6 sm:max-w-[30rem] sm:text-[1.08rem] md:max-w-2xl md:text-[1.2rem] md:leading-[1.65]">
+            <p className="mx-auto mt-5 max-w-[22rem] whitespace-pre-line text-[1rem] leading-[1.6] text-[#5f5a52] sm:mt-6 sm:max-w-[30rem] sm:text-[1.08rem] md:max-w-2xl md:text-[1.2rem] md:leading-[1.65]">
               {pageData?.hero?.subtitle ||
-                "Engineers, leaders and innovators contributing to talks, panels, fireside conversations, masterclasses and the wider programme throughout the day."}
+                "Engineers, leaders and innovators contributing to talks, panels, fireside conversations, masterclasses and the wider programme throughout the day.\n\nSpeakers are being announced continuously."}
             </p>
           </div>
         </section>
       )}
 
-      <section className="px-5 pb-20 md:px-12 md:pb-24 lg:px-20">
-        <div className="mx-auto max-w-6xl">
-          <SectionHeader
-            label={pageData?.featuredSection?.label || "Featured"}
-            title={
-              pageData?.featuredSection?.title || "A few of the voices to know"
-            }
-            intro={
-              pageData?.featuredSection?.intro ||
-              "A first look at some of the people helping shape the conversations on stage and throughout the programme."
-            }
-          />
+      {featuredSpeakers.length > 0 && (
+        <section className="px-5 pb-20 md:px-12 md:pb-24 lg:px-20">
+          <div className="mx-auto max-w-6xl">
+            <SectionHeader
+              label={pageData?.featuredSection?.label || "Featured"}
+              title={
+                pageData?.featuredSection?.title || "A few of the voices to know"
+              }
+              intro={
+                pageData?.featuredSection?.intro ||
+                "A first look at some of the people helping shape the conversations on stage and throughout the programme."
+              }
+            />
 
-          <div className="grid gap-8 sm:gap-10 md:grid-cols-2 xl:grid-cols-3">
-            {featuredSpeakers.map((person) => (
-              <SpeakerCard
-                key={`${person.name}-${person.session}`}
-                person={person}
-                onOpen={setSelectedPerson}
-              />
-            ))}
+            <div className="grid gap-8 sm:gap-10 md:grid-cols-2 xl:grid-cols-3">
+              {featuredSpeakers.map((person) => (
+                <SpeakerCard
+                  key={`${person.name}-${person.session}`}
+                  person={person}
+                  onOpen={setSelectedPerson}
+                />
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
-      <section className="px-5 pb-20 md:px-12 md:pb-24 lg:px-20">
-        <div className="mx-auto max-w-6xl">
-          <SectionHeader
-            label={pageData?.moderatorSection?.label || "Moderator"}
-            title={
-              pageData?.moderatorSection?.title || "Holding the day together"
-            }
-            intro={
-              pageData?.moderatorSection?.intro ||
-              "Guiding the programme, shaping the transitions and making each conversation land."
-            }
-          />
+      {moderatorSpeakers.length > 0 && (
+        <section className="px-5 pb-20 md:px-12 md:pb-24 lg:px-20">
+          <div className="mx-auto max-w-6xl">
+            <SectionHeader
+              label={pageData?.moderatorSection?.label || "Moderator"}
+              title={
+                pageData?.moderatorSection?.title || "Holding the day together"
+              }
+              intro={
+                pageData?.moderatorSection?.intro ||
+                "Guiding the programme, shaping the transitions and making each conversation land."
+              }
+            />
 
-          <div className="grid max-w-sm gap-8 sm:gap-10">
-            {moderatorSpeakers.map((person) => (
-              <SpeakerCard
-                key={`${person.name}-${person.session}`}
-                person={person}
-                onOpen={setSelectedPerson}
-              />
-            ))}
+            <div className="grid max-w-sm gap-8 sm:gap-10">
+              {moderatorSpeakers.map((person) => (
+                <SpeakerCard
+                  key={`${person.name}-${person.session}`}
+                  person={person}
+                  onOpen={setSelectedPerson}
+                />
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
-      <section className="px-5 pb-20 md:px-12 md:pb-24 lg:px-20">
-        <div className="mx-auto max-w-6xl">
-          <SectionHeader
-            label={pageData?.heroTalksSection?.label || "Hero talks"}
-            title={
-              pageData?.heroTalksSection?.title || "Five focused perspectives"
-            }
-            intro={
-              pageData?.heroTalksSection?.intro ||
-              "A series of talks from partners and speakers sharing ideas, experience and practical insight from different parts of engineering."
-            }
-          />
+      {heroTalkSpeakers.length > 0 && (
+        <section className="px-5 pb-20 md:px-12 md:pb-24 lg:px-20">
+          <div className="mx-auto max-w-6xl">
+            <SectionHeader
+              label={pageData?.heroTalksSection?.label || "Hero talks"}
+              title={
+                pageData?.heroTalksSection?.title || "Five focused perspectives"
+              }
+              intro={
+                pageData?.heroTalksSection?.intro ||
+                "A series of talks from partners and speakers sharing ideas, experience and practical insight from different parts of engineering."
+              }
+            />
 
-          <div className="grid gap-8 sm:gap-10 md:grid-cols-2 xl:grid-cols-3">
-            {heroTalkSpeakers.map((person) => (
-              <SpeakerCard
-                key={`${person.name}-${person.session}`}
-                person={person}
-                onOpen={setSelectedPerson}
-              />
-            ))}
+            <div className="grid gap-8 sm:gap-10 md:grid-cols-2 xl:grid-cols-3">
+              {heroTalkSpeakers.map((person) => (
+                <SpeakerCard
+                  key={`${person.name}-${person.session}`}
+                  person={person}
+                  onOpen={setSelectedPerson}
+                />
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
-      <SessionSection
-        label={pageData?.panelsSection?.label || "Panels"}
-        title={
-          pageData?.panelsSection?.title ||
-          "Conversations with multiple perspectives"
-        }
-        intro={
-          pageData?.panelsSection?.intro ||
-          "Each panel brings together people with different viewpoints, experiences and responsibilities."
-        }
-        sessions={panelGroups}
-        onOpen={setSelectedPerson}
-      />
+      {panelGroups.length > 0 && (
+        <SessionSection
+          label={pageData?.panelsSection?.label || "Panels"}
+          title={
+            pageData?.panelsSection?.title ||
+            "Conversations with multiple perspectives"
+          }
+          intro={
+            pageData?.panelsSection?.intro ||
+            "Each panel brings together people with different viewpoints, experiences and responsibilities."
+          }
+          sessions={panelGroups}
+          onOpen={setSelectedPerson}
+        />
+      )}
 
-      <SessionSection
-        label={pageData?.firesidesSection?.label || "Fireside conversations"}
-        title={
-          pageData?.firesidesSection?.title || "Smaller-format conversations"
-        }
-        intro={
-          pageData?.firesidesSection?.intro ||
-          "More intimate discussions centred around experience, reflection and technical depth."
-        }
-        sessions={firesideGroups}
-        onOpen={setSelectedPerson}
-      />
+      {firesideGroups.length > 0 && (
+        <SessionSection
+          label={pageData?.firesidesSection?.label || "Fireside conversations"}
+          title={
+            pageData?.firesidesSection?.title || "Smaller-format conversations"
+          }
+          intro={
+            pageData?.firesidesSection?.intro ||
+            "More intimate discussions centred around experience, reflection and technical depth."
+          }
+          sessions={firesideGroups}
+          onOpen={setSelectedPerson}
+        />
+      )}
 
-      <SessionSection
-        label={pageData?.masterclassesSection?.label || "Masterclasses"}
-        title={
-          pageData?.masterclassesSection?.title ||
-          "Smaller sessions for deeper insight"
-        }
-        intro={
-          pageData?.masterclassesSection?.intro ||
-          "A focused format for those who want to go further into specific themes, methods and questions."
-        }
-        sessions={masterclassGroups}
-        onOpen={setSelectedPerson}
-      />
+      {masterclassGroups.length > 0 && (
+        <SessionSection
+          label={pageData?.masterclassesSection?.label || "Masterclasses"}
+          title={
+            pageData?.masterclassesSection?.title ||
+            "Smaller sessions for deeper insight"
+          }
+          intro={
+            pageData?.masterclassesSection?.intro ||
+            "A focused format for those who want to go further into specific themes, methods and questions."
+          }
+          sessions={masterclassGroups}
+          onOpen={setSelectedPerson}
+        />
+      )}
 
-      <section className="px-5 pb-24 md:px-12 md:pb-32 lg:px-20">
-        <div className="mx-auto max-w-6xl">
-          <SectionHeader
-            label="Keynote"
-            title="Closing keynote"
-            intro="The keynote brings the day together — reflecting on the conversations, insights and what comes next."
-          />
+      {keynoteSpeakers.length > 0 && (
+        <section className="px-5 pb-24 md:px-12 md:pb-32 lg:px-20">
+          <div className="mx-auto max-w-6xl">
+            <SectionHeader
+              label="Keynote"
+              title="Closing keynote"
+              intro="The keynote brings the day together — reflecting on the conversations, insights and what comes next."
+            />
 
-          <div className="grid max-w-sm gap-8 sm:gap-10">
-            {keynoteSpeakers.map((person) => (
-              <SpeakerCard
-                key={`${person.name}-${person.session}`}
-                person={person}
-                onOpen={setSelectedPerson}
-              />
-            ))}
+            <div className="grid max-w-sm gap-8 sm:gap-10">
+              {keynoteSpeakers.map((person) => (
+                <SpeakerCard
+                  key={`${person.name}-${person.session}`}
+                  person={person}
+                  onOpen={setSelectedPerson}
+                />
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {selectedPerson ? (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/55 px-4 py-4 sm:px-6 sm:py-8 md:px-6 md:py-10">

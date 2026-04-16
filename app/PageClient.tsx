@@ -209,10 +209,10 @@ export default function PageClient({
                 {heroTitle}
               </h1>
 
-              <p className="mt-6 max-w-[39rem] text-[1rem] leading-[1.75] text-white/78 sm:mt-7 sm:text-[1.06rem] md:mt-8 md:text-[1.18rem] md:leading-[1.9]">
-                {pageData?.hero?.subtitle ||
-                  "Engineering Day is more than a single event. It is a platform for conversations, recognition, talent and the engineering ideas shaping what comes next."}
-              </p>
+              <p className="mt-6 max-w-[39rem] whitespace-pre-line text-[1rem] leading-[1.75] text-white/78 sm:mt-7 sm:text-[1.06rem] md:mt-8 md:text-[1.18rem] md:leading-[1.9]">
+  {pageData?.hero?.subtitle ||
+    "Engineering Day is more than a single event. It is a platform for conversations, recognition, talent and the engineering ideas shaping what comes next."}
+</p>
 
               <div className="mt-8 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:flex-wrap sm:gap-4 md:mt-12">
                 <a
@@ -245,10 +245,10 @@ export default function PageClient({
         <div className="mx-auto max-w-7xl">
           <div className="mb-12 max-w-3xl md:mb-16">
             <p
-              className={`${firaSans.className} mb-4 text-[10px] uppercase tracking-[0.24em] text-[#a27a26] md:mb-5 md:text-[11px]`}
-            >
-              {pageData?.foundation?.kicker || "Our foundation"}
-            </p>
+  className={`${firaSans.className} mb-4 whitespace-pre-line text-[10px] uppercase tracking-[0.24em] text-[#a27a26] md:mb-5 md:text-[11px]`}
+>
+  {pageData?.foundation?.kicker || "Our foundation"}
+</p>
 
             <h2
               className={`${lora.className} whitespace-pre-line max-w-4xl text-[2.1rem] leading-[1.02] font-light text-[#1f1f1f] sm:text-[2.6rem] md:text-[3.4rem] lg:text-[4.2rem]`}
@@ -257,10 +257,10 @@ export default function PageClient({
                 "Engineering Day is built on three pillars."}
             </h2>
 
-            <p className="mt-5 max-w-2xl text-[1rem] leading-[1.85] text-[#4c4a46] md:mt-6 md:text-[1.08rem]">
-              {pageData?.foundation?.body ||
-                "Knowledge, collaboration and community shape the platform and create a space where engineers can learn, connect and move ideas forward together."}
-            </p>
+            <p className="mt-5 max-w-2xl whitespace-pre-line text-[1rem] leading-[1.85] text-[#4c4a46] md:mt-6 md:text-[1.08rem]">
+  {pageData?.foundation?.body ||
+    "Knowledge, collaboration and community shape the platform and create a space where engineers can learn, connect and move ideas forward together."}
+</p>
           </div>
 
           <div className="grid grid-cols-1 border-t border-black/10 md:grid-cols-3">
@@ -281,10 +281,10 @@ export default function PageClient({
                 </p>
 
                 <h3
-                  className={`${lora.className} mb-5 text-[1.65rem] leading-[1.05] font-light text-[#1f1f1f] sm:text-[1.8rem] md:text-[2rem]`}
-                >
-                  {pillar.title}
-                </h3>
+  className={`${lora.className} mb-5 whitespace-pre-line text-[1.65rem] leading-[1.05] font-light text-[#1f1f1f] sm:text-[1.8rem] md:text-[2rem]`}
+>
+  {pillar.title}
+</h3>
 
                 <p className="max-w-[28rem] text-[0.98rem] leading-[1.85] text-[#4c4a46] md:text-[1.02rem]">
                   {pillar.body}
@@ -299,10 +299,10 @@ export default function PageClient({
         <div className="mx-auto max-w-7xl">
           <div className="mb-8 max-w-3xl md:mb-10">
             <p
-              className={`${firaSans.className} mb-5 text-[10px] uppercase tracking-[0.24em] text-[#a27a26] md:mb-6 md:text-[11px]`}
-            >
-              {pageData?.whyItMatters?.kicker || "Why it matters"}
-            </p>
+  className={`${firaSans.className} mb-5 whitespace-pre-line text-[10px] uppercase tracking-[0.24em] text-[#a27a26] md:mb-6 md:text-[11px]`}
+>
+  {pageData?.whyItMatters?.kicker || "Why it matters"}
+</p>
 
             <h2
               className={`${lora.className} max-w-4xl text-[2.1rem] leading-[1.02] font-light text-[#1f1f1f] sm:text-[2.6rem] md:text-[3.4rem] lg:text-[4.2rem]`}
@@ -312,24 +312,24 @@ export default function PageClient({
           </div>
 
           <div className="grid max-w-5xl grid-cols-1 gap-8 md:grid-cols-2 md:gap-14">
-            <p className="text-[1rem] leading-[1.85] text-[#4c4a46] md:text-[1.08rem]">
-              {whyItMattersPoints[0]?.body ||
-                "Engineering Day exists to bring together the people building the systems our society depends on. It creates a shared space for engineers across industries to exchange knowledge, challenge ideas and accelerate progress."}
-            </p>
+            <p className="whitespace-pre-line text-[1rem] leading-[1.85] text-[#4c4a46] md:text-[1.08rem]">
+  {whyItMattersPoints[0]?.body ||
+    "Engineering Day exists to bring together the people building the systems our society depends on. It creates a shared space for engineers across industries to exchange knowledge, challenge ideas and accelerate progress."}
+</p>
 
-            <p className="text-[1rem] leading-[1.85] text-[#4c4a46] md:text-[1.08rem]">
-              {whyItMattersPoints[1]?.body ||
-                "By connecting companies, individuals and disciplines, the platform strengthens the role of engineering in shaping a sustainable, resilient and forward-looking society."}
-            </p>
+            <p className="whitespace-pre-line text-[1rem] leading-[1.85] text-[#4c4a46] md:text-[1.08rem]">
+  {whyItMattersPoints[1]?.body ||
+    "By connecting companies, individuals and disciplines, the platform strengthens the role of engineering in shaping a sustainable, resilient and forward-looking society."}
+</p>
           </div>
         </div>
       </section>
 
       <section className="bg-[#f3f1ed] px-6 md:px-12 lg:px-20 py-24">
         <div className="max-w-6xl mx-auto">
-          <p className="text-[#d9a441] uppercase tracking-[0.3em] text-[10px] md:text-sm text-center">
-            {pageData?.foundingPartnersSection?.kicker || "FOUNDING PARTNERS 2026"}
-          </p>
+          <p className="whitespace-pre-line text-center text-[10px] uppercase tracking-[0.3em] text-[#d9a441] md:text-sm">
+  {pageData?.foundingPartnersSection?.kicker || "FOUNDING PARTNERS 2026"}
+</p>
 
           <div className="mt-10 md:hidden">
             <div className="grid grid-cols-3 justify-items-center gap-x-4 gap-y-10">

@@ -64,6 +64,8 @@ export const masterclassesQuery = groq`
 export const engineeringDayPageQuery = groq`
 {
   "page": *[_type == "engineeringDayPage"][0]{
+    _id,
+    internalTitle,
     seo{
       title,
       description,
@@ -105,6 +107,7 @@ export const engineeringDayPageQuery = groq`
       body
     }
   },
+
   "partners": *[_type == "partner"] | order(order asc) {
     _id,
     name,
@@ -120,19 +123,25 @@ export const engineeringDayPageQuery = groq`
       }
     }
   },
+
   "programme": *[_type == "programmeItem"] | order(order asc) {
     id,
+    order,
     time,
     title,
+    showDescription,
     description,
+    showDetails,
     detailsLabel,
     detailsText,
-    subItems[] {
+    showSubItems,
+    subItems[]{
       time,
       title,
       meta
     }
   },
+
   "masterclasses": *[_type == "masterclass"] | order(order asc) {
     _id,
     order,
@@ -154,7 +163,7 @@ export const engineeringDayPageQuery = groq`
     details
   }
 }
-`
+`;
 
 export const homePageQuery = `
   *[_type == "homePage"][0]{
@@ -293,7 +302,7 @@ export const attendingHeroesPageQuery = groq`
 `
 
 export const speakersQuery = groq`
-  *[_type == "speaker"] | order(order asc){
+  *[_type == "speaker" && visible == true] | order(order asc){
     name,
     title,
     company,
@@ -313,7 +322,7 @@ export const sessionGroupsQuery = groq`
     description,
     type,
     order,
-    people[]->{
+    "people": people[@->visible == true]->{
       name,
       title,
       company,
@@ -362,16 +371,16 @@ export const grandPrizePageQuery = `
     jurySection,
     bottomSection
   },
-  "juryMembers": *[_type == "juryMember"] | order(sortOrder asc){
-    name,
-    title,
-    company,
-    "image": {
-      "asset": {
-        "url": image.asset->url
-      }
+  "juryMembers": *[_type == "juryMember" && visible == true] | order(sortOrder asc){
+  name,
+  title,
+  company,
+  "image": {
+    "asset": {
+      "url": image.asset->url
     }
   }
+}
 }
 `;
 

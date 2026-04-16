@@ -1,9 +1,14 @@
 "use client";
 
 import SiteHeader from "@/app/components/SiteHeader";
-import { Fira_Sans } from "next/font/google";
+import { Fira_Sans, Lora } from "next/font/google";
 
 const firaSans = Fira_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+});
+
+const lora = Lora({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
 });
@@ -99,11 +104,11 @@ export default function PageClient({
               {data?.hero?.eyebrow || "Pre-events"}
             </p>
 
-            <h1 className="font-serif text-[4rem]">
+            <h1 className={`${lora.className} whitespace-pre-line text-[4rem]`}>
               {data?.hero?.title || "Career Day @ Malmö"}
             </h1>
 
-            <p className="mx-auto mt-6 max-w-2xl text-lg text-white/80">
+            <p className="mx-auto mt-6 max-w-2xl whitespace-pre-line text-lg text-white/80">
               {data?.hero?.subtitle ||
                 "A southern stop where engineers and companies meet in a more direct and personal format centred around recruitment."}
             </p>
@@ -116,25 +121,25 @@ export default function PageClient({
         <div className="mx-auto grid max-w-4xl grid-cols-2 gap-8 text-center md:grid-cols-4">
           <div>
             <p className="text-xs uppercase text-[#8b8276]">Date</p>
-            <p className="font-serif">
+            <p className={`${lora.className}`}>
               {data?.facts?.date || "11 November 2026"}
             </p>
           </div>
           <div>
             <p className="text-xs uppercase text-[#8b8276]">Location</p>
-            <p className="font-serif">
+            <p className={`${lora.className}`}>
               {data?.facts?.location || "Slagthuset"}
             </p>
           </div>
           <div>
             <p className="text-xs uppercase text-[#8b8276]">Time</p>
-            <p className="font-serif">
+            <p className={`${lora.className}`}>
               {data?.facts?.time || "09:00–13:00"}
             </p>
           </div>
           <div>
             <p className="text-xs uppercase text-[#8b8276]">Admission</p>
-            <p className="font-serif">
+            <p className={`${lora.className}`}>
               {data?.facts?.admission || "Free entry"}
             </p>
           </div>
@@ -144,30 +149,32 @@ export default function PageClient({
       {/* CONTENT */}
       <section className="px-5 py-20">
         <div className="mx-auto max-w-3xl text-center">
-          <p className="text-xs uppercase text-[#a27a26]">
+          <p
+            className={`${firaSans.className} text-xs uppercase tracking-[0.18em] text-[#a27a26]`}
+          >
             {data?.content?.label || "About the event"}
           </p>
 
-          <h2 className="mt-4 font-serif text-4xl">
+          <h2 className={`${lora.className} mt-4 whitespace-pre-line text-4xl`}>
             {data?.content?.title || "A more focused meeting place"}
           </h2>
 
-          <p className="mt-4 italic">
+          <p className="mt-4 whitespace-pre-line italic">
             {data?.content?.intro ||
               "Career Day Malmö creates a setting where engineers, tech professionals and employers can meet in a more direct and relevant way."}
           </p>
         </div>
 
         <div className="mx-auto mt-10 max-w-3xl space-y-6">
-          <p>
+          <p className="whitespace-pre-line">
             {data?.content?.body1 ||
               "The event is built around access, conversations and concrete opportunities rather than volume."}
           </p>
-          <p>
+          <p className="whitespace-pre-line">
             {data?.content?.body2 ||
               "It offers a calmer and more useful format for both employers and visitors, making it easier to create the right connections."}
           </p>
-          <p>
+          <p className="whitespace-pre-line">
             {data?.content?.body3 ||
               "Whether you are looking for your next role or simply want to understand the market better, Career Day Malmö is designed to help move things forward."}
           </p>
@@ -178,7 +185,7 @@ export default function PageClient({
             href={data?.content?.ctaHref || "#"}
             target="_blank"
             rel="noopener noreferrer"
-            className="uppercase text-[#a27a26]"
+            className={`${firaSans.className} uppercase tracking-[0.18em] text-[#a27a26]`}
           >
             {data?.content?.ctaLabel || "Read more"}
           </a>

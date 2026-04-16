@@ -81,99 +81,6 @@ type GrandPrizePageData = {
   juryMembers?: JuryMember[];
 };
 
-const fallbackJuryMembers: JuryMember[] = [
-  {
-    name: "Anna Holm",
-    title: "Chief Technology Officer",
-    company: "NordTech",
-    image: { asset: { url: "/speaker-1.jpg" } },
-  },
-  {
-    name: "Erik Lund",
-    title: "VP Engineering",
-    company: "Future Systems",
-    image: { asset: { url: "/speaker-2.jpg" } },
-  },
-  {
-    name: "Sara Berg",
-    title: "Head of Innovation",
-    company: "Green Industry",
-    image: { asset: { url: "/speaker-3.jpg" } },
-  },
-  {
-    name: "Johan Ek",
-    title: "Director of R&D",
-    company: "Infra Nordic",
-    image: { asset: { url: "/speaker-4.jpg" } },
-  },
-  {
-    name: "Lisa Nyström",
-    title: "Senior Advisor",
-    company: "Industrial Transformation",
-    image: { asset: { url: "/speaker-5.jpg" } },
-  },
-  {
-    name: "Mikael Sjöberg",
-    title: "Engineering Director",
-    company: "Nordic Grid",
-    image: { asset: { url: "/speaker-1.jpg" } },
-  },
-  {
-    name: "Karin West",
-    title: "Head of Product Development",
-    company: "Urban Systems",
-    image: { asset: { url: "/speaker-2.jpg" } },
-  },
-  {
-    name: "David Lind",
-    title: "Innovation Lead",
-    company: "Advanced Materials",
-    image: { asset: { url: "/speaker-3.jpg" } },
-  },
-  {
-    name: "Elin Fors",
-    title: "Senior Engineering Manager",
-    company: "TechWorks",
-    image: { asset: { url: "/speaker-4.jpg" } },
-  },
-  {
-    name: "Oskar Broman",
-    title: "R&D Strategist",
-    company: "Future Mobility",
-    image: { asset: { url: "/speaker-5.jpg" } },
-  },
-  {
-    name: "Maria Nyberg",
-    title: "Director of Sustainability Engineering",
-    company: "GreenCore",
-    image: { asset: { url: "/speaker-1.jpg" } },
-  },
-  {
-    name: "Henrik Åström",
-    title: "Chief Engineer",
-    company: "Industrial Scale",
-    image: { asset: { url: "/speaker-2.jpg" } },
-  },
-  {
-    name: "Sofia Lindqvist",
-    title: "Transformation Lead",
-    company: "Energy Systems",
-    image: { asset: { url: "/speaker-3.jpg" } },
-  },
-  {
-    name: "Patrik Holmér",
-    title: "VP Technology",
-    company: "Smart Infra",
-    image: { asset: { url: "/speaker-4.jpg" } },
-  },
-  {
-    name: "Nina Ekström",
-    title: "Head of Research Collaboration",
-    company: "Engine Lab",
-    image: { asset: { url: "/speaker-5.jpg" } },
-  },
-];
-
 const fallbackCategories: GrandPrizeCategory[] = [
   {
     title: "Innovation",
@@ -246,15 +153,14 @@ export default function PageClient({
     };
   }, [isJuryHovered]);
 
-  const juryMembers = pageData?.juryMembers?.length
-    ? pageData.juryMembers
-    : fallbackJuryMembers;
+  const juryMembers = pageData?.juryMembers?.length ? pageData.juryMembers : [];
 
   const categories = pageData?.page?.categories?.length
     ? pageData.page.categories
     : fallbackCategories;
 
-  const scrollingJuryMembers = [...juryMembers, ...juryMembers];
+  const scrollingJuryMembers =
+    juryMembers.length > 0 ? [...juryMembers, ...juryMembers] : [];
 
   const hasHeroMedia =
     (pageData?.page?.hero?.mediaType === "image" &&
@@ -317,18 +223,20 @@ export default function PageClient({
                 {pageData?.page?.hero?.eyebrow || "The Grand Prize for Engineering"}
               </p>
 
-              <h1 className={`${lora.className} text-[2.7rem] leading-[0.94] font-light tracking-[-0.04em] text-[#f7f1e8] sm:text-[3.4rem] md:text-[5.1rem] lg:text-[6.2rem] whitespace-pre-line`}>
-  {pageData?.page?.hero?.title ? (
-    pageData.page.hero.title
-  ) : (
-    <>
-      Celebrating the people
-      behind the progress
-    </>
-  )}
-</h1>
+              <h1
+                className={`${lora.className} whitespace-pre-line text-[2.7rem] leading-[0.94] font-light tracking-[-0.04em] text-[#f7f1e8] sm:text-[3.4rem] md:text-[5.1rem] lg:text-[6.2rem]`}
+              >
+                {pageData?.page?.hero?.title ? (
+                  pageData.page.hero.title
+                ) : (
+                  <>
+                    Celebrating the people
+                    behind the progress
+                  </>
+                )}
+              </h1>
 
-              <p className="mt-6 max-w-xl text-[1rem] leading-[1.75] text-[#d6d0c7] sm:mt-7 sm:text-[1.05rem] md:mt-8 md:text-[15px] md:leading-relaxed">
+              <p className="mt-6 max-w-xl whitespace-pre-line text-[1rem] leading-[1.75] text-[#d6d0c7] sm:mt-7 sm:text-[1.05rem] md:mt-8 md:text-[15px] md:leading-relaxed">
                 {pageData?.page?.hero?.text ||
                   "Since 2021, we have celebrated the engineers, ideas and achievements that turn innovation into real-world impact."}
               </p>
@@ -354,24 +262,24 @@ export default function PageClient({
               {pageData?.page?.whySection?.title || "Engineering that matters"}
             </h2>
 
-            <p className="italic text-[1.06rem] sm:text-[1.14rem] md:text-[1.4rem] leading-[1.45] text-[#5f5a52]">
+            <p className="whitespace-pre-line italic text-[1.06rem] sm:text-[1.14rem] md:text-[1.4rem] leading-[1.45] text-[#5f5a52]">
               {pageData?.page?.whySection?.intro ||
                 "A prize for engineering that creates lasting impact."}
             </p>
           </div>
 
           <div className="max-w-3xl mx-auto">
-            <p className="text-[1rem] sm:text-[1.05rem] md:text-[1.3rem] leading-[1.82] text-[#2c2c2c] mb-6 md:mb-8">
+            <p className="mb-6 whitespace-pre-line text-[1rem] sm:text-[1.05rem] md:text-[1.3rem] leading-[1.82] text-[#2c2c2c] md:mb-8">
               {pageData?.page?.whySection?.body1 ||
                 "Engineering has always been at the core of progress. From infrastructure and energy systems to digital platforms and intelligent machines, it is engineers who translate ideas into reality."}
             </p>
 
-            <p className="text-[1rem] sm:text-[1.05rem] md:text-[1.3rem] leading-[1.82] text-[#2c2c2c] mb-8 md:mb-10">
+            <p className="mb-8 whitespace-pre-line text-[1rem] sm:text-[1.05rem] md:text-[1.3rem] leading-[1.82] text-[#2c2c2c] md:mb-10">
               {pageData?.page?.whySection?.body2 ||
                 "The Grand Prize for Engineering exists to recognize individuals and teams whose work not only advances technology, but creates lasting impact in society."}
             </p>
 
-            <p className="text-[0.98rem] sm:text-[1.02rem] md:text-[1.22rem] leading-[1.85] md:leading-[1.9] text-[#555]">
+            <p className="whitespace-pre-line text-[0.98rem] sm:text-[1.02rem] md:text-[1.22rem] leading-[1.85] md:leading-[1.9] text-[#555]">
               {pageData?.page?.whySection?.body3 ||
                 "It highlights the people, ideas and achievements that move industries forward and shape the future through knowledge, courage and execution."}
             </p>
@@ -396,24 +304,24 @@ export default function PageClient({
               {pageData?.page?.whoSection?.title || "The people behind the progress"}
             </h2>
 
-            <p className="italic text-[1.06rem] sm:text-[1.14rem] md:text-[1.4rem] leading-[1.45] text-[#5f5a52]">
+            <p className="whitespace-pre-line italic text-[1.06rem] sm:text-[1.14rem] md:text-[1.4rem] leading-[1.45] text-[#5f5a52]">
               {pageData?.page?.whoSection?.intro ||
                 "Individuals and teams redefining what engineering can achieve."}
             </p>
           </div>
 
           <div className="max-w-3xl mx-auto">
-            <p className="text-[1rem] sm:text-[1.05rem] md:text-[1.3rem] leading-[1.82] text-[#2c2c2c] mb-6 md:mb-8">
+            <p className="mb-6 whitespace-pre-line text-[1rem] sm:text-[1.05rem] md:text-[1.3rem] leading-[1.82] text-[#2c2c2c] md:mb-8">
               {pageData?.page?.whoSection?.body1 ||
                 "The Grand Prize for Engineering recognizes individuals and teams who have distinguished themselves through exceptional work, innovation and leadership. Their contributions push boundaries, solve real-world challenges and create meaningful impact across industries."}
             </p>
 
-            <p className="text-[1rem] sm:text-[1.05rem] md:text-[1.3rem] leading-[1.82] text-[#2c2c2c] mb-8 md:mb-10">
+            <p className="mb-8 whitespace-pre-line text-[1rem] sm:text-[1.05rem] md:text-[1.3rem] leading-[1.82] text-[#2c2c2c] md:mb-10">
               {pageData?.page?.whoSection?.body2 ||
                 "The prize is awarded across five categories: Innovation, Leadership, Sustainability, Rising Star and Role Model of the Year. Together, they reflect the breadth of engineering and the many ways progress is shaped."}
             </p>
 
-            <p className="text-[0.98rem] sm:text-[1.02rem] md:text-[1.22rem] leading-[1.85] md:leading-[1.9] text-[#555]">
+            <p className="whitespace-pre-line text-[0.98rem] sm:text-[1.02rem] md:text-[1.22rem] leading-[1.85] md:leading-[1.9] text-[#555]">
               {pageData?.page?.whoSection?.body3 ||
                 "From breakthrough technologies to transformative leadership, each category highlights those who contribute to building a more advanced, sustainable and resilient society."}
             </p>
@@ -447,7 +355,7 @@ export default function PageClient({
               )}
             </h2>
 
-            <p className="italic text-[1.06rem] sm:text-[1.14rem] md:text-[1.4rem] leading-[1.45] text-[#5f5a52]">
+            <p className="whitespace-pre-line italic text-[1.06rem] sm:text-[1.14rem] md:text-[1.4rem] leading-[1.45] text-[#5f5a52]">
               {pageData?.page?.categoriesSection?.intro ||
                 "Explore the five award categories within The Grand Prize for Engineering."}
             </p>
@@ -464,7 +372,7 @@ export default function PageClient({
                   <h3 className="font-serif text-[1.55rem] sm:text-[1.7rem] md:text-[2.4rem] leading-[1.05] text-[#1f1f1f]">
                     {category.title || "Category"}
                   </h3>
-                  <p className="mt-2 text-[0.98rem] md:text-[1.08rem] leading-[1.7] text-[#5a5a5a] group-hover:text-[#6a6256]">
+                  <p className="mt-2 whitespace-pre-line text-[0.98rem] md:text-[1.08rem] leading-[1.7] text-[#5a5a5a] group-hover:text-[#6a6256]">
                     {category.description || ""}
                   </p>
                 </div>
@@ -479,60 +387,62 @@ export default function PageClient({
         </div>
       </section>
 
-      <section className="bg-[#f3f1ed] px-5 pt-4 pb-20 sm:pt-6 sm:pb-22 md:px-12 md:pt-8 md:pb-24 lg:px-20 lg:pt-10 lg:pb-28">
-        <div className="mx-auto max-w-[1600px]">
-          <div className="mb-10 text-center md:mb-14">
-            <p
-              className={`${firaSans.className} mb-3 text-[11px] uppercase tracking-[0.24em] text-[#a27a26] md:text-[13px]`}
-            >
-              {pageData?.page?.jurySection?.title || "Meet the jury"}
-            </p>
+      {juryMembers.length > 0 && (
+        <section className="bg-[#f3f1ed] px-5 pt-4 pb-20 sm:pt-6 sm:pb-22 md:px-12 md:pt-8 md:pb-24 lg:px-20 lg:pt-10 lg:pb-28">
+          <div className="mx-auto max-w-[1600px]">
+            <div className="mb-10 text-center md:mb-14">
+              <p
+                className={`${firaSans.className} mb-3 text-[11px] uppercase tracking-[0.24em] text-[#a27a26] md:text-[13px]`}
+              >
+                {pageData?.page?.jurySection?.title || "Meet the jury"}
+              </p>
 
-            <div className="mx-auto h-px w-14 bg-[#d9a441]" />
-          </div>
+              <div className="mx-auto h-px w-14 bg-[#d9a441]" />
+            </div>
 
-          <div className="relative">
-            <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-[#f3f1ed] to-transparent md:w-24" />
-            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-[#f3f1ed] to-transparent md:w-24" />
+            <div className="relative">
+              <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-[#f3f1ed] to-transparent md:w-24" />
+              <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-[#f3f1ed] to-transparent md:w-24" />
 
-            <div
-              ref={juryScrollRef}
-              onMouseEnter={() => setIsJuryHovered(true)}
-              onMouseLeave={() => setIsJuryHovered(false)}
-              className="overflow-x-auto overflow-y-hidden [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
-            >
-              <div className="flex w-max gap-6">
-                {scrollingJuryMembers.map((member, index) => (
-                  <div
-                    key={`${member.name || "jury"}-${index}`}
-                    className="group w-[240px] shrink-0 md:w-[260px]"
-                  >
-                    <div className="overflow-hidden rounded-[1.6rem] bg-[#e9e4dc]">
-                      <div className="aspect-[4/5] overflow-hidden">
-                        <img
-                          src={member.image?.asset?.url || "/speaker-1.jpg"}
-                          alt={member.name || "Jury member"}
-                          className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.03]"
-                        />
+              <div
+                ref={juryScrollRef}
+                onMouseEnter={() => setIsJuryHovered(true)}
+                onMouseLeave={() => setIsJuryHovered(false)}
+                className="overflow-x-auto overflow-y-hidden [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+              >
+                <div className={`flex gap-6 ${juryMembers.length < 4 ? "justify-center w-full" : "w-max"}`}>
+                  {scrollingJuryMembers.map((member, index) => (
+                    <div
+                      key={`${member.name || "jury"}-${index}`}
+                      className="group w-[240px] shrink-0 md:w-[260px]"
+                    >
+                      <div className="overflow-hidden rounded-[1.6rem] bg-[#e9e4dc]">
+                        <div className="aspect-[4/5] overflow-hidden">
+                          <img
+                            src={member.image?.asset?.url || "/speaker-1.jpg"}
+                            alt={member.name || "Jury member"}
+                            className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.03]"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="pt-4 text-center">
+                        <h3 className="font-serif text-[1.25rem] leading-[1.15] text-[#1f1f1f]">
+                          {member.name || "Jury member"}
+                        </h3>
+
+                        <p className="mt-2 whitespace-pre-line text-[0.95rem] leading-[1.65] text-[#6a6256]">
+                          {[member.title, member.company].filter(Boolean).join(", ")}
+                        </p>
                       </div>
                     </div>
-
-                    <div className="pt-4 text-center">
-                      <h3 className="font-serif text-[1.25rem] leading-[1.15] text-[#1f1f1f]">
-                        {member.name || "Jury member"}
-                      </h3>
-
-                      <p className="mt-2 text-[0.95rem] leading-[1.65] text-[#6a6256]">
-                        {[member.title, member.company].filter(Boolean).join(", ")}
-                      </p>
-                    </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       <section className="relative overflow-hidden px-5 py-20 text-white sm:py-24 md:px-12 md:py-32 lg:px-20">
         <div
@@ -544,11 +454,11 @@ export default function PageClient({
         <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.55),rgba(0,0,0,0.72))]" />
 
         <div className="relative z-10 mx-auto max-w-4xl text-center">
-          <h2 className="mb-5 md:mb-6 font-serif text-[2rem] sm:text-[2.4rem] md:text-[3.4rem] lg:text-[4rem] leading-[1.08]">
+          <h2 className="mb-5 whitespace-pre-line font-serif text-[2rem] sm:text-[2.4rem] md:text-[3.4rem] lg:text-[4rem] leading-[1.08]">
             {pageData?.page?.bottomSection?.title || "Engineering deserves recognition"}
           </h2>
 
-          <p className="mb-8 md:mb-10 text-[1rem] sm:text-[1.08rem] md:text-[1.3rem] leading-[1.7] text-[#d0d0d0]">
+          <p className="mb-8 whitespace-pre-line text-[1rem] sm:text-[1.08rem] md:text-[1.3rem] leading-[1.7] text-[#d0d0d0] md:mb-10">
             {pageData?.page?.bottomSection?.text ||
               "The Grand Prize for Engineering highlights the people and ideas that move society forward — not for attention, but for impact."}
           </p>
