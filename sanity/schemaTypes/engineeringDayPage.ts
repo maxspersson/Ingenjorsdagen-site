@@ -11,12 +11,12 @@ export default defineType({
       title: 'Internal title (only for CMS)',
       type: 'string',
     }),
-    
+
     defineField({
-  name: 'seo',
-  title: 'SEO',
-  type: 'seo',
-}),
+      name: 'seo',
+      title: 'SEO',
+      type: 'seo',
+    }),
 
     defineField({
       name: 'hero',
@@ -31,12 +31,14 @@ export default defineType({
         defineField({
           name: 'title',
           title: 'Title',
-          type: 'string',
+          type: 'text',
+          rows: 3,
         }),
         defineField({
           name: 'subtitle',
           title: 'Subtitle',
-          type: 'string',
+          type: 'text',
+          rows: 3,
         }),
         defineField({
           name: 'ctaText',
@@ -100,12 +102,14 @@ export default defineType({
         defineField({
           name: 'title',
           title: 'Title',
-          type: 'string',
+          type: 'text',
+          rows: 3,
         }),
         defineField({
           name: 'subtitle',
           title: 'Subtitle',
-          type: 'string',
+          type: 'text',
+          rows: 3,
         }),
         defineField({
           name: 'body',
@@ -124,7 +128,8 @@ export default defineType({
         defineField({
           name: 'title',
           title: 'Title',
-          type: 'string',
+          type: 'text',
+          rows: 3,
         }),
         defineField({
           name: 'body',
@@ -143,7 +148,8 @@ export default defineType({
         defineField({
           name: 'title',
           title: 'Title',
-          type: 'string',
+          type: 'text',
+          rows: 3,
         }),
         defineField({
           name: 'body',

@@ -31,7 +31,8 @@ export default defineType({
         defineField({
           name: 'title',
           title: 'Title',
-          type: 'string',
+          type: 'text',
+          rows: 3,
         }),
         defineField({
           name: 'subtitle',

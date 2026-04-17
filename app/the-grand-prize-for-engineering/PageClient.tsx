@@ -427,14 +427,20 @@ export default function PageClient({
                       </div>
 
                       <div className="pt-4 text-center">
-                        <h3 className="font-serif text-[1.25rem] leading-[1.15] text-[#1f1f1f]">
-                          {member.name || "Jury member"}
-                        </h3>
+  <h3 className="font-serif text-[1.25rem] leading-[1.15] text-[#1f1f1f]">
+    {member.name || "Jury member"}
+  </h3>
 
-                        <p className="mt-2 whitespace-pre-line text-[0.95rem] leading-[1.65] text-[#6a6256]">
-                          {[member.title, member.company].filter(Boolean).join(", ")}
-                        </p>
-                      </div>
+  <div className="mt-2 text-[0.95rem] leading-[1.65] text-[#6a6256]">
+    {member.title ? (
+      <p className="whitespace-pre-line">{member.title}</p>
+    ) : null}
+
+    {member.company ? (
+      <p className="whitespace-pre-line text-[#8b8276]">{member.company}</p>
+    ) : null}
+  </div>
+</div>
                     </div>
                   ))}
                 </div>

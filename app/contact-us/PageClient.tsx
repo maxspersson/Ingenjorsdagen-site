@@ -101,17 +101,17 @@ export default function PageClient({
 
               <div className="mx-auto h-px w-14 bg-[#d9a441]" />
 
-              <h1 className="mt-8 mb-5 font-serif text-[2.35rem] font-light leading-[1.02] text-white sm:text-[2.8rem] md:mb-6 md:mt-10 md:text-[4.4rem] lg:text-[5rem]">
+              <h1 className="mt-8 mb-5 whitespace-pre-line font-serif text-[2.35rem] font-light leading-[1.02] text-white sm:text-[2.8rem] md:mb-6 md:mt-10 md:text-[4.4rem] lg:text-[5rem]">
                 {pageData?.hero?.title || "Get in touch"}
               </h1>
 
-              <p className="mx-auto max-w-[23rem] text-[1.06rem] italic leading-[1.5] text-white/90 sm:max-w-[31rem] sm:text-[1.14rem] md:max-w-none md:text-[1.4rem] md:leading-[1.45]">
+              <p className="mx-auto max-w-[23rem] whitespace-pre-line text-[1.06rem] italic leading-[1.5] text-white/90 sm:max-w-[31rem] sm:text-[1.14rem] md:max-w-none md:text-[1.4rem] md:leading-[1.45]">
                 {pageData?.hero?.subtitle ||
                   "Questions about Engineering Day, partnerships or participation."}
               </p>
 
               <div className="mx-auto mt-8 max-w-3xl md:mt-10">
-                <p className="text-center text-[1.02rem] leading-[1.78] text-white/90 sm:text-[1.08rem] md:text-[1.3rem] md:leading-[1.82]">
+                <p className="text-center whitespace-pre-line text-[1.02rem] leading-[1.78] text-white/90 sm:text-[1.08rem] md:text-[1.3rem] md:leading-[1.82]">
                   {pageData?.hero?.intro ||
                     "Whether you would like to learn more about Engineering Day, explore a partnership or get in touch with the team, we are happy to hear from you."}
                 </p>
@@ -133,18 +133,18 @@ export default function PageClient({
             </div>
 
             <div className="mx-auto mb-10 max-w-4xl text-center md:mb-14">
-              <h1 className="mb-5 font-serif text-[2.35rem] font-light leading-[1.02] text-[#1f1f1f] sm:text-[2.8rem] md:mb-6 md:text-[4.4rem] lg:text-[5rem]">
+              <h1 className="mb-5 whitespace-pre-line font-serif text-[2.35rem] font-light leading-[1.02] text-[#1f1f1f] sm:text-[2.8rem] md:mb-6 md:text-[4.4rem] lg:text-[5rem]">
                 {pageData?.hero?.title || "Get in touch"}
               </h1>
 
-              <p className="mx-auto max-w-[23rem] text-[1.06rem] italic leading-[1.5] text-[#5f5a52] sm:max-w-[31rem] sm:text-[1.14rem] md:max-w-none md:text-[1.4rem] md:leading-[1.45]">
+              <p className="mx-auto max-w-[23rem] whitespace-pre-line text-[1.06rem] italic leading-[1.5] text-[#5f5a52] sm:max-w-[31rem] sm:text-[1.14rem] md:max-w-none md:text-[1.4rem] md:leading-[1.45]">
                 {pageData?.hero?.subtitle ||
                   "Questions about Engineering Day, partnerships or participation."}
               </p>
             </div>
 
             <div className="mx-auto max-w-3xl">
-              <p className="text-center text-[1.02rem] leading-[1.78] text-[#2c2c2c] sm:text-[1.08rem] md:text-[1.3rem] md:leading-[1.82]">
+              <p className="text-center whitespace-pre-line text-[1.02rem] leading-[1.78] text-[#2c2c2c] sm:text-[1.08rem] md:text-[1.3rem] md:leading-[1.82]">
                 {pageData?.hero?.intro ||
                   "Whether you would like to learn more about Engineering Day, explore a partnership or get in touch with the team, we are happy to hear from you."}
               </p>
@@ -176,7 +176,7 @@ export default function PageClient({
                   {item.email || ""}
                 </a>
 
-                <p className="mt-3 text-[0.98rem] leading-[1.75] text-[#55514a] sm:text-[1rem] md:text-[1.08rem] md:leading-[1.8]">
+                <p className="mt-3 whitespace-pre-line text-[0.98rem] leading-[1.75] text-[#55514a] sm:text-[1rem] md:text-[1.08rem] md:leading-[1.8]">
                   {item.text || ""}
                 </p>
               </div>

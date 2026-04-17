@@ -535,13 +535,13 @@ export const grandPrizeCategoryPageQuery = groq`
       "eyebrow": label,
       title,
       "subtitle": intro,
-      "body": pt::text([body1, body2])
+      "body": coalesce(body1, "") + "\n\n" + coalesce(body2, "") + "\n\n" + coalesce(body3, "")
     },
     whoSection{
       "eyebrow": label,
       title,
       "subtitle": intro,
-      "body": pt::text([body1, body2, body3])
+      "body": coalesce(body1, "") + "\n\n" + coalesce(body2, "") + "\n\n" + coalesce(body3, "")
     },
     criteriaSection{
       "eyebrow": label,

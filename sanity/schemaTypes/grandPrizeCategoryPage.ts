@@ -11,7 +11,6 @@ export default defineType({
       title: 'Internal title (only for CMS)',
       type: 'string',
     }),
-    
 
     defineField({
       name: 'slug',
@@ -24,10 +23,10 @@ export default defineType({
     }),
 
     defineField({
-  name: 'seo',
-  title: 'SEO',
-  type: 'seo',
-}),
+      name: 'seo',
+      title: 'SEO',
+      type: 'seo',
+    }),
 
     defineField({
       name: 'hero',
@@ -85,7 +84,8 @@ export default defineType({
         defineField({
           name: 'title',
           title: 'Title',
-          type: 'string',
+          type: 'text',
+          rows: 3,
         }),
         defineField({
           name: 'intro',
@@ -121,7 +121,8 @@ export default defineType({
         defineField({
           name: 'title',
           title: 'Title',
-          type: 'string',
+          type: 'text',
+          rows: 3,
         }),
         defineField({
           name: 'intro',
@@ -163,7 +164,8 @@ export default defineType({
         defineField({
           name: 'title',
           title: 'Title',
-          type: 'string',
+          type: 'text',
+          rows: 3,
         }),
         defineField({
           name: 'intro',
@@ -175,28 +177,28 @@ export default defineType({
     }),
 
     defineField({
-  name: 'criteriaItems',
-  title: 'Criteria items',
-  type: 'array',
-  of: [
-    {
-      type: 'object',
-      fields: [
-        defineField({
-          name: 'label',
-          title: 'Label',
-          type: 'string',
-        }),
-        defineField({
-          name: 'text',
-          title: 'Text',
-          type: 'text',
-          rows: 3,
-        }),
+      name: 'criteriaItems',
+      title: 'Criteria items',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'label',
+              title: 'Label',
+              type: 'string',
+            }),
+            defineField({
+              name: 'text',
+              title: 'Text',
+              type: 'text',
+              rows: 3,
+            }),
+          ],
+        },
       ],
-    },
-  ],
-}),
+    }),
 
     defineField({
       name: 'hallOfFameSection',
@@ -211,7 +213,8 @@ export default defineType({
         defineField({
           name: 'title',
           title: 'Title',
-          type: 'string',
+          type: 'text',
+          rows: 3,
         }),
         defineField({
           name: 'intro',
@@ -233,14 +236,15 @@ export default defineType({
           type: 'string',
         }),
         defineField({
-  name: 'year',
-  title: 'Year',
-  type: 'string',
-}),
+          name: 'year',
+          title: 'Year',
+          type: 'string',
+        }),
         defineField({
           name: 'winner',
           title: 'Winner',
-          type: 'string',
+          type: 'text',
+          rows: 2,
         }),
         defineField({
           name: 'presentedBy',
@@ -278,7 +282,8 @@ export default defineType({
             defineField({
               name: 'winner',
               title: 'Winner',
-              type: 'string',
+              type: 'text',
+              rows: 2,
             }),
             defineField({
               name: 'presentedBy',

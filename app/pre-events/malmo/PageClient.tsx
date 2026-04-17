@@ -191,6 +191,78 @@ export default function PageClient({
           </a>
         </div>
       </section>
+            <footer className="bg-[#f3f1ed] pt-12 pb-12 md:pt-12 md:pb-14">
+        <div className="mx-auto max-w-3xl px-5 text-center md:px-6">
+          <p className="text-[0.98rem] leading-[1.82] text-[#3e3c38] sm:text-[1.02rem] md:text-[1.15rem] md:leading-[1.9]">
+            Engineering Day – Sweden&apos;s first official day for engineers. We
+            celebrate our engineers and their powers of innovation, creativity
+            and hard work. The event is also a forum for knowledge-sharing and
+            networking.
+          </p>
+
+          <p className="mt-4 text-[13px] italic tracking-[0.02em] text-black/40 md:mt-5 md:text-sm">
+            A part of Ny Teknik
+          </p>
+
+          <div className="mt-10 flex items-center justify-center gap-7 md:mt-12 md:gap-8">
+            <a
+              href="https://www.linkedin.com/company/ingenj%C3%B6rsdagen/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="opacity-60 transition duration-200 hover:opacity-100"
+            >
+              <img
+                src="/Linkedin.svg"
+                alt="LinkedIn"
+                className="h-5 w-5 object-contain"
+              />
+            </a>
+
+            <a
+              href="https://www.instagram.com/engineeringdaysweden/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="opacity-60 transition duration-200 hover:opacity-100"
+            >
+              <img
+                src="/Instagram.png"
+                alt="Instagram"
+                className="h-5 w-5 object-contain"
+              />
+            </a>
+
+            <a
+              href="https://open.spotify.com/show/6FcEbcTbMfue0FLgwIoM8a?si=5d52f0a791e14f04"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="opacity-60 transition duration-200 hover:opacity-100"
+            >
+              <img
+                src="/Spotify.png"
+                alt="Spotify"
+                className="h-5 w-5 object-contain"
+              />
+            </a>
+
+            <a
+              href="https://www.nyteknik.se/ingenjorsdagen"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="opacity-60 transition duration-200 hover:opacity-100"
+            >
+              <img
+                src="/Website.png"
+                alt="Ny Teknik"
+                className="h-5 w-5 object-contain"
+              />
+            </a>
+          </div>
+
+          <div className="mt-10 text-[10px] uppercase tracking-[0.12em] text-black/30 md:mt-12 md:text-[11px]">
+            © 2026 Ny Teknik
+          </div>
+        </div>
+      </footer>
     </main>
   );
 }

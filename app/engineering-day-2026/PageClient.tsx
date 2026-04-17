@@ -976,10 +976,10 @@ clarity, rhythm and depth.`}
         <div className="mx-auto max-w-6xl">
           <div className="mb-14 md:mb-20">
             <p
-              className={`${firaSans.className} text-center text-[0.76rem] uppercase tracking-[0.26em] text-[#d9a441] sm:text-[0.82rem] md:text-[0.95rem] md:tracking-[0.34em]`}
-            >
-              FOUNDING PARTNERS 2026
-            </p>
+  className={`${firaSans.className} whitespace-pre-line text-center text-[0.76rem] uppercase tracking-[0.26em] text-[#d9a441] sm:text-[0.82rem] md:text-[0.95rem] md:tracking-[0.34em]`}
+>
+  FOUNDING PARTNERS 2026
+</p>
           </div>
 
           <div className="mx-auto mb-16 max-w-5xl md:mb-24">
@@ -1031,10 +1031,10 @@ clarity, rhythm and depth.`}
           <div className="border-t border-black/6 pt-14 md:pt-20">
             <div className="mb-10 text-center md:mb-14">
               <p
-                className={`${firaSans.className} text-center text-[0.76rem] uppercase tracking-[0.26em] text-[#d9a441] sm:text-[0.82rem] md:text-[0.95rem] md:tracking-[0.34em]`}
-              >
-                PARTNERS
-              </p>
+  className={`${firaSans.className} whitespace-pre-line text-center text-[0.76rem] uppercase tracking-[0.26em] text-[#d9a441] sm:text-[0.82rem] md:text-[0.95rem] md:tracking-[0.34em]`}
+>
+  PARTNERS
+</p>
             </div>
 
             <div className="mx-auto grid max-w-6xl grid-cols-2 items-center justify-items-center gap-x-4 gap-y-8 px-2 md:grid-cols-5 md:gap-x-10 md:gap-y-12 md:px-0">

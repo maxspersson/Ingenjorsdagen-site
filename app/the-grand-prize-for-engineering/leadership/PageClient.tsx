@@ -255,7 +255,7 @@ export default function PageClient({
               {whySection.title || fallbackWhySection.title}
             </h2>
 
-            <p className="italic text-[1.04rem] sm:text-[1.12rem] md:text-[1.4rem] leading-[1.45] text-[#5f5a52]">
+            <p className="whitespace-pre-line italic text-[1.04rem] sm:text-[1.12rem] md:text-[1.4rem] leading-[1.45] text-[#5f5a52]">
               {whySection.subtitle || fallbackWhySection.subtitle}
             </p>
           </div>
@@ -312,7 +312,7 @@ export default function PageClient({
               {whoSection.title || fallbackWhoSection.title}
             </h2>
 
-            <p className="italic text-[1.04rem] sm:text-[1.12rem] md:text-[1.4rem] leading-[1.45] text-[#5f5a52]">
+            <p className="whitespace-pre-line italic text-[1.04rem] sm:text-[1.12rem] md:text-[1.4rem] leading-[1.45] text-[#5f5a52]">
               {whoSection.subtitle || fallbackWhoSection.subtitle}
             </p>
           </div>
@@ -368,7 +368,7 @@ export default function PageClient({
               {criteriaSection.title || fallbackCriteriaSection.title}
             </h2>
 
-            <p className="italic text-[1.04rem] sm:text-[1.12rem] md:text-[1.4rem] leading-[1.45] text-[#5f5a52]">
+            <p className="whitespace-pre-line italic text-[1.04rem] sm:text-[1.12rem] md:text-[1.4rem] leading-[1.45] text-[#5f5a52]">
               {criteriaSection.subtitle || fallbackCriteriaSection.subtitle}
             </p>
           </div>
@@ -384,7 +384,7 @@ export default function PageClient({
                 >
                   {item.label}
                 </p>
-                <p className="text-[0.98rem] md:text-[1.12rem] leading-[1.82] md:leading-[1.85] text-[#2c2c2c]">
+                <p className="whitespace-pre-line text-[0.98rem] md:text-[1.12rem] leading-[1.82] md:leading-[1.85] text-[#2c2c2c]">
                   {item.text}
                 </p>
               </div>
@@ -410,7 +410,7 @@ export default function PageClient({
               {hallOfFameSection.title || fallbackHallOfFameSection.title}
             </h2>
 
-            <p className="italic text-[1.04rem] sm:text-[1.12rem] md:text-[1.4rem] leading-[1.45] text-[#5f5a52]">
+            <p className="whitespace-pre-line italic text-[1.04rem] sm:text-[1.12rem] md:text-[1.4rem] leading-[1.45] text-[#5f5a52]">
               {hallOfFameSection.subtitle || fallbackHallOfFameSection.subtitle}
             </p>
           </div>
@@ -425,7 +425,7 @@ export default function PageClient({
                   (featuredWinner?.year || "2025")}
               </p>
 
-              <h3 className="font-serif text-[1.7rem] sm:text-[1.9rem] md:text-[2.7rem] leading-[1.08] text-[#1f1f1f] mb-3">
+              <h3 className="whitespace-pre-line font-serif text-[1.7rem] sm:text-[1.9rem] md:text-[2.7rem] leading-[1.08] text-[#1f1f1f] mb-3">
                 {featuredWinner?.winner || fallbackFeaturedWinner.winner}
               </h3>
 
@@ -436,12 +436,12 @@ export default function PageClient({
             </div>
 
             <div className="px-5 py-6 md:px-8 md:py-9">
-              <p className="text-[1rem] md:text-[1.14rem] leading-[1.85] md:leading-[1.9] text-[#2c2c2c] mb-5 md:mb-6">
+              <p className="whitespace-pre-line text-[1rem] md:text-[1.14rem] leading-[1.85] md:leading-[1.9] text-[#2c2c2c] mb-5 md:mb-6">
                 {featuredWinner?.summary || fallbackFeaturedWinner.summary}
               </p>
 
               {(featuredWinner?.jury || fallbackFeaturedWinner.jury) && (
-                <p className="text-[0.98rem] md:text-[1.1rem] leading-[1.85] md:leading-[1.9] text-[#555]">
+                <p className="whitespace-pre-line text-[0.98rem] md:text-[1.1rem] leading-[1.85] md:leading-[1.9] text-[#555]">
                   {featuredWinner?.jury || fallbackFeaturedWinner.jury}
                 </p>
               )}
@@ -463,7 +463,7 @@ export default function PageClient({
                 </div>
 
                 <div>
-                  <h3 className="font-serif text-[1.45rem] sm:text-[1.6rem] md:text-[2rem] leading-[1.1] text-[#1f1f1f] mb-2">
+                  <h3 className="whitespace-pre-line font-serif text-[1.45rem] sm:text-[1.6rem] md:text-[2rem] leading-[1.1] text-[#1f1f1f] mb-2">
                     {item.winner}
                   </h3>
 
@@ -471,12 +471,12 @@ export default function PageClient({
                     {item.presentedBy}
                   </p>
 
-                  <p className="text-[0.98rem] md:text-[1.06rem] leading-[1.82] md:leading-[1.85] text-[#2c2c2c]">
+                  <p className="whitespace-pre-line text-[0.98rem] md:text-[1.06rem] leading-[1.82] md:leading-[1.85] text-[#2c2c2c]">
                     {item.summary}
                   </p>
 
                   {item.jury ? (
-                    <p className="mt-4 text-[0.96rem] md:text-[1.04rem] leading-[1.82] md:leading-[1.85] text-[#555]">
+                    <p className="mt-4 whitespace-pre-line text-[0.96rem] md:text-[1.04rem] leading-[1.82] md:leading-[1.85] text-[#555]">
                       {item.jury}
                     </p>
                   ) : null}
