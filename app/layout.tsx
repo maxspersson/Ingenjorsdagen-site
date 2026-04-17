@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Lora } from "next/font/google";
 import "./globals.css";
 import SiteHeader from "@/app/components/SiteHeader";
+import Script from "next/script";
 
 const lora = Lora({
   subsets: ["latin"],
@@ -21,6 +22,22 @@ export default function RootLayout({
 }) {
   return (
     <html lang="sv">
+      <head>
+        {/* Google Analytics */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-0HSK3KT0V2"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-0HSK3KT0V2');
+          `}
+        </Script>
+      </head>
+
       <body className={`${lora.variable} ${lora.className}`}>
         <SiteHeader />
 
