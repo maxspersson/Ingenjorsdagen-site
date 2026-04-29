@@ -4,6 +4,9 @@ import "./globals.css";
 import SiteHeader from "@/app/components/SiteHeader";
 import Script from "next/script";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 const lora = Lora({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
