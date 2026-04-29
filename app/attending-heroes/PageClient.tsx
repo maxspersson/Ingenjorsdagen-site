@@ -1,11 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import SiteHeader from "@/app/components/SiteHeader";
 import { Fira_Sans, Lora } from "next/font/google";
-import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
-import { speakersQuery, sessionGroupsQuery } from "@/sanity/lib/queries";
 
 const firaSans = Fira_Sans({
   subsets: ["latin"],
@@ -180,29 +178,11 @@ export default function PageClient({
   initialPageData: any;
 }) {
   const [selectedPerson, setSelectedPerson] = useState<Person | null>(null);
-  const pageData = initialPageData;
-  const [speakers, setSpeakers] = useState<Person[]>([]);
-  const [sessionGroups, setSessionGroups] = useState<SessionGroup[]>([]);
 
-  useEffect(() => {
-    async function loadSpeakers() {
-      const data = await client.fetch(speakersQuery);
-      console.log("SPEAKERS", data);
-      setSpeakers(data);
-    }
+const pageData = initialPageData?.page;
+const speakers: Person[] = initialPageData?.speakers || [];
+const sessionGroups: SessionGroup[] = initialPageData?.sessionGroups || [];
 
-    loadSpeakers();
-  }, []);
-
-  useEffect(() => {
-    async function loadSessionGroups() {
-      const data = await client.fetch(sessionGroupsQuery);
-      console.log("SESSION GROUPS", data);
-      setSessionGroups(data);
-    }
-
-    loadSessionGroups();
-  }, []);
 
   const sanitySpeakers = (speakers || []).filter(Boolean);
 
