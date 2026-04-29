@@ -16,6 +16,11 @@ const lora = Lora({
 export const metadata: Metadata = {
   title: "Ingenjörsdagen",
   description: "Ingenjörsdagen 2026",
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
