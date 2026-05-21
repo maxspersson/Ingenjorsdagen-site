@@ -84,6 +84,7 @@ const programmeItem = defineType({
       description: 'For example SESSION DETAILS or PANEL DETAILS',
       hidden: ({ parent }) => parent?.showDetails === false,
     }),
+    
     defineField({
       name: 'detailsText',
       title: 'Details text',

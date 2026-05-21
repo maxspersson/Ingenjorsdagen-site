@@ -454,7 +454,7 @@ export default function PageClient({
                   </p>
 
                   {item.jury ? (
-                    <p className="whitespace-pre-line text-[0.96rem] md:text-[1.04rem] leading-[1.82] md:leading-[1.85] text-[#555]">
+                    <p className="whitespace-pre-line text-[0.96rem] md:text-[1.04rem] leading-[1.82] md:leading-[1.85] text-[#555]"> 
                       {item.jury}
                     </p>
                   ) : null}
