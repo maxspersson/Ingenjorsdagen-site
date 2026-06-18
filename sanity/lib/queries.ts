@@ -18,25 +18,26 @@ export const partnersQuery = groq`
   }
 `
 
-export const programmeQuery = `*[_type == "programmeItem"] | order(order asc) {
-  id,
-  time,
-  title,
-
-  showDescription,
-  description,
-
-  showDetails,
-  detailsLabel,
-  detailsText,
-
-  showSubItems,
-  subItems[]{
+export const programmeQuery = groq`
+  *[_type == "programmeItem" && !(_id in path("drafts.**"))] | order(order asc) {
+    _id,
+    id,
+    order,
     time,
     title,
-    meta
+    showDescription,
+    description,
+    showDetails,
+    detailsLabel,
+    detailsText,
+    showSubItems,
+    subItems[]{
+      time,
+      title,
+      meta
+    }
   }
-}`
+`
 
 export const masterclassesQuery = groq`
   *[_type == "masterclass"] | order(order asc) {
@@ -124,23 +125,24 @@ export const engineeringDayPageQuery = groq`
     }
   },
 
-  "programme": *[_type == "programmeItem"] | order(order asc) {
-    id,
-    order,
+  "programme": *[_type == "programmeItem" && !(_id in path("drafts.**"))] | order(order asc) {
+  _id,
+  id,
+  order,
+  time,
+  title,
+  showDescription,
+  description,
+  showDetails,
+  detailsLabel,
+  detailsText,
+  showSubItems,
+  subItems[]{
     time,
     title,
-    showDescription,
-    description,
-    showDetails,
-    detailsLabel,
-    detailsText,
-    showSubItems,
-    subItems[]{
-      time,
-      title,
-      meta
-    }
-  },
+    meta
+  }
+}
 
   "masterclasses": *[_type == "masterclass"] | order(order asc) {
     _id,

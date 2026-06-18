@@ -170,7 +170,9 @@ type ProgrammeSubItem = {
 };
 
 type ProgrammeItem = {
+  _id?: string;
   id: string;
+  order?: number;
   time: string;
   title: string;
   showDescription?: boolean;
@@ -832,7 +834,8 @@ clarity, rhythm and depth.`}
           <div className="border-t border-black/5 pt-8 md:pt-12">
             <div className="mx-auto max-w-5xl">
               {programmeToRender.map((item) => {
-                const isActive = activeProgramme === item.id;
+  const programmeKey = item._id || item.id;
+  const isActive = activeProgramme === programmeKey;
                 const shouldShowDescription =
                   item.showDescription !== false && !!item.description;
                 const shouldShowSubItems =
@@ -845,7 +848,7 @@ clarity, rhythm and depth.`}
                   shouldShowSubItems || shouldShowDetails;
 
                 return (
-                  <div key={item.id} className="border-b border-black/6">
+                  <div key={programmeKey} className="border-b border-black/6">
                     <div className="py-7 md:py-10">
                       <div className="grid grid-cols-1 gap-y-4 md:grid-cols-[120px_1fr] md:gap-x-8">
                         <div className="pt-1">
@@ -873,7 +876,7 @@ clarity, rhythm and depth.`}
                             {hasExpandableContent ? (
                               <button
                                 type="button"
-                                onClick={() => handleProgrammeClick(item.id)}
+                                onClick={() => handleProgrammeClick(programmeKey)}
                                 aria-expanded={isActive}
                                 className={`${firaSans.className} mt-1 hidden shrink-0 items-center gap-3 text-[0.68rem] uppercase tracking-[0.18em] text-[#7a7468] transition-colors hover:text-[#a27a26] md:inline-flex`}
                               >
@@ -927,7 +930,7 @@ clarity, rhythm and depth.`}
                           {hasExpandableContent ? (
                             <button
                               type="button"
-                              onClick={() => handleProgrammeClick(item.id)}
+                              onClick={() => handleProgrammeClick(programmeKey)}
                               aria-expanded={isActive}
                               className={`${firaSans.className} mt-5 inline-flex items-center gap-3 text-[0.68rem] uppercase tracking-[0.18em] text-[#7a7468] transition-colors hover:text-[#a27a26] md:hidden`}
                             >
