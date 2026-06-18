@@ -375,12 +375,10 @@ export default function PageClient({
     (partner: any) => partner.tier === "partner"
   );
 
-  const programmeToRender: ProgrammeItem[] = programme.map((defaultItem) => {
-    const sanityItem = sanityProgramme.find(
-      (item: ProgrammeItem) => item.id === defaultItem.id
-    );
-    return sanityItem || defaultItem;
-  });
+  const programmeToRender: ProgrammeItem[] =
+  sanityProgramme.length > 0
+    ? sanityProgramme
+    : programme;
 
   const hasHeroMedia =
     (pageData?.hero?.mediaType === "image" && pageData?.hero?.image?.asset) ||
