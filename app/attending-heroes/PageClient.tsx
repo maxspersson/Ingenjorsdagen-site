@@ -443,26 +443,28 @@ const sessionGroups: SessionGroup[] = initialPageData?.sessionGroups || [];
       )}
 
       {keynoteSpeakers.length > 0 && (
-        <section className="px-5 pb-24 md:px-12 md:pb-32 lg:px-20">
-          <div className="mx-auto max-w-6xl">
-            <SectionHeader
-              label="Keynote"
-              title="Closing keynote"
-              intro="The keynote brings the day together — reflecting on the conversations, insights and what comes next."
-            />
+  <section className="px-5 pb-24 md:px-12 md:pb-32 lg:px-20">
+    <div className="mx-auto max-w-6xl">
+      <p
+        className={`${firaSans.className} mb-4 text-[12px] uppercase tracking-[0.22em] text-[#a27a26] md:text-[13px] md:tracking-[0.24em]`}
+      >
+        {pageData?.keynoteSection?.label || "Keynote"}
+      </p>
 
-            <div className="grid max-w-sm gap-8 sm:gap-10">
-              {keynoteSpeakers.map((person) => (
-                <SpeakerCard
-                  key={`${person.name}-${person.session}`}
-                  person={person}
-                  onOpen={setSelectedPerson}
-                />
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
+      <div className="mb-7 h-px w-14 bg-[#d9a441] md:mb-8" />
+
+      <div className="grid max-w-sm gap-8 sm:gap-10">
+        {keynoteSpeakers.map((person) => (
+          <SpeakerCard
+            key={`${person.name}-${person.session}`}
+            person={person}
+            onOpen={setSelectedPerson}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+)}
 
       {selectedPerson ? (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/55 px-4 py-4 sm:px-6 sm:py-8 md:px-6 md:py-10">
