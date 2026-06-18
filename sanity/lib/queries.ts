@@ -125,7 +125,7 @@ export const engineeringDayPageQuery = groq`
     }
   },
 
-  "programme": *[_type == "programmeItem" && !(_id in path("drafts.**"))] | order(order asc) {
+  "programme": *[_type == "programmeItem"] | order(order asc) {
   _id,
   id,
   order,
@@ -142,7 +142,7 @@ export const engineeringDayPageQuery = groq`
     title,
     meta
   }
-}
+},
 
   "masterclasses": *[_type == "masterclass"] | order(order asc) {
     _id,
