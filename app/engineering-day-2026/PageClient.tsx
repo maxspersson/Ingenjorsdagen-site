@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { Fira_Sans } from "next/font/google";
 import SiteHeader from "@/app/components/SiteHeader";
 import { urlFor } from "@/sanity/lib/image";
@@ -65,6 +65,7 @@ const masterclasses = [
         </p>
 
         <p className="mb-3 font-semibold text-[#242424]">Learnings</p>
+
         <ul className="mb-8 list-disc space-y-3 pl-5">
           <li>
             How renewable energy sources are integrated into modern power
@@ -316,10 +317,36 @@ export default function PageClient({
   );
   const [activeProgramme, setActiveProgramme] = useState<string | null>(null);
 
+  const [preRegName, setPreRegName] = useState("");
+  const [preRegEmail, setPreRegEmail] = useState("");
+
+  const [preRegStatus, setPreRegStatus] = useState<
+    "idle" | "loading" | "success" | "error" | "already_registered"
+  >("idle");
+
+  const [preRegMessage, setPreRegMessage] = useState("");
+
+  const showPreRegistration = true;
+
   const pageData = initialPageData?.page;
   const sanityPartners = initialPageData?.partners || [];
   const sanityProgramme = initialPageData?.programme || [];
   const sanityMasterclasses = initialPageData?.masterclasses || [];
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+
+    const utm = {
+      source: params.get("utm_source") || "",
+      medium: params.get("utm_medium") || "",
+      campaign: params.get("utm_campaign") || "",
+      content: params.get("utm_content") || "",
+    };
+
+    if (utm.source || utm.medium || utm.campaign || utm.content) {
+      localStorage.setItem("engineeringday_utm", JSON.stringify(utm));
+    }
+  }, []);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -342,6 +369,80 @@ export default function PageClient({
 
   const handleProgrammeClick = (id: string) => {
     setActiveProgramme((prev) => (prev === id ? null : id));
+  };
+
+  const handlePreRegistration = async (
+    event: FormEvent<HTMLFormElement>
+  ) => {
+    event.preventDefault();
+
+    if (!preRegName.trim() || !preRegEmail.trim()) {
+      setPreRegStatus("error");
+      setPreRegMessage("Please enter your name and email.");
+      return;
+    }
+
+    try {
+      setPreRegStatus("loading");
+      setPreRegMessage("");
+
+      const storedUtm =
+        typeof window !== "undefined"
+          ? localStorage.getItem("engineeringday_utm")
+          : null;
+
+      let utm: {
+        source?: string;
+        medium?: string;
+        campaign?: string;
+        content?: string;
+      } = {};
+
+      if (storedUtm) {
+        try {
+          utm = JSON.parse(storedUtm);
+        } catch {
+          utm = {};
+        }
+      }
+
+      const response = await fetch("/api/pre-register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: preRegName.trim(),
+          email: preRegEmail.trim(),
+          source: utm.source || "",
+          medium: utm.medium || "",
+          campaign: utm.campaign || "",
+          content: utm.content || "",
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.code === "already_registered") {
+        setPreRegStatus("already_registered");
+        setPreRegMessage("");
+        return;
+      }
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.message || "Registration failed.");
+      }
+
+      setPreRegStatus("success");
+      setPreRegMessage("");
+      setPreRegName("");
+      setPreRegEmail("");
+    } catch (error) {
+      console.error("Pre-registration error:", error);
+
+      setPreRegStatus("error");
+      setPreRegMessage("Something went wrong. Please try again.");
+    }
   };
 
   const masterclassesToRender = masterclasses.map((defaultItem, index) => {
@@ -378,13 +479,104 @@ export default function PageClient({
   );
 
   const programmeToRender: ProgrammeItem[] =
-  sanityProgramme.length > 0
-    ? sanityProgramme
-    : programme;
+    sanityProgramme.length > 0 ? sanityProgramme : programme;
 
   const hasHeroMedia =
     (pageData?.hero?.mediaType === "image" && pageData?.hero?.image?.asset) ||
     (pageData?.hero?.mediaType === "video" && pageData?.hero?.videoUrl);
+
+  const heroRegistration = showPreRegistration ? (
+    <div className="mx-auto w-full max-w-2xl">
+      {preRegStatus === "success" ? (
+        <div className="mx-auto max-w-xl border border-white/25 bg-black/20 px-6 py-6 backdrop-blur-sm sm:px-8">
+          <p
+            className={`${firaSans.className} mb-2 text-[11px] font-semibold uppercase tracking-[0.24em] text-[#e2ad3e] sm:text-xs`}
+          >
+            YOU&apos;RE ON THE EARLY ACCESS LIST
+          </p>
+
+          <p className="text-[0.95rem] leading-[1.65] text-white/90 sm:text-[1.05rem]">
+            We&apos;ll let you know as soon as tickets for Engineering Day 2026
+            are released.
+          </p>
+        </div>
+      ) : preRegStatus === "already_registered" ? (
+        <div className="mx-auto max-w-xl border border-white/25 bg-black/20 px-6 py-6 backdrop-blur-sm sm:px-8">
+          <p
+            className={`${firaSans.className} mb-2 text-[11px] font-semibold uppercase tracking-[0.24em] text-[#e2ad3e] sm:text-xs`}
+          >
+            YOU&apos;RE ALREADY ON THE LIST
+          </p>
+
+          <p className="text-[0.95rem] leading-[1.65] text-white/90 sm:text-[1.05rem]">
+            You&apos;re all set. We&apos;ll let you know as soon as early access
+            to Engineering Day 2026 tickets opens.
+          </p>
+        </div>
+      ) : (
+        <form
+          onSubmit={handlePreRegistration}
+          className="mx-auto w-full max-w-2xl"
+        >
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
+            <input
+              type="text"
+              name="name"
+              value={preRegName}
+              onChange={(event) => setPreRegName(event.target.value)}
+              placeholder="Full name"
+              autoComplete="name"
+              required
+              className={`${firaSans.className} h-12 w-full border border-white/45 bg-black/20 px-4 text-[14px] text-white outline-none backdrop-blur-sm transition placeholder:text-white/65 focus:border-[#d9a441] sm:h-[52px]`}
+            />
+
+            <input
+              type="email"
+              name="email"
+              value={preRegEmail}
+              onChange={(event) => setPreRegEmail(event.target.value)}
+              placeholder="Email"
+              autoComplete="email"
+              required
+              className={`${firaSans.className} h-12 w-full border border-white/45 bg-black/20 px-4 text-[14px] text-white outline-none backdrop-blur-sm transition placeholder:text-white/65 focus:border-[#d9a441] sm:h-[52px]`}
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={preRegStatus === "loading"}
+            className={`${firaSans.className} mt-4 w-full bg-[#d9a441] px-6 py-4 text-[10px] font-medium uppercase tracking-[0.2em] text-white shadow-lg transition hover:bg-[#c8932f] disabled:cursor-wait disabled:opacity-70 sm:text-[11px] sm:tracking-[0.24em]`}
+          >
+            {preRegStatus === "loading"
+              ? "ADDING YOU TO THE LIST..."
+              : "GET EARLY ACCESS TO TICKETS"}
+          </button>
+
+          {preRegStatus === "error" && preRegMessage ? (
+            <p
+              className={`${firaSans.className} mt-3 text-[12px] text-red-200`}
+            >
+              {preRegMessage}
+            </p>
+          ) : null}
+
+          <p
+            className={`${firaSans.className} mt-3 text-[10px] leading-[1.5] tracking-[0.04em] text-white/60 sm:text-[11px]`}
+          >
+            We&apos;ll notify you as soon as tickets for Engineering Day 2026
+            become available.
+          </p>
+        </form>
+      )}
+    </div>
+  ) : (
+    <a
+      href={pageData?.hero?.ctaHref || "#"}
+      className={`${firaSans.className} inline-block bg-[#d9a441] px-8 py-3 text-[11px] uppercase tracking-[0.24em] text-white shadow-lg transition hover:bg-[#c8932f] sm:px-10 sm:py-3.5 md:px-14 md:py-4 md:text-xs md:tracking-[0.3em]`}
+    >
+      {pageData?.hero?.ctaText || "BOOK YOUR SPOT"}
+    </a>
+  );
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#f3f1ed] text-[#1f1f1f]">
@@ -393,7 +585,8 @@ export default function PageClient({
       {hasHeroMedia ? (
         <section className="relative flex min-h-[58vh] items-center justify-center px-5 text-center text-white sm:min-h-[66vh] md:min-h-[85vh] md:px-6">
           <div className="absolute inset-0">
-            {pageData?.hero?.mediaType === "video" && pageData?.hero?.videoUrl ? (
+            {pageData?.hero?.mediaType === "video" &&
+            pageData?.hero?.videoUrl ? (
               <video
                 className="h-full w-full object-cover"
                 autoPlay
@@ -418,7 +611,7 @@ export default function PageClient({
 
           <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
 
-          <div className="relative z-10 max-w-4xl py-20 sm:py-24">
+          <div className="relative z-10 w-full max-w-4xl py-20 sm:py-24">
             <p className="mb-6 text-[10px] uppercase tracking-[0.28em] text-white/80 sm:text-[11px] sm:tracking-[0.4em] md:mb-8 whitespace-pre-line">
               {pageData?.hero?.dateText || "OCTOBER 21, 2026 – STOCKHOLM"}
             </p>
@@ -438,12 +631,7 @@ export default function PageClient({
                 "We the engineers. Together. For the future."}
             </p>
 
-            <a
-              href={pageData?.hero?.ctaHref || "#"}
-              className={`${firaSans.className} inline-block bg-[#d9a441] px-8 py-3 text-[11px] uppercase tracking-[0.24em] text-white shadow-lg transition hover:bg-[#c8932f] sm:px-10 sm:py-3.5 md:px-14 md:py-4 md:text-xs md:tracking-[0.3em]`}
-            >
-              {pageData?.hero?.ctaText || "BOOK YOUR SPOT"}
-            </a>
+            {heroRegistration}
           </div>
         </section>
       ) : (
@@ -452,9 +640,10 @@ export default function PageClient({
             className="absolute inset-0 bg-cover bg-center"
             style={{ backgroundImage: "url('/hero.jpg')" }}
           />
+
           <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
 
-          <div className="relative z-10 max-w-4xl py-20 sm:py-24">
+          <div className="relative z-10 w-full max-w-4xl py-20 sm:py-24">
             <p className="mb-6 text-[10px] uppercase tracking-[0.28em] text-white/80 sm:text-[11px] sm:tracking-[0.4em] md:mb-8 whitespace-pre-line">
               {pageData?.hero?.dateText || "OCTOBER 21, 2026 – STOCKHOLM"}
             </p>
@@ -474,12 +663,7 @@ export default function PageClient({
                 "We the engineers. Together. For the future."}
             </p>
 
-            <a
-              href={pageData?.hero?.ctaHref || "#"}
-              className={`${firaSans.className} inline-block bg-[#d9a441] px-8 py-3 text-[11px] uppercase tracking-[0.24em] text-white shadow-lg transition hover:bg-[#c8932f] sm:px-10 sm:py-3.5 md:px-14 md:py-4 md:text-xs md:tracking-[0.3em]`}
-            >
-              {pageData?.hero?.ctaText || "BOOK YOUR SPOT"}
-            </a>
+            {heroRegistration}
           </div>
         </section>
       )}
@@ -606,6 +790,7 @@ Deeper technical insight.`}
               {rows.map((row, rowIndex) => {
                 const rowStartIndex = rowIndex * 2;
                 const rowEndIndex = rowStartIndex + row.length - 1;
+
                 const rowHasActive =
                   activeMasterclass !== null &&
                   activeMasterclass >= rowStartIndex &&
@@ -637,7 +822,9 @@ Deeper technical insight.`}
                             >
                               <div
                                 className="relative h-[330px] bg-cover bg-center sm:h-[350px] md:h-[380px]"
-                                style={{ backgroundImage: `url('${item.image}')` }}
+                                style={{
+                                  backgroundImage: `url('${item.image}')`,
+                                }}
                               >
                                 <div
                                   className={`absolute inset-0 transition-all duration-300 ${
@@ -672,9 +859,11 @@ Deeper technical insight.`}
                                         <p className="text-[1rem] font-semibold md:text-[1.12rem] whitespace-pre-line">
                                           {item.speaker}
                                         </p>
+
                                         <p className="text-[0.9rem] text-white/90 md:text-[1rem] whitespace-pre-line">
                                           {item.role}
                                         </p>
+
                                         {item.company ? (
                                           <p className="text-[0.9rem] text-white/90 md:text-[1rem] whitespace-pre-line">
                                             {item.company}
@@ -685,7 +874,9 @@ Deeper technical insight.`}
 
                                     <div className="flex items-center justify-between border-t border-white/20 pt-4">
                                       <span className="text-[0.94rem] text-white/95 md:text-[0.98rem]">
-                                        {isActive ? "Close details" : "Read details"}
+                                        {isActive
+                                          ? "Close details"
+                                          : "Read details"}
                                       </span>
 
                                       <span
@@ -834,12 +1025,15 @@ clarity, rhythm and depth.`}
           <div className="border-t border-black/5 pt-8 md:pt-12">
             <div className="mx-auto max-w-5xl">
               {programmeToRender.map((item) => {
-  const programmeKey = item._id || item.id;
-  const isActive = activeProgramme === programmeKey;
+                const programmeKey = item._id || item.id;
+                const isActive = activeProgramme === programmeKey;
+
                 const shouldShowDescription =
                   item.showDescription !== false && !!item.description;
+
                 const shouldShowSubItems =
                   item.showSubItems === true && !!item.subItems?.length;
+
                 const shouldShowDetails =
                   item.showDetails === true &&
                   (!!item.detailsText || !!item.detailsLabel);
@@ -876,11 +1070,14 @@ clarity, rhythm and depth.`}
                             {hasExpandableContent ? (
                               <button
                                 type="button"
-                                onClick={() => handleProgrammeClick(programmeKey)}
+                                onClick={() =>
+                                  handleProgrammeClick(programmeKey)
+                                }
                                 aria-expanded={isActive}
                                 className={`${firaSans.className} mt-1 hidden shrink-0 items-center gap-3 text-[0.68rem] uppercase tracking-[0.18em] text-[#7a7468] transition-colors hover:text-[#a27a26] md:inline-flex`}
                               >
                                 <span>{isActive ? "Close" : "More"}</span>
+
                                 <span
                                   className={`flex h-8 w-8 items-center justify-center rounded-full border border-black/10 text-[1rem] transition-all duration-300 ${
                                     isActive
@@ -913,6 +1110,7 @@ clarity, rhythm and depth.`}
                                         <span className="font-medium">
                                           {subItem.title}
                                         </span>
+
                                         {subItem.meta ? (
                                           <span className="text-[#746f64]">
                                             {" "}
@@ -930,11 +1128,14 @@ clarity, rhythm and depth.`}
                           {hasExpandableContent ? (
                             <button
                               type="button"
-                              onClick={() => handleProgrammeClick(programmeKey)}
+                              onClick={() =>
+                                handleProgrammeClick(programmeKey)
+                              }
                               aria-expanded={isActive}
                               className={`${firaSans.className} mt-5 inline-flex items-center gap-3 text-[0.68rem] uppercase tracking-[0.18em] text-[#7a7468] transition-colors hover:text-[#a27a26] md:hidden`}
                             >
                               <span>{isActive ? "Close" : "More"}</span>
+
                               <span
                                 className={`flex h-8 w-8 items-center justify-center rounded-full border border-black/10 text-[1rem] transition-all duration-300 ${
                                   isActive
@@ -977,10 +1178,10 @@ clarity, rhythm and depth.`}
         <div className="mx-auto max-w-6xl">
           <div className="mb-14 md:mb-20">
             <p
-  className={`${firaSans.className} whitespace-pre-line text-center text-[0.76rem] uppercase tracking-[0.26em] text-[#d9a441] sm:text-[0.82rem] md:text-[0.95rem] md:tracking-[0.34em]`}
->
-  FOUNDING PARTNERS 2026
-</p>
+              className={`${firaSans.className} whitespace-pre-line text-center text-[0.76rem] uppercase tracking-[0.26em] text-[#d9a441] sm:text-[0.82rem] md:text-[0.95rem] md:tracking-[0.34em]`}
+            >
+              FOUNDING PARTNERS 2026
+            </p>
           </div>
 
           <div className="mx-auto mb-16 max-w-5xl md:mb-24">
@@ -1014,7 +1215,7 @@ clarity, rhythm and depth.`}
               </div>
             </div>
 
-            <div className="hidden md:grid md:grid-cols-5 md:gap-8 md:items-start md:justify-items-center">
+            <div className="hidden md:grid md:grid-cols-5 md:items-start md:justify-items-center md:gap-8">
               {foundingPartnersFromSanity.map((partner: any) => (
                 <div key={partner.name} className="group flex justify-center">
                   <div className="relative flex h-[158px] w-[158px] items-center justify-center transition-transform duration-300 group-hover:-translate-y-[3px]">
@@ -1032,10 +1233,10 @@ clarity, rhythm and depth.`}
           <div className="border-t border-black/6 pt-14 md:pt-20">
             <div className="mb-10 text-center md:mb-14">
               <p
-  className={`${firaSans.className} whitespace-pre-line text-center text-[0.76rem] uppercase tracking-[0.26em] text-[#d9a441] sm:text-[0.82rem] md:text-[0.95rem] md:tracking-[0.34em]`}
->
-  PARTNERS
-</p>
+                className={`${firaSans.className} whitespace-pre-line text-center text-[0.76rem] uppercase tracking-[0.26em] text-[#d9a441] sm:text-[0.82rem] md:text-[0.95rem] md:tracking-[0.34em]`}
+              >
+                PARTNERS
+              </p>
             </div>
 
             <div className="mx-auto grid max-w-6xl grid-cols-2 items-center justify-items-center gap-x-4 gap-y-8 px-2 md:grid-cols-5 md:gap-x-10 md:gap-y-12 md:px-0">
