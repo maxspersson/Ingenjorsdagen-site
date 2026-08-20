@@ -430,13 +430,18 @@ export default function PageClient({
       }
 
       if (!response.ok || !data.success) {
-        throw new Error(data.message || "Registration failed.");
-      }
+  throw new Error(data.message || "Registration failed.");
+}
 
-      setPreRegStatus("success");
-      setPreRegMessage("");
-      setPreRegName("");
-      setPreRegEmail("");
+// Track successful lead in Meta Pixel
+if (typeof window !== "undefined" && typeof (window as any).fbq === "function") {
+  (window as any).fbq("track", "Lead");
+}
+
+setPreRegStatus("success");
+setPreRegMessage("");
+setPreRegName("");
+setPreRegEmail("");
     } catch (error) {
       console.error("Pre-registration error:", error);
 
