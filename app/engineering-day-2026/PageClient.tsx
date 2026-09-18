@@ -326,7 +326,7 @@ export default function PageClient({
 
   const [preRegMessage, setPreRegMessage] = useState("");
 
-  const showPreRegistration = true;
+  const showPreRegistration = false;
 
   const pageData = initialPageData?.page;
   const sanityPartners = initialPageData?.partners || [];
