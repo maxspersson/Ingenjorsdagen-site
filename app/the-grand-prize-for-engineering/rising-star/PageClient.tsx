@@ -202,10 +202,11 @@ export default function PageClient({
     pageData?.featuredWinner?.winner || pageData?.featuredWinner?.summary
       ? pageData.featuredWinner
       : fallbackFeaturedWinner;
-  const hallOfFameItems =
-    pageData?.hallOfFameItems && pageData.hallOfFameItems.length > 0
-      ? pageData.hallOfFameItems
-      : fallbackHallOfFame;
+  const hallOfFameItems = [
+  ...(pageData?.hallOfFameItems?.length
+    ? pageData.hallOfFameItems
+    : fallbackHallOfFame),
+].sort((a, b) => Number(b.year || 0) - Number(a.year || 0));
 
   const heroImageUrl = hero?.image?.asset?.url || "/rising-star-2026.png";
   const whyParagraphs = splitParagraphs(whySection.body);
@@ -392,9 +393,8 @@ export default function PageClient({
               <p
                 className={`${firaSans.className} mb-3 text-[10px] uppercase tracking-[0.18em] text-[#a27a26] md:text-[11px] md:tracking-[0.2em]`}
               >
-                {(featuredWinner?.label || "Featured winner") +
-                  " · " +
-                  (featuredWinner?.year || "2025")}
+                {featuredWinner?.label || "Featured winner"}
+{featuredWinner?.year ? ` · ${featuredWinner.year}` : ""}
               </p>
 
               <h3 className="mb-3 whitespace-pre-line font-serif text-[1.7rem] leading-[1.08] text-[#1f1f1f] sm:text-[1.95rem] md:text-[2.7rem]">
